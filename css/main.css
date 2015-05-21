@@ -1,0 +1,12 @@
+.login_form{
+	width: 30%;
+	margin-top: 200px;
+}
+.login_image{
+	width: 32px;
+	height: 32px;
+}
+.login-error{
+	font-size: 12px;
+	color: #C73836;
+}
