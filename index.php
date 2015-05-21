@@ -1,11 +1,41 @@
 <head>
-<?php 
-	include_once(__DIR__.'/head.php'); 
-?>
+	<meta http-equiv="Content-Type" content="text/HTML; charset=UTF-8"/>
+	<link rel="icon" type="image/ico" href="images/favicon.ico">
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+	<!-- jQuery library -->
+	<script src="js/jquery/jquery.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="css/bootstrap/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+	<?php 
+		include_once (__DIR__.'/Util/util.php');
+		include_once (__DIR__.'/service/LoginService.php');
+		if(!empty($_POST)){
+			$loginService = new LoginService();
+			
+			$username = Util::cleanInput($_POST['username']);
+			$password = Util::cleanInput($_POST['password']);
+			$remember = isset($_POST['remember']) ? true : false;
+			
+			$db_output = $loginService->login($username, $password, $remember);
+			if($db_output['role'] == 0){
+				echo "NOOO";
+			}else if($db_output['role'] == 1){
+				Util::redirect("/positive/admin");
+			}else if($db_output['role'] == 2){
+				Util::redirect("/positive/personel");
+			}else if($db_output['role'] == 3){
+				Util::redirect("/positive/branch");
+			}
+		}
+	?>
 	<div class="container login_form">
-		<form class="form-signin" id="positive_login" action="login_action.php" method="post">
+		<form class="form-signin" id="positive_login" action="" method="post">
 	        <h2 class="form-signin-heading">
 	        	<img src="images/positive.png" class="login_image">&nbsp&nbspGiriş Yapınız
 	        </h2>
