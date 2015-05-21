@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://logging.apache.org/log4php/">
+
+    <appender name="logger" class="LoggerAppenderDailyFile">
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="[%level]-[%date{d-m-Y H:i:s}]-%message%newline" />
+        </layout>
+
+        <param name="file" value="logs/charter_%s.log" />
+        <param name="datePattern" value="d-m-Y" />
+        <param name="append" value="true" />
+    </appender>
+    <root>
+        <level value="TRACE" />
+        <appender_ref ref="logger" />
+    </root>
+
+</configuration>
