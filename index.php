@@ -12,25 +12,29 @@
 	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<?php 
+	<?php
+		include_once (__DIR__.'/Util/init.php');
 		include_once (__DIR__.'/Util/util.php');
 		include_once (__DIR__.'/service/LoginService.php');
+		include_once (__DIR__.'/classes/user.php');
 		if(!empty($_POST)){
 			$loginService = new LoginService();
+			$session_flag = false;
 			
 			$username = Util::cleanInput($_POST['username']);
 			$password = Util::cleanInput($_POST['password']);
 			$remember = isset($_POST['remember']) ? true : false;
 			
-			$db_output = $loginService->login($username, $password, $remember);
-			if($db_output['role'] == 0){
-				echo "NOOO";
-			}else if($db_output['role'] == 1){
+			$user = $loginService->login($username, $password, $remember);
+			if($user[User::ROLE] == 1){
 				Util::redirect("/positive/admin");
-			}else if($db_output['role'] == 2){
+				$session_flag = true;
+			}else if($user[User::ROLE] == 2){
 				Util::redirect("/positive/personel");
-			}else if($db_output['role'] == 3){
+				$session_flag = true;
+			}else if($user[User::ROLE] == 3){
 				Util::redirect("/positive/branch");
+				$session_flag = true;
 			}
 		}
 	?>
@@ -53,4 +57,16 @@
 	      </form>
 	</div>
 	<script src="js/login.js"></script>
+	
+	<?php 
+		if(!empty($_POST)){
+			echo "<script type='text/javascript'>";
+			if($user[User::ROLE] == -1){
+				echo "$('#login-error').html('Böyle bir kullanıcı adı kayıtlı değil.');";
+			}else if($user[User::ROLE] == 0){
+				echo "$('#login-error').html('Kullanıcı adı-şifre hatalı.');";
+			}
+			echo "</script>";
+		}
+	?>
 </body>

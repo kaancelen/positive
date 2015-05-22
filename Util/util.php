@@ -51,6 +51,29 @@ class Util{
 	    }
 	    exit();
 	}
+	
+	/**
+	 * Read xml file and return content as nested array
+	 * @param unknown $filepath
+	 */
+	public static function readXML($filepath){
+		$xml = simplexml_load_file($filepath);
+		return self::xml2array($xml);
+	}
+	
+	/**
+	 * convert xml object to array
+	 * @param unknown $xmlObject
+	 * @param unknown $out
+	 * @return unknown
+	 */
+	private static function xml2array ( $xmlObject, $out = array () ){
+	    foreach ( (array) $xmlObject as $index => $node ){
+	    	$out[$index] = ( is_object ( $node ) ) ? self::xml2array ( $node ) : $node;
+	    }
+	
+	    return $out;
+	}
 }
 
 ?>
