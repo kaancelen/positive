@@ -24,9 +24,11 @@
 			$password = Util::cleanInput($_POST['password']);
 			$remember = isset($_POST['remember']) ? true : false;
 			
+			$logger->write(ALogger::INFO, __FILE__, "Login request come [".$username."]");
 			$user = $loginService->login($username, $password);
 			//put to session
 			if($user[User::ROLE] > 0){
+				$logger->write(ALogger::INFO, __FILE__, "Logged in [".$username."]");
 				Session::put(Session::USER, $user);
 				if($remember){
 					$hash = Hash::unique();
@@ -60,7 +62,7 @@
 	          </label>
 	        </div>
 	        <button class="btn btn-lg btn-primary btn-block" type="button" id="login_button">Giriş</button>
-	      </form>
+      </form>
 	</div>
 	<script src="js/login.js"></script>
 	

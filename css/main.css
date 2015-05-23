@@ -1,9 +1,10 @@
 body{
 	padding-top: 70px;
+	background-color: #FEFEFE;
 }
 .login_form{
 	width: 30%;
-	padding-top: 200px;
+	padding-top: 130px;
 }
 .login_image{
 	width: 32px;
@@ -15,5 +16,12 @@ body{
 }
 .login-error{
 	font-size: 12px;
-	color: #C73836;
+	color: #FF0033;
+}
+.success-label{
+	font-size: 12px;
+	color: #00CC00;
+}
+.profile-well{
+	width: 40%;
 }

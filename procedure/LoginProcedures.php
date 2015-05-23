@@ -4,17 +4,14 @@ include_once (__DIR__.'/../db/db.php');
 include_once (__DIR__.'/../Logger/ALogger.php');
 include_once (__DIR__.'/../Util/Hash.php');
 include_once (__DIR__.'/../classes/user.php');
+include_once (__DIR__.'/Procedures.php');
 
-class LoginProcedures{
-	
-	private $_db;
-	private $_logger;
+class LoginProcedures extends Procedures{
 	
 	const TAG = "LoginProcedures";
 	
 	public function __construct(){
-		$this->_logger = ALogger::getInstance();
-		$this->_db = DB::getInstance();
+		parent::__construct();
 	}
 	
 	public function login($username, $password){
@@ -24,6 +21,7 @@ class LoginProcedures{
 		
 		//User not exist
 		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "User not found : [".$username."]");
 			return array(User::ROLE => -1);
 		}		
 		//Check password
@@ -38,6 +36,7 @@ class LoginProcedures{
 			return $user;
 		}else{
 			//password is wrong
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "Password wrong : [".$username."]");
 			return array(User::ROLE => 0);
 		}
 	}
@@ -46,13 +45,23 @@ class LoginProcedures{
 		$sql = "SELECT * FROM USER_SESSION WHERE ID = ?";
 		$this->_db->query($sql, array($id));
 		$count = $this->_db->count();
+		
 		if($count == 0){
 			$sql = "INSERT INTO USER_SESSION(HASH, ID) VALUES(?, ?)";
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "Remember ID not found, new hash will be insert : [".$id."]");
 		}else{
 			$sql = "UPDATE USER_SESSION SET HASH = ? WHERE ID = ?";
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "Remember ID found hash will be updated: [".$id."]");
 		}
 		$this->_db->query($sql, array($hash, $id));
-		return true;
+		$result = $this->_db->all();
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "Remember Failed : [".$id."]");
+			return false;
+		}else{
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "Remember Succeed : [".$id."]");
+			return true;
+		}
 	}
 	
 	public function loginWithHash($hash){
@@ -63,6 +72,7 @@ class LoginProcedures{
 		
 		//User not exist
 		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "Login with hash failed [".$hash."]");
 			return array(User::ROLE => -1);
 		}
 		
@@ -72,6 +82,8 @@ class LoginProcedures{
 		$user[User::NAME] = $result->NAME;
 		$user[User::EMAIL] = $result->EMAIL;
 		$user[User::CODE] = $result->CODE;
+		$this->_logger->write(ALogger::DEBUG, self::TAG, "Login with hash succeed [".$user[User::CODE]."]");
+		
 		return $user;
 	}
 	
