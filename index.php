@@ -1,40 +1,46 @@
 <head>
-	<meta http-equiv="Content-Type" content="text/HTML; charset=UTF-8"/>
-	<link rel="icon" type="image/ico" href="images/favicon.ico">
-	
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
-	<!-- jQuery library -->
-	<script src="js/jquery/jquery.min.js"></script>
-	<!-- Latest compiled JavaScript -->
-	<script src="css/bootstrap/js/bootstrap.min.js"></script>
-	
-	<link rel="stylesheet" href="css/main.css">
+	<?php include_once (__DIR__.'/headIndex.php'); ?>
 </head>
 <body>
 	<?php
 		include_once (__DIR__.'/Util/init.php');
-		include_once (__DIR__.'/Util/util.php');
-		include_once (__DIR__.'/service/LoginService.php');
-		include_once (__DIR__.'/classes/user.php');
+		
+		if($loggedIn){
+			$user = Session::get(Session::USER);
+			//redirect
+			if($user[User::ROLE] == User::ADMIN){
+				Util::redirect("/positive/admin");
+			}else if($user[User::ROLE] == User::PERSONEL){
+				Util::redirect("/positive/personel");
+			}else if($user[User::ROLE] == User::BRANCH){
+				Util::redirect("/positive/branch");
+			}
+		}
+		
 		if(!empty($_POST)){
 			$loginService = new LoginService();
-			$session_flag = false;
 			
 			$username = Util::cleanInput($_POST['username']);
 			$password = Util::cleanInput($_POST['password']);
 			$remember = isset($_POST['remember']) ? true : false;
 			
-			$user = $loginService->login($username, $password, $remember);
-			if($user[User::ROLE] == 1){
+			$user = $loginService->login($username, $password);
+			//put to session
+			if($user[User::ROLE] > 0){
+				Session::put(Session::USER, $user);
+				if($remember){
+					$hash = Hash::unique();
+					Cookie::put(Cookie::HASH, $hash, Cookie::REMEMBER_EXPIRE);
+					$loginService->remember($user[User::ID], $hash);
+				}
+			}
+			//redirect
+			if($user[User::ROLE] == User::ADMIN){
 				Util::redirect("/positive/admin");
-				$session_flag = true;
-			}else if($user[User::ROLE] == 2){
+			}else if($user[User::ROLE] == User::PERSONEL){
 				Util::redirect("/positive/personel");
-				$session_flag = true;
-			}else if($user[User::ROLE] == 3){
+			}else if($user[User::ROLE] == User::BRANCH){
 				Util::redirect("/positive/branch");
-				$session_flag = true;
 			}
 		}
 	?>
@@ -61,9 +67,9 @@
 	<?php 
 		if(!empty($_POST)){
 			echo "<script type='text/javascript'>";
-			if($user[User::ROLE] == -1){
+			if($user[User::ROLE] == User::USER_NOT_FOUND){
 				echo "$('#login-error').html('Böyle bir kullanıcı adı kayıtlı değil.');";
-			}else if($user[User::ROLE] == 0){
+			}else if($user[User::ROLE] == User::WRONG_PASS){
 				echo "$('#login-error').html('Kullanıcı adı-şifre hatalı.');";
 			}
 			echo "</script>";

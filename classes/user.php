@@ -8,6 +8,12 @@ class User{
 	const HASH = "HASH";
 	const SALT = "SALT";
 	const ROLE = "ROLE";
+	
+	const USER_NOT_FOUND = -1;
+	const WRONG_PASS = 0;
+	const ADMIN = 1;
+	const PERSONEL = 2;
+	const BRANCH = 3;
 }
 
 ?>

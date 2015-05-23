@@ -1,10 +1,17 @@
+body{
+	padding-top: 70px;
+}
 .login_form{
 	width: 30%;
-	margin-top: 200px;
+	padding-top: 200px;
 }
 .login_image{
 	width: 32px;
 	height: 32px;
+}
+.brand_image{
+	width: 16px;
+	height: 16px;
 }
 .login-error{
 	font-size: 12px;
