@@ -24,8 +24,18 @@ class UserService implements Service{
 	}
 	
 	public function addUser($name, $email, $username, $password, $role){
+		if($this->_userProcedures->exist($username)){
+			return null;
+		}
 		return $this->_userProcedures->addUser($name, $email, $username, $password, $role);
 	}
 	
+	public function updateUser($user_id, $name, $email, $role){
+		return $this->_userProcedures->updateUser($user_id, $name, $email, $role);
+	}
+	
+	public function getUser($user_id){
+		return $this->_userProcedures->getUser($user_id);
+	}
 }
 ?>

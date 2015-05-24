@@ -16,10 +16,14 @@ if(!empty($_POST)){
 	}
 	
 	$user_id = Util::cleanInput($_POST['user_id']);
-	$logger->write(ALogger::INFO, __FILE__, "User remove request [".$user_id."] from [".$user[User::CODE]."]");
+	$username = Util::cleanInput($_POST['username']);
+	$logger->write(ALogger::INFO, __FILE__, "User reset password request [".$user_id.", ".$username."] from [".$user[User::CODE]."]");
+	//new password
+	$salt = Hash::unique();
+	$hash = Hash::make($username, $salt);
 	
 	$userService = new UserService();
-	$result = $userService->removeUser($user_id);
+	$result = $userService->changePassword($user_id, $salt, $hash);
 	if($result){
 		echo json_encode(true);
 	}else{

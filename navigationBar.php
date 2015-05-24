@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
       	<?php if($nav_user[User::ROLE] == User::ADMIN){?>
-      		<li><a href="/positive/admin/users.php">Kullanıcılar</a></li>
+      		<li><a href="/positive/admin/users.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Kullanıcılar</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
       		<li><a href="#">Personel</a></li>

@@ -12,7 +12,14 @@ $userService = new UserService();
 // $result = $userService->changePassword(12, $salt, $hash);
 // echo $result;
 
-$userService->addUser("Kaan Çelen", "bkaancelen@gmail.com", "kaan", "celen", 2);
+$result = $userService->addUser("Neval Fer", "dasas", "neval", "fer", 2);
+if(is_null($result)){
+	echo "USER EXIST";
+}else if($result){
+	echo "SUCCESS";
+}else{
+	echo "FAILED";
+}
 //TODO control username before insert!!
 
 ?>

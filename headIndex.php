@@ -9,3 +9,4 @@
 <script src="css/bootstrap/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="css/main.css">
+<script src="js/main.js"></script>

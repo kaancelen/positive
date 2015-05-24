@@ -18,9 +18,12 @@
 	$userService = new UserService();
 	$all_users = $userService->allUsers();
 ?>
-
+<div id="user_table_msg" align="center">
+	<div class="alert alert-danger" role="alert" id="user_table_error" style="visibility: hidden;"></div>
+	<div class="alert alert-success" role="alert" id="user_table_success" style="visibility: hidden;"></div>
+</div>
 <div class="container">
-	<div class="table-responsive">
+	<div id="user_table" class="table-responsive">
 		<table class="table">
 			<thead>
 				<tr>
@@ -28,8 +31,12 @@
 					<td><b>İsim</b></td>
 					<td><b>E-Posta</b></td>
 					<td><b>Rol</b></td>
-					<td><b>Düzenle</b></td>
-					<td><b>Sil</b></td>
+					<td>
+						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
+							onclick="location.href = '/positive/admin/user.php?operation=<?php echo urldecode('add');?>'">
+						  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ekle
+						</button>
+					</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -47,11 +54,9 @@
 					?></td>
 					<td>
 						<button id="edit_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="edit_user(<?php echo $user[User::ID]; ?>)">
+							onclick="location.href = '/positive/admin/user.php?operation=<?php echo urldecode('edit');?>&user_id=<?php echo urldecode($user[User::ID]); ?>'">
 						  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 						</button>
-					</td>
-					<td>
 						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="remove_user('<?php echo $user[User::CODE]; ?>', <?php echo $user[User::ID]; ?>)">
 						  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -63,6 +68,6 @@
 		</table>
 	</div>
 </div>
-<script src="../js/userOperations.js"></script>
+<script src="../js/removeUser.js"></script>
 
 </body>

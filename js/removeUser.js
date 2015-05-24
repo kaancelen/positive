@@ -1,7 +1,3 @@
-function edit_user(user_id){
-	alert("edit "+user_id);
-}
-
 function remove_user(username, user_id){
 	var r = confirm(username + " kullanıcısını silmek istediğinize emin misiniz?");
 	if(!r){
@@ -21,9 +17,19 @@ function remove_user(username, user_id){
         processData: false,
         contentType: false,
         success: function(data, textStatus, jqXHR){
+        	var success_label = $('#user_table_success');
+        	var error_label = $('#user_table_error');
         	if(data){
-        		alert(username + " silindi");
             	$('#user_'+user_id).remove();
+            	success_label.html(username + " başarı ile silindi.");
+            	success_label.css("visibility", "visible");
+            	error_label.html("");
+            	error_label.css("visibility", "hidden");
+        	}else{
+        		error_label.html(username + " kullanıcı silinirken bir hata oluştu, işlem başarısız.");
+        		error_label.css("visibility", "visible");
+        		success_label.html("");
+        		success_label.css("visibility", "hidden");
         	}
         },
         error: function(jqXHR, textStatus, errorThrown){

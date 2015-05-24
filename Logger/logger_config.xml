@@ -6,7 +6,7 @@
             <param name="conversionPattern" value="[%level]-[%date{d-m-Y H:i:s}]-%message%newline" />
         </layout>
 
-        <param name="file" value="logs/charter_%s.log" />
+        <param name="file" value="C:\xampp\htdocs\positive\logs\positive_%s.log" />
         <param name="datePattern" value="d-m-Y" />
         <param name="append" value="true" />
     </appender>

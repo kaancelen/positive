@@ -80,6 +80,52 @@ class UserProcedures extends Procedures{
 			return true;
 		}
 	}
+	
+	public function updateUser($user_id, $name, $email, $role){
+		$sql = "UPDATE USER SET NAME = ?, EMAIL = ?, ROLE = ? WHERE ID = ?";
+		$this->_db->query($sql, array($name, $email, $role, $user_id));
+		$result = $this->_db->all();
+		
+		if(is_null($result)){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public function exist($username){
+		$sql = "SELECT CODE FROM USER WHERE CODE = ?";
+		$this->_db->query($sql, array($username));
+		
+		$result = $this->_db->count();
+		
+		if($result > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public function getUser($user_id){
+		$sql = "SELECT * FROM USER WHERE ID = ?";
+		$this->_db->query($sql, array($user_id));
+		
+		$result = $this->_db->first();
+		
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "user[".$user_id."] not found in DB");
+			return null;
+		}else{
+			$user = array();
+			$user[User::ID] = $user_id;
+			$user[User::CODE] = $result->CODE;
+			$user[User::NAME] = $result->NAME;
+			$user[User::EMAIL] = $result->EMAIL;
+			$user[User::ROLE] = $result->ROLE;
+			
+			return $user;
+		}
+	}
 }
 
 ?>

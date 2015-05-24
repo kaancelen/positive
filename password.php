@@ -50,11 +50,13 @@
 		        <label class="success-label" id="password_change_success"></label>
 		        <label for="password" class="sr-only">Eski şifre</label>
 		        <input type="password" id="oldPassword" name="oldPassword" class="form-control" placeholder="Eski şifre">
+		        <br>
 		        <label for="password" class="sr-only">Yeni şifre</label>
 		        <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Yeni şifre">
+		        <br>
 		        <label for="password" class="sr-only">Yeni şifre tekrar</label>
 		        <input type="password" id="newPasswordAgain" name="newPasswordAgain" class="form-control" placeholder="Yeni şifre tekrar">
-		        
+		        <br>
 		        <button class="btn btn-lg btn-primary btn-block" type="button" id="password_change_button">Değiştir</button>
 			</form>
 		</div>
