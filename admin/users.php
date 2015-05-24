@@ -22,6 +22,15 @@
 	<div class="alert alert-danger" role="alert" id="user_table_error" style="visibility: hidden;"></div>
 	<div class="alert alert-success" role="alert" id="user_table_success" style="visibility: hidden;"></div>
 </div>
+<script src="../js/usersJs.js"></script>
+<script type="text/javascript">
+<?php 
+	if(Session::exists(Session::FLASH)){
+		echo 'showFlash("'.Session::get(Session::FLASH).'");';
+		Session::delete(Session::FLASH);
+	}
+?>
+</script>
 <div class="container">
 	<div id="user_table" class="table-responsive">
 		<table class="table">
@@ -37,6 +46,13 @@
 						  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ekle
 						</button>
 					</td>
+				</tr>
+				<tr>
+					<td><input type="text" id="username_search" placeholder="Ara.."></td>
+					<td><input type="text" id="name_search" placeholder="Ara.."></td>
+					<td><input type="text" id="email_search" placeholder="Ara.."></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</thead>
 			<tbody>
@@ -68,6 +84,6 @@
 		</table>
 	</div>
 </div>
-<script src="../js/removeUser.js"></script>
+<script src="../js/search.js"></script>
 
 </body>

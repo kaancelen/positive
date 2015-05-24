@@ -46,7 +46,7 @@
 				$post_flag = 0;
 				$post_message = "Kullanıcı ekleme işlemi başarısız";
 			}else{
-				Session::flash(Session::FLASH, $username." kullanıcı başarı ile eklendi.");
+				Session::flash(Session::FLASH, $username." kullanıcısı başarı ile eklendi.");
 				Util::redirect("/positive/admin/users.php");
 			}
 		}else if($operation == 'edit'){

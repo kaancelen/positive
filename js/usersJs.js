@@ -40,3 +40,10 @@ function remove_user(username, user_id){
         }
     });
 }
+
+function showFlash(message){
+	var success_label = $('#user_table_success');
+	success_label.html(message);
+	success_label.css("visibility", "visible");
+	
+}
