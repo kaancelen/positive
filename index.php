@@ -35,6 +35,8 @@
 					Cookie::put(Cookie::HASH, $hash, Cookie::REMEMBER_EXPIRE);
 					$loginService->remember($user[User::ID], $hash);
 				}
+			}else{
+				$logger->write(ALogger::INFO, __FILE__, "Could not Logged in [".$username."]");
 			}
 			//redirect
 			if($user[User::ROLE] == User::ADMIN){
@@ -47,7 +49,7 @@
 		}
 	?>
 	<div class="container login_form">
-		<form class="form-signin" id="positive_login" action="" method="post">
+		<form class="form-signin" id="positive_login" action="" method="post" autocomplete="off">
 	        <h2 class="form-signin-heading">
 	        	<img src="images/positive.png" class="login_image">&nbsp&nbspGiriş Yapınız
 	        </h2>

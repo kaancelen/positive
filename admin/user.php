@@ -37,6 +37,7 @@
 		$operation = Util::cleanInput($_POST['operation']);
 		
 		if($operation == 'add'){
+			$logger->write(ALogger::INFO, __FILE__, "user add operation to [".$username."] by [".$user[User::CODE]."]");
 			$password = $username;
 			$result = $userService->addUser($name, $email, $username, $password, $role);
 			if($result == null){
@@ -50,6 +51,7 @@
 				Util::redirect("/positive/admin/users.php");
 			}
 		}else if($operation == 'edit'){
+			$logger->write(ALogger::INFO, __FILE__, "user edit to operation to [".$selected_user[User::CODE]."] by [".$user[User::CODE]."]");
 			$result = $userService->updateUser($user_id, $name, $email, $role);
 			if($result == null){
 				$post_flag = 0;
@@ -72,7 +74,7 @@
 </div>
 <div class="container user_form">
 	<div class="well well-lg">
-		<form class="form-signin" id="positive_user" action="" method="post">
+		<form class="form-signin" id="positive_user" action="" method="post" autocomplete="off">
 			<label class="login-error" id="user-error"></label>
 	        <label for="username" class="sr-only">Kullanıcı Adı</label>
 	        <input type="text" id="username" name="username" class="form-control" placeholder="Kullanıcı Adı" autofocus>

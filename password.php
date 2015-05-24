@@ -14,6 +14,8 @@
 			$newPassword = Util::cleanInput($_POST['newPassword']);
 			$newPasswordAgain = Util::cleanInput($_POST['newPasswordAgain']);
 			
+			$logger->write(ALogger::INFO, __FILE__, "password change request [".$user[User::CODE]."]");
+			
 			if($newPassword != $newPasswordAgain){
 				$password_change_flag = false;
 				$password_change_message = "Yeni şifre, tekrarı ile eşleşmiyor.";
@@ -34,9 +36,11 @@
 					if(!$result){
 						$password_change_flag = false;
 						$password_change_message = "Şifre değiştirilirken bir hata oluştu.";
+						$logger->write(ALogger::INFO, __FILE__, "password could not changed [".$user[User::CODE]."]");
 					}else{
 						$password_change_flag = true;
 						$password_change_message = "Şifre başarıyla değiştirildi.";
+						$logger->write(ALogger::INFO, __FILE__, "password changed [".$user[User::CODE]."]");
 					}
 				}
 			}
@@ -45,7 +49,7 @@
 	?>
 	<div class="container profile-well">
 		<div class="well well-lg">
-			<form action="" method="post" id="password_change_form">
+			<form action="" method="post" id="password_change_form" autocomplete="off">
 		        <label class="login-error" id="password_change_error"></label>
 		        <label class="success-label" id="password_change_success"></label>
 		        <label for="password" class="sr-only">Eski şifre</label>

@@ -19,10 +19,8 @@ class UserProcedures extends Procedures{
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
-			$this->_logger->write(ALogger::DEBUG, self::TAG, "Password couldn't change [".$id."]");
 			return false;
 		}else{
-			$this->_logger->write(ALogger::DEBUG, self::TAG, "Password change succesfully [".$id."]");
 			return true;
 		}
 	}
@@ -61,6 +59,7 @@ class UserProcedures extends Procedures{
 		if(is_null($result)){
 			return false;
 		}else{
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "user removed, id=[".$user_id."]");
 			return true;
 		}
 	}
