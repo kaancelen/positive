@@ -48,9 +48,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td><input type="text" id="username_search" placeholder="Ara.."></td>
-					<td><input type="text" id="name_search" placeholder="Ara.."></td>
-					<td><input type="text" id="email_search" placeholder="Ara.."></td>
+					<td><input type="text" id="username_search" placeholder="	Ara.."></td>
+					<td><input type="text" id="name_search" placeholder="	Ara.."></td>
+					<td><input type="text" id="email_search" placeholder="	 Ara.."></td>
 					<td></td>
 					<td></td>
 				</tr>
@@ -69,6 +69,10 @@
 						} 
 					?></td>
 					<td>
+						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
+							onclick="location.href = '/positive/profile.php?user_id=<?php echo urldecode($user[User::ID])?>';">
+						  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+						</button>
 						<button id="edit_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/admin/user.php?operation=<?php echo urldecode('edit');?>&user_id=<?php echo urldecode($user[User::ID]); ?>'">
 						  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

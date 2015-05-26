@@ -33,6 +33,8 @@ class LoginProcedures extends Procedures{
 			$user[User::NAME] = $result->NAME;
 			$user[User::EMAIL] = $result->EMAIL;
 			$user[User::CODE] = $result->CODE;
+			$user[User::PHONE] = $result->PHONE;
+			$user[User::DESCRIPTION] = $result->DESCRIPTION;
 			return $user;
 		}else{
 			//password is wrong
@@ -82,6 +84,8 @@ class LoginProcedures extends Procedures{
 		$user[User::NAME] = $result->NAME;
 		$user[User::EMAIL] = $result->EMAIL;
 		$user[User::CODE] = $result->CODE;
+		$user[User::PHONE] = $result->PHONE;
+		$user[User::DESCRIPTION] = $result->DESCRIPTION;
 		$this->_logger->write(ALogger::DEBUG, self::TAG, "Login with hash succeed [".$user[User::CODE]."]");
 		
 		return $user;

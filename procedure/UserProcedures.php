@@ -42,6 +42,8 @@ class UserProcedures extends Procedures{
 				$user[User::EMAIL] = $object->EMAIL;
 				$user[User::CODE] = $object->CODE;
 				$user[User::ROLE] = $object->ROLE;
+				$user[User::PHONE] = $object->PHONE;
+				$user[User::DESCRIPTION] = $object->DESCRIPTION;
 				array_push($users, $user);
 			}
 			return $users;
@@ -64,11 +66,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function addUser($name, $email, $username, $password, $role){
-		$sql = "INSERT INTO USER(NAME, EMAIL, CODE, ROLE, HASH, SALT) VALUES(?, ?, ?, ?, ?, ?)";
+	public function addUser($name, $email, $username, $password, $role, $phone, $desc){
+		$sql = "INSERT INTO USER(NAME, EMAIL, CODE, ROLE, HASH, SALT, PHONE, DESCRIPTION) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 		$salt = Hash::unique();
 		$hash = Hash::make($password, $salt);
-		$params = array($name, $email, $username, $role, $hash, $salt);
+		$params = array($name, $email, $username, $role, $hash, $salt, $phone, $desc);
 		
 		$this->_db->query($sql, $params);
 		$result = $this->_db->all();
@@ -80,9 +82,9 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function updateUser($user_id, $name, $email, $role){
-		$sql = "UPDATE USER SET NAME = ?, EMAIL = ?, ROLE = ? WHERE ID = ?";
-		$this->_db->query($sql, array($name, $email, $role, $user_id));
+	public function updateUser($user_id, $name, $email, $role, $phone, $desc){
+		$sql = "UPDATE USER SET NAME = ?, EMAIL = ?, ROLE = ?, PHONE = ?, DESCRIPTION = ? WHERE ID = ?";
+		$this->_db->query($sql, array($name, $email, $role, $phone, $desc, $user_id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -121,6 +123,8 @@ class UserProcedures extends Procedures{
 			$user[User::NAME] = $result->NAME;
 			$user[User::EMAIL] = $result->EMAIL;
 			$user[User::ROLE] = $result->ROLE;
+			$user[User::PHONE] = $result->PHONE;
+			$user[User::DESCRIPTION] = $result->DESCRIPTION;
 			
 			return $user;
 		}

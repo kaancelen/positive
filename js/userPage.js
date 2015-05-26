@@ -46,6 +46,8 @@ function fillUserForm(selected_user){
 	$('#username').val(selected_user['CODE']);
 	$('#name').val(selected_user['NAME']);
 	$('#email').val(selected_user['EMAIL']);
+	$('#phone').val(selected_user['PHONE']);
+	$('#description').val(selected_user['DESCRIPTION']);
 	$('#select_role').val(selected_user['ROLE']);
 }
 
@@ -54,6 +56,8 @@ function validateUserForm(){
 	var name = $('#name').val();
 	var email = $('#email').val();
 	var role = $('#select_role').val();
+	var phone = $('#phone').val();
+	var desc = $('#description').val();
 	
 	var message = "";
 	
@@ -79,6 +83,14 @@ function validateUserForm(){
 	
 	if(role == 0){
 		message += "Lütfen bir rol seçiniz.<br>";
+	}
+	
+	if(phone != null && phone.length > 15){
+		message += "Telefon numarası en çok 15 karakter olabilir.<br>";
+	}
+	
+	if(desc != null && desc.length > 2048){
+		message += "Ek bilgi en çok 2048 karakter olabilir.<br>";
 	}
 	
 	$('#user-error').html(message);

@@ -8,6 +8,8 @@ class User{
 	const HASH = "HASH";
 	const SALT = "SALT";
 	const ROLE = "ROLE";
+	const PHONE = "PHONE";
+	const DESCRIPTION = "DESCRIPTION";
 	
 	const USER_NOT_FOUND = -1;
 	const WRONG_PASS = 0;
