@@ -28,7 +28,7 @@
       		<li><a href="#">Personel</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
-      		<li><a href="#">Branch</a></li>
+      		<li><a href="/positive/branch/offer.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Teklif İste</a></li>
       	<?php }?>
       </ul>
       <ul class="nav navbar-nav navbar-right">

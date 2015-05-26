@@ -8,6 +8,7 @@ include_once (__DIR__.'/Hash.php');
 include_once (__DIR__.'/../classes/user.php');
 include_once (__DIR__.'/../service/LoginService.php');
 include_once (__DIR__.'/../service/UserService.php');
+include_once (__DIR__.'/../service/CompanyService.php');
 include_once (__DIR__.'/../Logger/ALogger.php');
 
 $loggedIn = false;
