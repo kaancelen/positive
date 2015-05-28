@@ -36,9 +36,8 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<td><b>Kullanıcı Adı</b></td>
-					<td><b>İsim</b></td>
-					<td><b>E-Posta</b></td>
+					<td><b>Kodu</b></td>
+					<td><b>Adı</b></td>
 					<td><b>Rol</b></td>
 					<td>
 						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
@@ -50,7 +49,6 @@
 				<tr>
 					<td><input type="text" id="username_search" placeholder="	Ara.."></td>
 					<td><input type="text" id="name_search" placeholder="	Ara.."></td>
-					<td><input type="text" id="email_search" placeholder="	 Ara.."></td>
 					<td></td>
 					<td></td>
 				</tr>
@@ -60,12 +58,12 @@
 				<tr id="user_<?php echo $user[User::ID]; ?>">
 					<td><?php echo $user[User::CODE]; ?></td>
 					<td><?php echo $user[User::NAME]; ?></td>
-					<td><?php echo $user[User::EMAIL]; ?></td>
 					<td><?php 
 						switch ($user[User::ROLE]) {
 							case 1: echo "Admin"; break;
-							case 2: echo "Personel"; break;
+							case 2: echo "Teknik"; break;
 							case 3: echo "Acente"; break;
+							case 4: echo "Finans"; break;
 						} 
 					?></td>
 					<td>

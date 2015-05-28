@@ -22,8 +22,9 @@
 		$role_name = "TANIMSIZ";
 		switch ($user[User::ROLE]) {
 			case 1: $role_name="Admin"; break;
-			case 2: $role_name="Personel"; break;
+			case 2: $role_name="Teknik"; break;
 			case 3: $role_name="Acente"; break;
+			case 4: $role_name="Finans"; break;
 		}
 	?>
 	
@@ -32,9 +33,8 @@
 			<p>Kullanıcı Adı : <?php echo $user[User::CODE]; ?></p>
 			<p>Hesap Türü : <?php echo $role_name; ?></p>
 			<p>İsim : <?php echo $user[User::NAME]; ?></p>
-			<p>E-Posta : <?php echo $user[User::EMAIL]; ?></p>
-			<p>Telefon : <?php echo $user[User::PHONE]; ?></p>
 			<p>Ek Bilgi : <?php echo $user[User::DESCRIPTION]; ?></p>
+			<p>Oluşturulma tarihi : <?php echo $user[User::CREATION_DATE]; ?></p>
 			<br><br>
 			<?php if(is_null($user_id)){ ?>
 				<button class="btn btn-default" type="button" onclick="location.href = '/positive/password.php'">Şifre Değiştir</button>

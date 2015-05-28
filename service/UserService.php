@@ -23,15 +23,15 @@ class UserService implements Service{
 		return $this->_userProcedures->removeUser($user_id);
 	}
 	
-	public function addUser($name, $email, $username, $password, $role, $phone, $desc){
+	public function addUser($name, $username, $password, $role, $desc){
 		if($this->_userProcedures->exist($username)){
 			return null;
 		}
-		return $this->_userProcedures->addUser($name, $email, $username, $password, $role, $phone, $desc);
+		return $this->_userProcedures->addUser($name, $username, $password, $role, $desc);
 	}
 	
-	public function updateUser($user_id, $name, $email, $role, $phone, $desc){
-		return $this->_userProcedures->updateUser($user_id, $name, $email, $role, $phone, $desc);
+	public function updateUser($user_id, $name, $role, $desc){
+		return $this->_userProcedures->updateUser($user_id, $name, $role, $desc);
 	}
 	
 	public function getUser($user_id){

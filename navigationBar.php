@@ -25,10 +25,13 @@
       		<li><a href="/positive/admin/users.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Kullanıcılar</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
-      		<li><a href="#">Personel</a></li>
+      		<li><a href="#">Teknik</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
       		<li><a href="/positive/branch/offer.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Teklif İste</a></li>
+      	<?php }?>
+      	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
+      		<li><a href="#">Finans</a></li>
       	<?php }?>
       </ul>
       <ul class="nav navbar-nav navbar-right">

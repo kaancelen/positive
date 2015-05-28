@@ -31,10 +31,10 @@ class LoginProcedures extends Procedures{
 			$user[User::ID] = $result->ID;
 			$user[User::ROLE] = $result->ROLE;
 			$user[User::NAME] = $result->NAME;
-			$user[User::EMAIL] = $result->EMAIL;
 			$user[User::CODE] = $result->CODE;
-			$user[User::PHONE] = $result->PHONE;
 			$user[User::DESCRIPTION] = $result->DESCRIPTION;
+			$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
+			$user[User::CREATION_DATE] = $result->CREATION_DATE;
 			return $user;
 		}else{
 			//password is wrong
@@ -82,10 +82,10 @@ class LoginProcedures extends Procedures{
 		$user[User::ID] = $result->ID;
 		$user[User::ROLE] = $result->ROLE;
 		$user[User::NAME] = $result->NAME;
-		$user[User::EMAIL] = $result->EMAIL;
 		$user[User::CODE] = $result->CODE;
-		$user[User::PHONE] = $result->PHONE;
 		$user[User::DESCRIPTION] = $result->DESCRIPTION;
+		$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
+		$user[User::CREATION_DATE] = $result->CREATION_DATE;
 		$this->_logger->write(ALogger::DEBUG, self::TAG, "Login with hash succeed [".$user[User::CODE]."]");
 		
 		return $user;

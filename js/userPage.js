@@ -45,8 +45,6 @@ function fillUserForm(selected_user){
 	$('#user_id').val(selected_user['ID']);
 	$('#username').val(selected_user['CODE']);
 	$('#name').val(selected_user['NAME']);
-	$('#email').val(selected_user['EMAIL']);
-	$('#phone').val(selected_user['PHONE']);
 	$('#description').val(selected_user['DESCRIPTION']);
 	$('#select_role').val(selected_user['ROLE']);
 }
@@ -54,9 +52,7 @@ function fillUserForm(selected_user){
 function validateUserForm(){
 	var username = $('#username').val();
 	var name = $('#name').val();
-	var email = $('#email').val();
 	var role = $('#select_role').val();
-	var phone = $('#phone').val();
 	var desc = $('#description').val();
 	
 	var message = "";
@@ -73,20 +69,8 @@ function validateUserForm(){
 		message += "İsim en az 5, en çok 127 karakter olabilir.<br>";
 	}
 	
-	if(email == null || email.length == 0){
-		message += "Lütfen e-postayı boş bırakmayınız.<br>";
-	}else if(email.length < 5 || email.length > 255){
-		message += "E-posta en az 5, en çok 255 karakter olabilir.<br>";
-	}else if(!validateEmail(email)){
-		message += "Lütfen formata uygun bir e-posta adresi giriniz.<br>";
-	}
-	
 	if(role == 0){
 		message += "Lütfen bir rol seçiniz.<br>";
-	}
-	
-	if(phone != null && phone.length > 15){
-		message += "Telefon numarası en çok 15 karakter olabilir.<br>";
 	}
 	
 	if(desc != null && desc.length > 2048){

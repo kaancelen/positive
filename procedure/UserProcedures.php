@@ -39,11 +39,11 @@ class UserProcedures extends Procedures{
 				$user = array();
 				$user[User::ID] = $object->ID;
 				$user[User::NAME] = $object->NAME;
-				$user[User::EMAIL] = $object->EMAIL;
 				$user[User::CODE] = $object->CODE;
 				$user[User::ROLE] = $object->ROLE;
-				$user[User::PHONE] = $object->PHONE;
 				$user[User::DESCRIPTION] = $object->DESCRIPTION;
+				$user[User::FIRST_LOGIN] = $object->FIRST_LOGIN;
+				$user[User::CREATION_DATE] = $object->CREATION_DATE;
 				array_push($users, $user);
 			}
 			return $users;
@@ -66,11 +66,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function addUser($name, $email, $username, $password, $role, $phone, $desc){
-		$sql = "INSERT INTO USER(NAME, EMAIL, CODE, ROLE, HASH, SALT, PHONE, DESCRIPTION) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+	public function addUser($name, $username, $password, $role, $desc){
+		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION) VALUES(?, ?, ?, ?, ?, ?)";
 		$salt = Hash::unique();
 		$hash = Hash::make($password, $salt);
-		$params = array($name, $email, $username, $role, $hash, $salt, $phone, $desc);
+		$params = array($name, $username, $role, $hash, $salt, $desc);
 		
 		$this->_db->query($sql, $params);
 		$result = $this->_db->all();
@@ -82,9 +82,9 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function updateUser($user_id, $name, $email, $role, $phone, $desc){
-		$sql = "UPDATE USER SET NAME = ?, EMAIL = ?, ROLE = ?, PHONE = ?, DESCRIPTION = ? WHERE ID = ?";
-		$this->_db->query($sql, array($name, $email, $role, $phone, $desc, $user_id));
+	public function updateUser($user_id, $name, $role, $desc){
+		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ? WHERE ID = ?";
+		$this->_db->query($sql, array($name, $role, $desc, $user_id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -121,11 +121,10 @@ class UserProcedures extends Procedures{
 			$user[User::ID] = $user_id;
 			$user[User::CODE] = $result->CODE;
 			$user[User::NAME] = $result->NAME;
-			$user[User::EMAIL] = $result->EMAIL;
 			$user[User::ROLE] = $result->ROLE;
-			$user[User::PHONE] = $result->PHONE;
 			$user[User::DESCRIPTION] = $result->DESCRIPTION;
-			
+			$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
+			$user[User::CREATION_DATE] = $result->CREATION_DATE;
 			return $user;
 		}
 	}

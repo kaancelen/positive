@@ -32,16 +32,14 @@
 	if(!empty($_POST)){
 		$username = Util::cleanInput($_POST['username']);
 		$name = Util::cleanInput($_POST['name']);
-		$email = Util::cleanInput($_POST['email']);
 		$role = Util::cleanInput($_POST['select_role']);
-		$phone = Util::cleanInput($_POST['phone']);
 		$desc = Util::cleanInput($_POST['description']);
 		$operation = Util::cleanInput($_POST['operation']);
 		
 		if($operation == 'add'){
 			$logger->write(ALogger::INFO, __FILE__, "user add operation to [".$username."] by [".$user[User::CODE]."]");
 			$password = $username;
-			$result = $userService->addUser($name, $email, $username, $password, $role, $phone, $desc);
+			$result = $userService->addUser($name, $username, $password, $role, $desc);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı ekleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -54,7 +52,7 @@
 			}
 		}else if($operation == 'edit'){
 			$logger->write(ALogger::INFO, __FILE__, "user edit to operation to [".$selected_user[User::CODE]."] by [".$user[User::CODE]."]");
-			$result = $userService->updateUser($user_id, $name, $email, $role, $phone, $desc);
+			$result = $userService->updateUser($user_id, $name, $role, $desc);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı düzenleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -78,26 +76,18 @@
 	<div class="well well-lg">
 		<form class="form-signin" id="positive_user" action="" method="post" autocomplete="off">
 			<label class="login-error" id="user-error"></label>
-	        <label for="username" class="sr-only">Kullanıcı Adı</label>
-	        <input type="text" id="username" name="username" class="form-control" placeholder="Kullanıcı Adı" autofocus>
+	        <input type="text" id="username" name="username" class="form-control" placeholder="Kodu" autofocus>
 	        <br>
-	        <label for="name" class="sr-only">İsim</label>
-	        <input type="text" id="name" name="name" class="form-control" placeholder="İsim" autofocus>
-	        <br>
-	        <label for="email" class="sr-only">E-Posta</label>
-	        <input type="text" id="email" name="email" class="form-control" placeholder="E-Posta" autofocus>
-	        <br>
-	        <label for="phone" class="sr-only">Telefon</label>
-	        <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon" autofocus>
+	        <input type="text" id="name" name="name" class="form-control" placeholder="Adı" autofocus>
 	        <br>
 	        <select id="select_role" name="select_role" class="form-control">
 				<option value="0">Rol Seçiniz</option>
 				<option value="1">Admin</option>
-				<option value="2">Personel</option>
+				<option value="2">Teknik</option>
 				<option value="3">Acente</option>
+				<option value="4">Finans</option>
 			</select>
 			<br>
-			<label for="description" class="sr-only">Telefon</label>
 			<textarea rows="4" id="description" name="description" class="form-control" placeholder="Ek Bilgi" autofocus></textarea>
 	        <br>
 	        <input type="hidden" id="user_id" name="user_id">
@@ -137,8 +127,6 @@
 	if(!empty($_POST)){
 		echo "$('#username').val('".$username."');";
 		echo "$('#name').val('".$name."');";
-		echo "$('#email').val('".$email."');";
-		echo "$('#phone').val('".$phone."');";
 		echo "$('#description').val('".$desc."');";
 		echo "$('#select_role').val(".$role.");";
 	}

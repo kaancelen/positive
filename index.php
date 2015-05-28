@@ -14,6 +14,8 @@
 				Util::redirect("/positive/personel");
 			}else if($user[User::ROLE] == User::BRANCH){
 				Util::redirect("/positive/branch");
+			}else if($user[User::ROLE] == User::FINANCE){
+				Util::redirect("/positive/finans");
 			}
 		}
 		
@@ -45,6 +47,8 @@
 				Util::redirect("/positive/personel");
 			}else if($user[User::ROLE] == User::BRANCH){
 				Util::redirect("/positive/branch");
+			}else if($user[User::ROLE] == User::FINANCE){
+				Util::redirect("/positive/finans");
 			}
 		}
 	?>
