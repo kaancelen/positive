@@ -76,19 +76,31 @@
 	<div class="well well-lg">
 		<form class="form-signin" id="positive_user" action="" method="post" autocomplete="off">
 			<label class="login-error" id="user-error"></label>
-	        <input type="text" id="username" name="username" class="form-control" placeholder="Kodu" autofocus>
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Kod</span>
+				<input type="text" class="form-control" aria-describedby="basic-addon1" id="username" name="username">
+			</div>
 	        <br>
-	        <input type="text" id="name" name="name" class="form-control" placeholder="Adı" autofocus>
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Adı</span>
+				<input type="text" class="form-control" aria-describedby="basic-addon1" id="name" name="name">
+			</div>
 	        <br>
-	        <select id="select_role" name="select_role" class="form-control">
-				<option value="0">Rol Seçiniz</option>
-				<option value="1">Admin</option>
-				<option value="2">Teknik</option>
-				<option value="3">Acente</option>
-				<option value="4">Finans</option>
-			</select>
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Adı</span>
+				<select id="select_role" name="select_role" class="form-control">
+					<option value="0">Rol Seçiniz</option>
+					<option value="1">Admin</option>
+					<option value="2">Teknik</option>
+					<option value="3">Acente</option>
+					<option value="4">Finans</option>
+				</select>
+			</div>
 			<br>
-			<textarea rows="4" id="description" name="description" class="form-control" placeholder="Ek Bilgi" autofocus></textarea>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Adres</span>
+				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description"></textarea>
+			</div>
 	        <br>
 	        <input type="hidden" id="user_id" name="user_id">
 	        <input type="hidden" id="operation" name="operation">

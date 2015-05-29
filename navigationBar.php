@@ -1,8 +1,9 @@
 <?php 
 	if(!$loggedIn){
 		Util::redirect("/positive");
+	}else{ 
+		$nav_user = Session::get(Session::USER);
 	}
-	$nav_user = Session::get(Session::USER);
 ?>
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -36,7 +37,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
-      	  <li><a href="/positive"><?php echo "Sayın ".$nav_user[User::NAME]; ?></a></li>
+      	  <li><a href="/positive"><?php echo $nav_user[User::NAME]; ?></a></li>
         </ul>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $nav_user[User::CODE];?><span class="caret"></span></a>

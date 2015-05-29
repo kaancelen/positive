@@ -58,10 +58,15 @@
 	        	<img src="images/positive.png" class="login_image">&nbsp&nbspGiriş Yapınız
 	        </h2>
 	        <label for="username" class="login-error" id="login-error"></label>
-	        <label for="username" class="sr-only">Kullanıcı Adı</label>
-	        <input type="text" id="username" name="username" class="form-control" placeholder="Kullanıcı Adı" autofocus>
-	        <label for="password" class="sr-only">Şifre</label>
-	        <input type="password" id="password" name="password" class="form-control" placeholder="Şifre">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Kod</span>
+				<input type="text" class="form-control" aria-describedby="basic-addon1" id="username" name="username">
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Şifre</span>
+				<input type="password" class="form-control" aria-describedby="basic-addon1" id="password" name="password">
+			</div>
 	        <div class="checkbox">
 	          <label>
 	            <input type="checkbox" id="remember" name="remember" value="remember-me"> Beni Hatırla

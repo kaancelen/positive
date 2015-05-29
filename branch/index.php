@@ -14,6 +14,10 @@
 		}
 	}
 	include_once (__DIR__.'/../navigationBar.php');
+	
+	if($user[User::ROLE] == User::BRANCH && $user[User::FIRST_LOGIN] == User::FIRST_LOGIN_FLAG){
+		Util::redirect("/positive/profile.php");
+	}
 ?>
 
 </body>
