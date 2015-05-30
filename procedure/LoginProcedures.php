@@ -93,12 +93,16 @@ class LoginProcedures extends Procedures{
 	
 	public function removeHash($hash){
 		$sql = "DELETE FROM USER_SESSION WHERE HASH = ?";
+		
+		$this->_db->beginTransaction();
 		$this->_db->query($sql, array($hash));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
+			$this->_db->rollback();
 			return false;
 		}else{
+			$this->_db->commit();
 			return true;
 		}
 	}

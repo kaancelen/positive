@@ -1,5 +1,5 @@
 <head>
-	<?php include_once (__DIR__.'/headIndex.php'); ?>
+	<?php include_once (__DIR__.'/head.php'); ?>
 </head>
 <body>
 	<?php
@@ -75,7 +75,7 @@
 	        <button class="btn btn-lg btn-primary btn-block" type="button" id="login_button">Giriş</button>
       </form>
 	</div>
-	<script src="js/login.js"></script>
+	<script src="/positive/js/login.js"></script>
 	
 	<?php 
 		if(!empty($_POST)){

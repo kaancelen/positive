@@ -22,7 +22,7 @@
 	<div class="alert alert-danger" role="alert" id="user_table_error" style="visibility: hidden;"></div>
 	<div class="alert alert-success" role="alert" id="user_table_success" style="visibility: hidden;"></div>
 </div>
-<script src="../js/usersJs.js"></script>
+<script src="/positive/js/usersJs.js"></script>
 <script type="text/javascript">
 <?php 
 	if(Session::exists(Session::FLASH)){
@@ -39,6 +39,7 @@
 					<td><b>Kodu</b></td>
 					<td><b>Adı</b></td>
 					<td><b>Rol</b></td>
+					<td><b>Alarm</b></td>
 					<td>
 						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/admin/user.php?operation=<?php echo urldecode('add');?>'">
@@ -67,6 +68,13 @@
 						} 
 					?></td>
 					<td>
+						<?php
+							if($user[User::ROLE] == User::BRANCH && $user[User::FIRST_LOGIN] == User::FIRST_LOGIN_FLAG){
+								?><img src="/positive/images/red-alert.png" alt="Kullanıcının bilgileri eksik"><?php
+							}	
+						?>
+					</td>
+					<td>
 						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/profile.php?user_id=<?php echo urldecode($user[User::ID])?>';">
 						  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -86,6 +94,6 @@
 		</table>
 	</div>
 </div>
-<script src="../js/search.js"></script>
+<script src="/positive/js/search.js"></script>
 
 </body>

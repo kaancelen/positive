@@ -38,6 +38,21 @@ class DB{
 	// Magic method clone is empty to prevent duplication of connection
 	private function __clone() { }
 	
+	//Open transaction
+	public function beginTransaction(){
+		$this->_pdo->beginTransaction();
+	}
+	
+	//Commit it
+	public function commit(){
+		$this->_pdo->commit();
+	}
+	
+	//Rollback all
+	public function rollback(){
+		$this->_pdo->rollBack();
+	}
+	
 	#execute given query
 	#query("SELECT * FROM users WHERE username = ? AND groups = ?", array('kaan', 2))
 	public function query($sql, $params = array()){

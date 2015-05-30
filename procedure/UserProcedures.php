@@ -15,12 +15,16 @@ class UserProcedures extends Procedures{
 	
 	public function changePassword($id, $salt, $hash){
 		$sql = "UPDATE USER SET HASH = ?, SALT = ? WHERE ID = ?";
+		
+		$this->_db->beginTransaction();
 		$this->_db->query($sql, array($hash, $salt, $id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
+			$this->_db->rollback();
 			return false;
 		}else{
+			$this->_db->commit();
 			return true;
 		}
 	}
@@ -51,6 +55,8 @@ class UserProcedures extends Procedures{
 	}
 	
 	public function removeUser($user_id){
+		$this->_db->beginTransaction();
+		
 		$sql = "DELETE FROM USER_SESSION WHERE ID = ?";
 		$this->_db->query($sql, array($user_id));
 		
@@ -59,8 +65,10 @@ class UserProcedures extends Procedures{
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
+			$this->_db->rollback();
 			return false;
 		}else{
+			$this->_db->commit();
 			$this->_logger->write(ALogger::DEBUG, self::TAG, "user removed, id=[".$user_id."]");
 			return true;
 		}
@@ -72,24 +80,31 @@ class UserProcedures extends Procedures{
 		$hash = Hash::make($password, $salt);
 		$params = array($name, $username, $role, $hash, $salt, $desc);
 		
+		$this->_db->beginTransaction();
 		$this->_db->query($sql, $params);
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
+			$this->_db->rollback();
 			return false;
 		}else{
+			$this->_db->commit();
 			return true;
 		}
 	}
 	
 	public function updateUser($user_id, $name, $role, $desc){
 		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ? WHERE ID = ?";
+		
+		$this->_db->beginTransaction();
 		$this->_db->query($sql, array($name, $role, $desc, $user_id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
+			$this->_db->rollback();
 			return false;
 		}else{
+			$this->_db->commit();
 			return true;
 		}
 	}

@@ -1,25 +1,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php 
 
-include_once (__DIR__.'/Util/Hash.php');
-include_once (__DIR__.'/service/UserService.php');
+include_once (__DIR__.'/db/db.php');
 
-// $salt = Hash::unique();
-// $hash = Hash::make("admin", $salt);
+$db = DB::getInstance();
 
-// echo $salt.'<br>'.$hash.'<br>';
-$userService = new UserService();
-// $result = $userService->changePassword(12, $salt, $hash);
-// echo $result;
+// $db->beginTransaction();
 
-$result = $userService->addUser("Neval Fer", "dasas", "neval", "fer", 2);
-if(is_null($result)){
-	echo "USER EXIST";
-}else if($result){
-	echo "SUCCESS";
-}else{
-	echo "FAILED";
-}
-//TODO control username before insert!!
+// $db->query("INSERT INTO COMPANY(NAME, ACTIVE) VALUES(?, ?)", array("Kaan", 1));
+// $result = $db->all();
+// if(is_null($result)){
+// 	echo "CANNOT INSERT";
+// }else{
+// 	echo "INSERT";
+// }
+// $db->commit();
+// $db->rollback();
 
 ?>

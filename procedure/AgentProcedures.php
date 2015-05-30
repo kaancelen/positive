@@ -55,6 +55,7 @@ class AgentProcedures extends Procedures{
 		$sql = "INSERT INTO AGENT_DETAIL(USER_ID, EXECUTIVE, ADDRESS, PHONE, FAX, GSM, EMAIL, IBAN, BANK, AGENTS) ";
 		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?)";
 		
+		$this->_db->beginTransaction();
 		$this->_db->query($sql, array(
 				$params[Agent::USER_ID],
 				$params[Agent::EXECUTIVE],
@@ -70,11 +71,19 @@ class AgentProcedures extends Procedures{
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
+			$this->_db->rollback();
 			return false;
 		}else{
 			$sql = "UPDATE USER SET FIRST_LOGIN = 0 WHERE ID = ?";
 			$this->_db->query($sql, array($params[Agent::USER_ID]));
-			return true;
+			$result = $this->_db->all();
+			if(is_null($result)){
+				$this->_db->rollback();
+				return false;
+			}else{
+				$this->_db->commit();
+				return true;
+			}
 		}
 	}
 	
@@ -82,6 +91,7 @@ class AgentProcedures extends Procedures{
 		$sql = "UPDATE AGENT_DETAIL SET EXECUTIVE=?, ADDRESS=?, PHONE=?, FAX=?, GSM=?, EMAIL=?, IBAN=?, BANK=?, AGENTS=? ";
 		$sql .= "WHERE USER_ID = ?";
 		
+		$this->_db->beginTransaction();
 		$this->_db->query($sql, array(
 				$params[Agent::EXECUTIVE],
 				$params[Agent::ADDRESS],
@@ -97,11 +107,19 @@ class AgentProcedures extends Procedures{
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
+			$this->_db->rollback();
 			return false;
 		}else{
 			$sql = "UPDATE USER SET FIRST_LOGIN = 0 WHERE ID = ?";
 			$this->_db->query($sql, array($params[Agent::USER_ID]));
-			return true;
+			$result = $this->_db->all();
+			if(is_null($result)){
+				$this->_db->rollback();
+				return false;
+			}else{
+				$this->_db->commit();
+				return true;
+			}
 		}
 	}
 }

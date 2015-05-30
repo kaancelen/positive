@@ -124,7 +124,7 @@
 		 <?php }?>
       </div>
 </div>
-<script src="../js/userPage.js"></script>
+<script src="/positive/js/userPage.js"></script>
 <script type="text/javascript">
 <?php
 	echo '$("#operation").val("'.$operation.'");';

@@ -1,5 +1,5 @@
 <head>
-	<?php include_once (__DIR__.'/headIndex.php'); ?>
+	<?php include_once (__DIR__.'/head.php'); ?>
 </head>
 <body>
 	<?php
@@ -66,11 +66,32 @@
 	
 	<div class="container profile-well">
 		<div class="well well-lg">
-			<p>Kod : <?php echo $user[User::CODE]; ?></p>
-			<p>Hesap Türü : <?php echo $role_name; ?></p>
-			<p>Kullanıcı Adı : <?php echo $user[User::NAME]; ?></p>
-			<p>Ek Bilgi : <?php echo $user[User::DESCRIPTION]; ?></p>
-			<p>Oluşturulma tarihi : <?php echo $user[User::CREATION_DATE]; ?></p>
+			<h2 class="form-signin-heading">Kullanıcı Bilgileri</h2>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Kod</span>
+				<label class="form-control"><?php echo $user[User::CODE]; ?></label>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Hesap türü</span>
+				<label class="form-control"><?php echo $role_name; ?></label>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Kullanıcı adı</span>
+				<label class="form-control"><?php echo $user[User::NAME]; ?></label>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Oluşturulma tarihi</span>
+				<label class="form-control"><?php echo $user[User::CREATION_DATE]; ?></label>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Ek bilgi</span>
+				<textarea rows="4" class="form-control" readonly><?php echo $user[User::DESCRIPTION]; ?></textarea>
+			</div>
+			<br>
 			<?php if($loggedInUser[User::ROLE] == User::BRANCH || ($user[User::ROLE] == User::BRANCH && $loggedInUser[User::ROLE] == User::ADMIN)){ ?>
 				<form class="form-signin" id="agent_detail" action="" method="post" autocomplete="off">
 					<h2 class="form-signin-heading">Acente Bilgileri</h2>
