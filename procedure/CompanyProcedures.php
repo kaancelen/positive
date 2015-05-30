@@ -13,7 +13,7 @@ class CompanyProcedures extends Procedures{
 	}
 	
 	public function getAll(){
-		$sql = "SELECT * FROM COMPANY";
+		$sql = "SELECT * FROM COMPANY ORDER BY ACTIVE DESC, NAME";
 		$this->_db->query($sql);
 		$result = $this->_db->all();
 		

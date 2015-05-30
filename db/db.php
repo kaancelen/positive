@@ -75,6 +75,10 @@ class DB{
 		return $this;
 	}
 	
+	#last insert id
+	public function lastInsertId($name = null){
+		return $this->_pdo->lastInsertId($name);
+	}
 	#first result of last query
 	public function first(){
 		$all = $this->_results;

@@ -31,3 +31,15 @@ body{
 .user_form{
 	width: 40%;
 }
+.offer-screen{
+	width: 95%;
+	margin: auto;
+}
+.companies-column{
+	float: left;
+	width: 30%;
+}
+.offer-column{
+	float: right;
+	width: 70%;
+}

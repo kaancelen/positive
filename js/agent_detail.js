@@ -68,7 +68,7 @@ function validateAgentForm(){
 		$('#email-error').html("E-posta en fazla 128 karakter olabilir.");
 		success_flag = false;
 	}else if(!validateEmail(email)){
-		$('#email-error').html("Lütfen E-posta adresinizi geçerli formatta giriniz.");
+		$('#email-error').html("Lütfen E-posta adresinizi geçerli formatta giriniz.ör['abc@xyz.com']");
 		success_flag = false;
 	}else{
 		$('#email-error').html("");
