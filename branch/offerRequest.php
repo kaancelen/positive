@@ -42,10 +42,9 @@
 		$user_id = $user[User::ID];
 		
 		$offerService = new OfferService();
-		$insertResult = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $companyIds);
-		if($insertResult){
-			Session::flash(Session::FLASH, $username." kullanıcısı başarı ile eklendi.");
-			Util::redirect("/positive/branch");
+		$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $companyIds);
+		if(!is_null($offerRequestId)){
+			Util::redirect("/positive/branch/offer.php?request_id=".$offerRequestId);
 		}else{ ?>
 			<div id="user_form_msg" align="center">
 				<div class="alert alert-danger" role="alert">Teklif oluşturulamadı, bir hata ile karşılaşıldı!</div>
@@ -58,7 +57,7 @@
 <script src="/positive/js/offer.js"></script>
 <form class="form-signin" id="offer-request-form" action="" method="post" autocomplete="off">
 	<div class="container offer-screen">
-			<div class="companies-column well">
+		<div class="companies-column well">
 			<label class="login-error" id="offer-request-company-error"></label>
 		    <div class="input-group">
 		      <span class="input-group-addon">
@@ -81,7 +80,7 @@
 		    <?php }?>
 		</div>
 		<div class="offer-column well">
-			<h2 class="form-signin-heading">Teklif Bilgileri</h2>
+			<h2 class="form-signin-heading">Talep Bilgileri</h2>
 			<label class="login-error" id="offer-request-error"></label>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Plaka No</span>
@@ -90,7 +89,7 @@
 			<br>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_tckn" checked="checked" onchange="radio_tckn()">
+					<input type="radio" id="radio_tckn" checked="checked" onchange="on_radio_tckn_change()">
 					TC Kimlik No
 				</span>
 				<input type="text" class="form-control" aria-describedby="basic-addon1" id="tckn" name="tckn">
@@ -98,7 +97,7 @@
 			<br>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_vergi" onchange="radio_vergi()">
+					<input type="radio" id="radio_vergi" onchange="on_radio_vergi_change()">
 					Vergi No
 				</span>
 				<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="vergiNo" name="vergiNo">
@@ -106,7 +105,7 @@
 			<br>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_belge" checked="checked" onchange="radio_belge()">
+					<input type="radio" id="radio_belge" checked="checked" onchange="on_radio_belge_change()">
 					Belge No
 				</span>
 				<input type="text" class="form-control" aria-describedby="basic-addon1" id="belgeNo" name="belgeNo">
@@ -114,7 +113,7 @@
 			<br>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_asbis" onchange="radio_asbis()">
+					<input type="radio" id="radio_asbis" onchange="on_radio_asbis_change()">
 					ASBİS
 				</span>
 				<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="asbis" name="asbis">

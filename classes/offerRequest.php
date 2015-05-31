@@ -9,6 +9,7 @@ class OfferRequest{
 	const VERGI = "VERGI";
 	const BELGE = "BELGE";
 	const ASBIS = "ASBIS";
+	const COMPANIES = "COMPANIES";
 	
 	const REQUEST_ID = "REQUEST_ID";
 	const COMPANY_ID = "COMPANY_ID";

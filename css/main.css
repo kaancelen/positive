@@ -43,3 +43,41 @@ body{
 	float: right;
 	width: 70%;
 }
+.offer-request-label{
+	width: 70%;
+	margin: auto;
+}
+.offer-request-screen{
+	width: 95%;
+	margin: auto;
+}
+.offers-column{
+	float: left;
+	width: 70%;
+}
+.chat-column{
+	float: right;
+	width: 30%;
+}
+.offer-request-info-table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+.offer-request-info-table td, .offer-request-info-table th {
+    font-size: 1em;
+    border: 1px solid #4fa7ff;
+    padding: 3px 7px 2px 7px;
+}
+.offer-request-info-table th {
+    font-size: 1.1em;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #0080ff;
+    color: #ffffff;
+}
+.offer-request-info-table tr.alt td {
+    color: #000000;
+    background-color: #EAF2D3;
+}

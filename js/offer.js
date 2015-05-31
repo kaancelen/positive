@@ -8,26 +8,26 @@ function onCompanyAllChange(companies){
 	}
 }
 
-function radio_tckn(){
+function on_radio_tckn_change(){
 	$('#radio_vergi').prop('checked', false);
 	$('#tckn').prop('readonly', false);
 	$('#vergiNo').prop('readonly', true);
 	$('#vergiNo').val("");
 }
-function radio_vergi(){
+function on_radio_vergi_change(){
 	$('#radio_tckn').prop('checked', false);
 	$('#vergiNo').prop('readonly', false);
 	$('#tckn').prop('readonly', true);
 	$('#tckn').val("");
 }
 
-function radio_belge(){
+function on_radio_belge_change(){
 	$('#radio_asbis').prop('checked', false);
 	$('#belgeNo').prop('readonly', false);
 	$('#asbis').prop('readonly', true);
 	$('#asbis').val("");
 }
-function radio_asbis(){
+function on_radio_asbis_change(){
 	$('#radio_belge').prop('checked', false);
 	$('#asbis').prop('readonly', false);
 	$('#belgeNo').prop('readonly', true);
