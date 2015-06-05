@@ -73,8 +73,14 @@ class OfferProcedures extends Procedures{
 	}
 	
 	public function getAllRequests($user_id){
-		$sql = "SELECT * FROM OFFER_REQUEST WHERE USER_ID = ? ORDER BY CREATION_DATE DESC";
-		$this->_db->query($sql, array($user_id));
+		$user_id_array = null;
+		$user_id_part = " ";
+		if(!is_null($user_id)){
+			$user_id_part = " WHERE USER_ID = ? ";
+			$user_id_array = array($user_id);
+		}
+		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part."ORDER BY CREATION_DATE DESC";
+		$this->_db->query($sql, $user_id_array);
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -110,6 +116,28 @@ class OfferProcedures extends Procedures{
 			}
 				
 			return $allOffers;
+		}
+	}
+	
+	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon){
+		$this->_db->beginTransaction();
+		
+		$sql = "INSERT INTO OFFER_RESPONSE(USER_ID, PRIM, KOMISYON) VALUES(?,?,?)";
+		$this->_db->query($sql, array($user_id, $prim, $komisyon));
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return null;
+		}else{
+			$offer_id = (int)$this->_db->lastInsertId();
+			$sql = "UPDATE OFFER_REQUEST_COMPANY SET OFFER_ID = ? WHERE REQUEST_ID = ? AND COMPANY_ID = ?";
+			$this->_db->query($sql, array($offer_id, $request_id, $company_id));
+			if($this->_db->error()){
+				$this->_db->rollback();
+				return null;
+			}
+			
+			$this->_db->commit();
+			return $offer_id;
 		}
 	}
 	

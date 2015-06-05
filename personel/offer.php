@@ -9,17 +9,11 @@ include_once(__DIR__.'/../head.php');
 	include_once (__DIR__.'/../Util/init.php');
 	if($loggedIn){
 		$user = Session::get(Session::USER);
-		if($user[User::ROLE] != User::BRANCH){
+		if($user[User::ROLE] != User::PERSONEL){
 			Util::redirect("/positive/error/403.php");
 		}
 	}
 	include_once (__DIR__.'/../navigationBar.php');
-	if($user[User::ROLE] == User::BRANCH && $user[User::FIRST_LOGIN] == User::FIRST_LOGIN_FLAG){
-		Util::redirect("/positive/profile.php");
-	}
-	
-	$agentService = new AgentService();
-	$agent = $agentService->get($user[User::ID]);
 	
 	if(isset($_GET['request_id'])){
 		$offerRequestId = urlencode($_GET['request_id']);
@@ -34,6 +28,7 @@ include_once(__DIR__.'/../head.php');
 		Util::redirect('/positive/error/404.php');
 	}
 ?>
+<script src="/positive/js/personel.js"></script>
 <div class="well offer-request-label">
 	<table class="offer-request-info-table">
 		<thead>
@@ -71,7 +66,7 @@ include_once(__DIR__.'/../head.php');
 						<td><b>Sigorta şirketi</b></td>
 						<td><b>Prim</b></td>
 						<td><b>Komisyon</b></td>
-						<td><b>Poliçeleştir</b></td>
+						<td><b>Teklif ver</b></td>
 					</tr>
 					<tr>
 					</tr>
@@ -81,11 +76,21 @@ include_once(__DIR__.'/../head.php');
 					<tr>
 						<td></td>
 						<td><?php echo $company[Company::NAME]; ?></td>
-						<td></td>
-						<td></td>
+						<td style="width:20%">
+							<div class="input-group input-group-sm">
+							  <span class="input-group-addon">₺</span>
+							  <input type="text" class="form-control input-tl" id="prim_<?php echo $company[Company::ID]; ?>" name="prim_<?php echo $company[Company::ID]; ?>">
+							</div>
+						</td>
+						<td style="width:20%">
+							<div class="input-group input-group-sm">
+							  <span class="input-group-addon">₺</span>
+							  <input type="text" class="form-control input-tl" id="komisyon_<?php echo $company[Company::ID]; ?>" name="komisyon_<?php echo $company[Company::ID]; ?>">
+							</div>
+						</td>
 						<td>
 							<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-								onclick="location.href = '/positive/branch';">
+								onclick="giveOffer(<?php echo $offerRequest[OfferRequest::ID]; ?>,<?php echo $company[Company::ID]; ?>, '<?php echo $company[Company::NAME]; ?>', <?php echo $user[User::ID]; ?>);">
 							  <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
 							</button>
 						</td>
@@ -99,5 +104,12 @@ include_once(__DIR__.'/../head.php');
 		<h4 style="text-align:center">Konuşma</h4>
 		<hr>	
 	</div>
+	<!-- input mask -->
+	<script type="text/javascript">
+		<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){?>
+			$('#prim_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
+			$('#komisyon_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
+		<?php }?>
+	</script>
 </div>
 </body>

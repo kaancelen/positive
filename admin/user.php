@@ -82,12 +82,12 @@
 			</div>
 	        <br>
 	        <div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">Adı</span>
+				<span class="input-group-addon" id="basic-addon1">Kullanıcı Adı</span>
 				<input type="text" class="form-control" aria-describedby="basic-addon1" id="name" name="name">
 			</div>
 	        <br>
 	        <div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">Adı</span>
+				<span class="input-group-addon" id="basic-addon1">Hesap türü</span>
 				<select id="select_role" name="select_role" class="form-control">
 					<option value="0">Rol Seçiniz</option>
 					<option value="1">Admin</option>
@@ -98,7 +98,7 @@
 			</div>
 			<br>
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">Adres</span>
+				<span class="input-group-addon" id="basic-addon1">Ek bilgi</span>
 				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description"></textarea>
 			</div>
 	        <br>

@@ -9,7 +9,7 @@ function remove_user(username, user_id){
 	
 	//make ajax request
     $.ajax({
-        url: '../ajax/remove_user.php',
+        url: '/positive/ajax/remove_user.php',
         type: 'POST',
         data: data,
         cache: false,

@@ -73,13 +73,13 @@
 			</div>
 			<br>
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">Hesap türü</span>
-				<label class="form-control"><?php echo $role_name; ?></label>
+				<span class="input-group-addon" id="basic-addon1">Kullanıcı adı</span>
+				<label class="form-control"><?php echo $user[User::NAME]; ?></label>
 			</div>
 			<br>
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">Kullanıcı adı</span>
-				<label class="form-control"><?php echo $user[User::NAME]; ?></label>
+				<span class="input-group-addon" id="basic-addon1">Hesap türü</span>
+				<label class="form-control"><?php echo $role_name; ?></label>
 			</div>
 			<br>
 			<div class="input-group">

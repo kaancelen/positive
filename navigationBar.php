@@ -26,7 +26,7 @@
       		<li><a href="/positive/admin/users.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Kullanıcılar</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
-      		<li><a href="#">Teknik</a></li>
+      		<li><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
       		<li><a href="/positive/branch/offerRequest.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Yeni Talep</a></li>
