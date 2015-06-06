@@ -1,3 +1,12 @@
+function disableOfferRow(offer){
+	$('#offer_id_'+offer['COMPANY_ID']).html(offer['ID']);
+	$('#prim_'+offer['COMPANY_ID']).val(offer['PRIM']);
+	$('#prim_'+offer['COMPANY_ID']).prop('readonly', true);
+	$('#komisyon_'+offer['COMPANY_ID']).val(offer['KOMISYON']);
+	$('#komisyon_'+offer['COMPANY_ID']).prop('readonly', true);
+	$('#give_offer_'+offer['COMPANY_ID']).remove();
+}
+
 function giveOffer(talepNo, companyId, companyName, user_id){
 	var prim = $('#prim_'+companyId).val();
 	var komisyon = $('#komisyon_'+companyId).val();
@@ -35,7 +44,7 @@ function giveOffer(talepNo, companyId, companyName, user_id){
         processData: false,
         contentType: false,
         success: function(data, textStatus, jqXHR){
-        	console.log(data);
+        	disableOfferRow(data);
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.log('add offer ajax error : ' + textStatus);

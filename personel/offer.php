@@ -27,6 +27,8 @@ include_once(__DIR__.'/../head.php');
 	if(is_null($offerRequest)){
 		Util::redirect('/positive/error/404.php');
 	}
+	
+	$offerResponses = $offerService->getOffers($offerRequestId);
 ?>
 <script src="/positive/js/personel.js"></script>
 <div class="well offer-request-label">
@@ -74,7 +76,7 @@ include_once(__DIR__.'/../head.php');
 				<tbody>
 				<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){ ?>
 					<tr>
-						<td></td>
+						<td id="offer_id_<?php echo $company[Company::ID]; ?>"></td>
 						<td><?php echo $company[Company::NAME]; ?></td>
 						<td style="width:20%">
 							<div class="input-group input-group-sm">
@@ -89,7 +91,7 @@ include_once(__DIR__.'/../head.php');
 							</div>
 						</td>
 						<td>
-							<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
+							<button id="give_offer_<?php echo $company[Company::ID]; ?>" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 								onclick="giveOffer(<?php echo $offerRequest[OfferRequest::ID]; ?>,<?php echo $company[Company::ID]; ?>, '<?php echo $company[Company::NAME]; ?>', <?php echo $user[User::ID]; ?>);">
 							  <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
 							</button>
@@ -109,6 +111,9 @@ include_once(__DIR__.'/../head.php');
 		<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){?>
 			$('#prim_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
 			$('#komisyon_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
+		<?php }?>
+		<?php foreach($offerResponses as $offerResponse){?>
+			disableOfferRow(<?php echo json_encode($offerResponse); ?>);
 		<?php }?>
 	</script>
 </div>

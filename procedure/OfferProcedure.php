@@ -141,6 +141,30 @@ class OfferProcedures extends Procedures{
 		}
 	}
 	
+	public function getOffers($request_id){
+		$sql = "SELECT * FROM OFFER_RESPONSE ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.OFFER_ID AND orc.REQUEST_ID = ?";
+		$this->_db->query($sql, array($request_id));
+		$result = $this->_db->all();
+		
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request[".$request_id."] not found in DB");
+			return null;
+		}else{
+			$allOffers = array();
+			foreach ($result as $offerObject){
+				$offerResponse = array();
+				$offerResponse[OfferResponse::ID] = $offerObject->ID;
+				$offerResponse[OfferResponse::USER_ID] = $offerObject->USER_ID;
+				$offerResponse[OfferResponse::PRIM] = $offerObject->PRIM;
+				$offerResponse[OfferResponse::KOMISYON] = $offerObject->KOMISYON;
+				$offerResponse[OfferResponse::COMPANY_ID] = $offerObject->COMPANY_ID;
+				
+				array_push($allOffers, $offerResponse);
+			}
+			return $allOffers;
+		}
+	}
+	
 }
 
 ?>

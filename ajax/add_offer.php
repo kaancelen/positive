@@ -35,7 +35,14 @@ if(!empty($_POST)){
 	if(is_null($result)){
 		echo json_encode(false);
 	}else{
-		echo json_encode($result);//offer id
+		$offer = array();
+		$offer[OfferResponse::ID] = $result;
+		$offer[OfferResponse::USER_ID] = $user_id;
+		$offer[OfferResponse::PRIM] = $prim;
+		$offer[OfferResponse::KOMISYON] = $komisyon;
+		$offer[OfferResponse::COMPANY_ID] = $company_id;
+		
+		echo json_encode($offer);
 	}
 }
 

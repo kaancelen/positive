@@ -33,7 +33,10 @@ include_once(__DIR__.'/../head.php');
 	if(is_null($offerRequest)){
 		Util::redirect('/positive/error/404.php');
 	}
+	
+	$offerResponses = $offerService->getOffers($offerRequestId);
 ?>
+<script src="/positive/js/branch.js"></script>
 <div class="well offer-request-label">
 	<table class="offer-request-info-table">
 		<thead>
@@ -79,13 +82,23 @@ include_once(__DIR__.'/../head.php');
 				<tbody>
 				<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){ ?>
 					<tr>
-						<td></td>
+						<td id="offer_id_<?php echo $company[Company::ID]; ?>"></td>
 						<td><?php echo $company[Company::NAME]; ?></td>
-						<td></td>
-						<td></td>
+						<td style="width:20%">
+							<div class="input-group input-group-sm">
+							  <span class="input-group-addon">₺</span>
+							  <input type="text" readonly="readonly" class="form-control input-tl" id="prim_<?php echo $company[Company::ID]; ?>">
+							</div>
+						</td>
+						<td style="width:20%">
+							<div class="input-group input-group-sm">
+							  <span class="input-group-addon">₺</span>
+							  <input type="text" readonly="readonly" class="form-control input-tl" id="komisyon_<?php echo $company[Company::ID]; ?>">
+							</div>
+						</td>
 						<td>
-							<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-								onclick="location.href = '/positive/branch';">
+							<button id="make_policy_<?php echo $company[Company::ID]; ?>" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
+								onclick="navigateToPolicyRequest(<?php echo $company[Company::ID]; ?>);" style="display: none">
 							  <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
 							</button>
 						</td>
@@ -99,5 +112,10 @@ include_once(__DIR__.'/../head.php');
 		<h4 style="text-align:center">Konuşma</h4>
 		<hr>	
 	</div>
+	<script type="text/javascript">
+		<?php foreach($offerResponses as $offerResponse){?>
+			writeToOfferRow(<?php echo json_encode($offerResponse); ?>);
+		<?php }?>
+	</script>
 </div>
 </body>
