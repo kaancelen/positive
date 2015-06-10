@@ -32,6 +32,24 @@ class CompanyProcedures extends Procedures{
 			return $companies;
 		}
 	}
+	
+	public function getCompany($company_id){
+		$sql = "SELECT * FROM COMPANY WHERE ID = ?";
+		$this->_db->query($sql, array($company_id));
+		$result = $this->_db->first();
+		
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "no company recorded in DB id = [".$company_id."]");
+			return null;
+		}else{
+			$company = array();
+			$company[Company::ID] = $result->ID;
+			$company[Company::NAME] = $result->NAME;
+			$company[Company::ACTIVE] = $result->ACTIVE;
+			
+			return $company;
+		}
+	}
 }
 
 ?>

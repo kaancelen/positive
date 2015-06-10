@@ -1,5 +1,6 @@
-function writeToOfferRow(offer){
+function writeToOfferRow(offer, username){
 	$('#offer_id_'+offer['COMPANY_ID']).html(offer['ID']);
+	$('#personel_id_'+offer['COMPANY_ID']).html(username);
 	$('#prim_'+offer['COMPANY_ID']).val(offer['PRIM']);
 	$('#komisyon_'+offer['COMPANY_ID']).val(offer['KOMISYON']);
 	$('#make_policy_'+offer['COMPANY_ID']).css("display", "block");

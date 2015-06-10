@@ -14,6 +14,10 @@ class CompanyService implements Service{
 	public function getAll(){
 		return $this->_companyProcedures->getAll();
 	}
+	
+	public function getCompany($company_id){
+		return $this->_companyProcedures->getCompany($company_id);
+	}
 }
 
 ?>

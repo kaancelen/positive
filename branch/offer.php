@@ -35,6 +35,7 @@ include_once(__DIR__.'/../head.php');
 	}
 	
 	$offerResponses = $offerService->getOffers($offerRequestId);
+	$userService = new UserService();
 ?>
 <script src="/positive/js/branch.js"></script>
 <div class="well offer-request-label">
@@ -71,6 +72,7 @@ include_once(__DIR__.'/../head.php');
 				<thead>
 					<tr>
 						<td><b>Teklif No</b></td>
+						<td><b>Teknikçi</b></td>
 						<td><b>Sigorta şirketi</b></td>
 						<td><b>Prim</b></td>
 						<td><b>Komisyon</b></td>
@@ -83,6 +85,7 @@ include_once(__DIR__.'/../head.php');
 				<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){ ?>
 					<tr>
 						<td id="offer_id_<?php echo $company[Company::ID]; ?>"></td>
+						<td id="personel_id_<?php echo $company[Company::ID]; ?>"></td>
 						<td><?php echo $company[Company::NAME]; ?></td>
 						<td style="width:20%">
 							<div class="input-group input-group-sm">
@@ -114,7 +117,8 @@ include_once(__DIR__.'/../head.php');
 	</div>
 	<script type="text/javascript">
 		<?php foreach($offerResponses as $offerResponse){?>
-			writeToOfferRow(<?php echo json_encode($offerResponse); ?>);
+			<?php $personelUser = $userService->getUser($offerResponse[OfferResponse::USER_ID]);?>
+			writeToOfferRow(<?php echo json_encode($offerResponse); ?>, '<?php echo $personelUser[User::NAME];?>');
 		<?php }?>
 	</script>
 </div>

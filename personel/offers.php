@@ -32,6 +32,7 @@
 			<thead>
 				<tr>
 					<td><b>Talep No</b></td>
+					<td><b>Kullanıcı Adı</b></td>
 					<td><b>İstek Tarihi</b></td>
 					<td><b>Plaka</b></td>
 					<td><b>TC Kimlik No</b></td>
@@ -44,9 +45,12 @@
 				</tr>
 			</thead>
 			<tbody>
+			<?php $userService = new UserService(); ?>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
+				<?php $tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);?>
 				<tr>
 					<td><?php echo $offerRequest[OfferRequest::ID]; ?></td>
+					<td><?php echo $tempUser[User::NAME]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::CREATION_DATE]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::TCKN]; ?></td>

@@ -30,6 +30,10 @@ class OfferService implements Service{
 	public function getOffers($request_id){
 		return $this->_offerProcedures->getOffers($request_id);
 	}
+	
+	public function getOffer($offer_id){
+		return $this->_offerProcedures->getOffer($offer_id);
+	}
 }
 
 ?>
