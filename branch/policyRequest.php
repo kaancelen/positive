@@ -82,39 +82,43 @@
 	</table>
 </div>
 <br>
-<div class="container profile-well">
-	<div class="well well-lg">
-		<h2 class="form-signin-heading">Kredi kartı bilgileri</h2>
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon1">Kart üzerindeki isim</span>
-			<input type="text" class="form-control" aria-describedby="basic-addon1" id="name" name="name">
+<script src="/positive/js/policy.js"></script>
+<form class="form-signin" id="offer-request-form" action="" method="post" autocomplete="off">
+	<div class="container profile-well">
+		<div class="well well-lg">
+			<h2 class="form-signin-heading">Kredi kartı bilgileri</h2>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Kart üzerindeki isim</span>
+				<input type="text" class="form-control" aria-describedby="basic-addon1" id="name" name="name">
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Kart numarası</span>
+				<input type="text" class="form-control" aria-describedby="basic-addon1" id="card" name="card">
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Son kullanma tarihi</span>
+				<select class="form-control" id="expireMonth" name="expireMonth">
+					<?php for ($i = 1; $i <= 12; $i++){ ?>
+				    	<option><?php echo $i; ?></option>
+				    <?php } ?>
+				</select>
+				<select class="form-control" id="expireYear" name="expireYear">
+					<?php for ($i = 2015; $i <= 2050; $i++){ ?>
+				    	<option><?php echo $i; ?></option>
+				    <?php } ?>
+				</select>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Cvc kodu</span>
+				<input type="text" class="form-control" aria-describedby="basic-addon1" id="cvc" name="cvc">
+			</div>
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validatePolicyRequest()' id="policy-request-button">Poliçeleştir</button>
 		</div>
-		<br>
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon1">Kart numarası</span>
-			<input type="text" class="form-control" aria-describedby="basic-addon1" id="card" name="card">
-		</div>
-		<br>
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon1">Son kullanma tarihi</span>
-			<select class="form-control" id="expireMonth" name="expireMonth">
-				<?php for ($i = 1; $i <= 12; $i++){ ?>
-			    	<option><?php echo $i; ?></option>
-			    <?php } ?>
-			</select>
-			<select class="form-control" id="expireYear" name="expireYear">
-				<?php for ($i = 2015; $i <= 2050; $i++){ ?>
-			    	<option><?php echo $i; ?></option>
-			    <?php } ?>
-			</select>
-		</div>
-		<br>
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon1">Cvc kodu</span>
-			<input type="text" class="form-control" aria-describedby="basic-addon1" id="cvc" name="cvc">
-		</div>
-		<br>
 	</div>
-</div>
+</form>
 
 </body>

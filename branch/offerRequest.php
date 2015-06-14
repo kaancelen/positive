@@ -39,10 +39,11 @@
 		$vergi = Util::cleanInput($_POST['vergiNo']);
 		$belge = Util::cleanInput($_POST['belgeNo']);
 		$asbis = Util::cleanInput($_POST['asbis']);
+		$description = Util::cleanInput($_POST['description']);
 		$user_id = $user[User::ID];
 		
 		$offerService = new OfferService();
-		$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $companyIds);
+		$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $user_id, $companyIds);
 		if(!is_null($offerRequestId)){
 			Util::redirect("/positive/branch/offer.php?request_id=".$offerRequestId);
 		}else{ ?>
@@ -117,6 +118,13 @@
 					ASBİS
 				</span>
 				<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="asbis" name="asbis">
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">
+					Ek Bilgi
+				</span>
+				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description" placeholder="Müşteri adı soyadı, araba markası, rengi vs."></textarea>
 			</div>
 			<br>
 			<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validateOfferRequest(<?php echo json_encode($companies);?>)' id="offer-request-button">Teklif iste</button>

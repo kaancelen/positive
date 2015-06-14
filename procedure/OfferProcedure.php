@@ -12,11 +12,11 @@ class OfferProcedures extends Procedures{
 		parent::__construct();
 	}
 	
-	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $companies){
+	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $user_id, $companies){
 		$this->_db->beginTransaction();
 		
-		$sql = "INSERT INTO OFFER_REQUEST(PLAKA, TCKN, VERGI, BELGE, ASBIS, USER_ID) VALUES(?,?,?,?,?,?)";
-		$this->_db->query($sql, array($plaka, $tckn, $vergi, $belge, $asbis, $user_id));
+		$sql = "INSERT INTO OFFER_REQUEST(PLAKA, TCKN, VERGI, BELGE, ASBIS, USER_ID, DESCRIPTION) VALUES(?,?,?,?,?,?,?)";
+		$this->_db->query($sql, array($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $description));
 		
 		if($this->_db->error()){
 			$this->_db->rollback();
@@ -66,6 +66,7 @@ class OfferProcedures extends Procedures{
 			$offerRequest[OfferRequest::VERGI] = $result->VERGI;
 			$offerRequest[OfferRequest::BELGE] = $result->BELGE;
 			$offerRequest[OfferRequest::ASBIS] = $result->ASBIS;
+			$offerRequest[OfferRequest::DESCRIPTION] = $result->DESCRIPTION;
 			$offerRequest[OfferRequest::COMPANIES] = $companies;
 			
 			return $offerRequest;
@@ -110,6 +111,7 @@ class OfferProcedures extends Procedures{
 				$offerRequest[OfferRequest::VERGI] = $offerObject->VERGI;
 				$offerRequest[OfferRequest::BELGE] = $offerObject->BELGE;
 				$offerRequest[OfferRequest::ASBIS] = $offerObject->ASBIS;
+				$offerRequest[OfferRequest::DESCRIPTION] = $offerObject->DESCRIPTION;
 				$offerRequest[OfferRequest::COMPANIES] = $companies;
 				
 				array_push($allOffers, $offerRequest);

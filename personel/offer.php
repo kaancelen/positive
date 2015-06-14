@@ -45,6 +45,7 @@ include_once(__DIR__.'/../head.php');
 				<td>Vergi No</td>
 				<td>Belge No</td>
 				<td>ASBİS No</td>
+				<td>Ek Bilgi</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -57,6 +58,7 @@ include_once(__DIR__.'/../head.php');
 				<td><?php echo $offerRequest[OfferRequest::VERGI];?></td>
 				<td><?php echo $offerRequest[OfferRequest::BELGE];?></td>
 				<td><?php echo $offerRequest[OfferRequest::ASBIS];?></td>
+				<td><?php echo $offerRequest[OfferRequest::DESCRIPTION];?></td>
 			</tr>
 		</tbody>
 	</table>

@@ -10,6 +10,7 @@ class OfferRequest{
 	const BELGE = "BELGE";
 	const ASBIS = "ASBIS";
 	const STATUS = "STATUS";
+	const DESCRIPTION = "DESCRIPTION";
 	const COMPANIES = "COMPANIES";
 	
 	const REQUEST_ID = "REQUEST_ID";
