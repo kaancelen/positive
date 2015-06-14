@@ -11,6 +11,9 @@ String.prototype.turkishToLower = function(){
     string = string.replace(/(([İIŞĞÜÇÖ]))+/g, function(letter){ return letters[letter]; })
     return string.toLowerCase();
 }
+String.prototype.trim = function() {
+	return this.replace(/\s/g, ''); 
+}
 function validateEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);

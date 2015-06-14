@@ -16,7 +16,7 @@
 	include_once (__DIR__.'/../navigationBar.php');
 	
 	$offerService = new OfferService();
-	$allOfferRequest = $offerService->getAllRequests();
+	$allOfferRequest = $offerService->getAllRequests(null, 1);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	
 	if(empty($allOfferRequest)){
 		?>

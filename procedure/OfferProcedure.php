@@ -73,14 +73,22 @@ class OfferProcedures extends Procedures{
 		}
 	}
 	
-	public function getAllRequests($user_id){
+	public function getAllRequests($user_id, $all){
 		$user_id_array = null;
 		$user_id_part = " ";
+		$status_part = " ";
 		if(!is_null($user_id)){
 			$user_id_part = " WHERE USER_ID = ? ";
 			$user_id_array = array($user_id);
+			if(!is_null($all)){
+				$status_part = " AND STATUS = 0 ";
+			}
+		}else{
+			if(!is_null($all)){
+				$status_part = " WHERE STATUS = 0 ";
+			}
 		}
-		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part."ORDER BY CREATION_DATE DESC";
+		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."ORDER BY CREATION_DATE DESC";
 		$this->_db->query($sql, $user_id_array);
 		$result = $this->_db->all();
 		
@@ -189,6 +197,35 @@ class OfferProcedures extends Procedures{
 		}
 	}
 	
+	public function addCardInfos($offer_id, $name, $card_no, $expire_date, $cvc){
+		$this->_db->beginTransaction();
+		
+		$sql = "INSERT INTO CREDIT_CARDS(NAME, CARD_NO, EXPIRE_DATE, CVC_CODE) VALUES(?,?,?,?)";
+		$this->_db->query($sql, array($name, $card_no, $expire_date, $cvc));
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return null;
+		}else{
+			$card_id = (int)$this->_db->lastInsertId();
+			$sql = "UPDATE OFFER_REQUEST_COMPANY SET CARD_ID = ? WHERE OFFER_ID = ?";
+			$this->_db->query($sql, array($card_id, $offer_id));
+			if($this->_db->error()){
+				$this->_db->rollback();
+				return null;
+			}else{
+				$sql = "UPDATE OFFER_REQUEST SET STATUS = 1 WHERE ID = ";
+				$sql .= "(SELECT REQUEST_ID FROM OFFER_REQUEST_COMPANY WHERE OFFER_ID = ? LIMIT 1)";
+				$this->_db->query($sql, array($offer_id));
+				if($this->_db->error()){
+					$this->_db->rollback();
+					return null;
+				}
+			}
+				
+			$this->_db->commit();
+			return $card_id;
+		}
+	}
 }
 
 ?>

@@ -34,6 +34,24 @@
 	$offer = $offerService->getOffer($offerId);
 	$request = $offerService->getOfferRequest($offer[OfferResponse::REQUEST_ID]);
 	$company = $companyService->getCompany($offer[OfferResponse::COMPANY_ID]);
+	
+	if(!empty($_POST)){
+		$card_name = Util::cleanInput($_POST['name']);
+		$card_no = Util::cleanInput($_POST['card']);
+		$card_expire_date = Util::cleanInput($_POST['expireMonth']).'/'.Util::cleanInput($_POST['expireYear']);
+		$card_cvc = Util::cleanInput($_POST['cvc']);
+		
+		$card_id = $offerService->addCardInfos($offerId, $card_name, $card_no, $card_expire_date, $card_cvc);
+		if(is_null($card_id)){
+			?>
+			<div id="user_form_msg" align="center">
+				<div class="alert alert-danger" role="alert">Kart bilgisi sisteme eklenemedi!</div>
+			</div>
+			<?php
+		}else{
+			Util::redirect("/positive/branch");
+		}
+	}
 ?>
 
 <div class="well offer-request-label">
@@ -47,6 +65,7 @@
 				<td>Vergi No</td>
 				<td>Belge No</td>
 				<td>ASBİS No</td>
+				<td>Ek Bilgi</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,6 +77,7 @@
 				<td><?php echo $request[OfferRequest::VERGI];?></td>
 				<td><?php echo $request[OfferRequest::BELGE];?></td>
 				<td><?php echo $request[OfferRequest::ASBIS];?></td>
+				<td><?php echo $request[OfferRequest::DESCRIPTION];?></td>
 			</tr>
 		</tbody>
 	</table>
@@ -83,15 +103,17 @@
 </div>
 <br>
 <script src="/positive/js/policy.js"></script>
-<form class="form-signin" id="offer-request-form" action="" method="post" autocomplete="off">
+<form class="form-signin" id="policy-request-form" action="" method="post" autocomplete="off">
 	<div class="container profile-well">
 		<div class="well well-lg">
 			<h2 class="form-signin-heading">Kredi kartı bilgileri</h2>
+			<label class="login-error" id="card-name-error"></label>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Kart üzerindeki isim</span>
 				<input type="text" class="form-control" aria-describedby="basic-addon1" id="name" name="name">
 			</div>
 			<br>
+			<label class="login-error" id="card-no-error"></label>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Kart numarası</span>
 				<input type="text" class="form-control" aria-describedby="basic-addon1" id="card" name="card">
@@ -111,6 +133,7 @@
 				</select>
 			</div>
 			<br>
+			<label class="login-error" id="cvc-error"></label>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Cvc kodu</span>
 				<input type="text" class="form-control" aria-describedby="basic-addon1" id="cvc" name="cvc">

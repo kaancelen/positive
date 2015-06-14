@@ -19,8 +19,8 @@ class OfferService implements Service{
 		return $this->_offerProcedures->getOfferRequest($request_id);
 	}
 	
-	public function getAllRequests($user_id = null){
-		return $this->_offerProcedures->getAllRequests($user_id);
+	public function getAllRequests($user_id = null, $all = null){
+		return $this->_offerProcedures->getAllRequests($user_id, $all);
 	}
 	
 	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon){
@@ -33,6 +33,10 @@ class OfferService implements Service{
 	
 	public function getOffer($offer_id){
 		return $this->_offerProcedures->getOffer($offer_id);
+	}
+	
+	public function addCardInfos($offer_id, $name, $card_no, $expire_date, $cvc){
+		return $this->_offerProcedures->addCardInfos($offer_id, $name, $card_no, $expire_date, $cvc);
 	}
 }
 

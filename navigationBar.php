@@ -27,10 +27,12 @@
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
       		<li><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
+      		<li><a href="/positive/personel/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istekleri</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
       		<li><a href="/positive/branch/offerRequest.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Yeni Talep</a></li>
-      		<li><a href="/positive/branch/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Tüm taleplerim</a></li>
+      		<li><a href="/positive/branch/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Taleplerim</a></li>
+      		<li><a href="/positive/branch/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe isteklerim</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
       		<li><a href="#">Finans</a></li>
