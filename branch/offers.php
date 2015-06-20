@@ -58,7 +58,7 @@
 					<td><?php echo $offerRequest[OfferRequest::BELGE]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::ASBIS]; ?></td>
 					<td>
-						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
+						<button id="make_policies_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/branch/offer.php?request_id=<?php echo urldecode($offerRequest[OfferRequest::ID]);?>';">
 						  <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
 						</button>
@@ -69,5 +69,7 @@
 		</table>
 	</div>
 </div>
-
+<script type="text/javascript">
+	$('#branch_2').addClass("active");
+</script>
 </body>

@@ -11,6 +11,7 @@ include_once (__DIR__.'/../classes/offerRequest.php');
 include_once (__DIR__.'/../classes/offerResponse.php');
 include_once (__DIR__.'/../classes/company.php');
 include_once (__DIR__.'/../classes/creditCard.php');
+include_once (__DIR__.'/../classes/policyRequest.php');
 include_once (__DIR__.'/../service/LoginService.php');
 include_once (__DIR__.'/../service/UserService.php');
 include_once (__DIR__.'/../service/CompanyService.php');

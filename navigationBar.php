@@ -21,21 +21,21 @@
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav nav-pills">
       	<?php if($nav_user[User::ROLE] == User::ADMIN){?>
-      		<li><a href="/positive/admin/users.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Kullanıcılar</a></li>
+      		<li id="admin_1"><a href="/positive/admin/users.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Kullanıcılar</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
-      		<li><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
-      		<li><a href="/positive/personel/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istekleri</a></li>
+      		<li id="personel_1"><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
+      		<li id="personel_2"><a href="/positive/personel/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istekleri</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
-      		<li><a href="/positive/branch/offerRequest.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Yeni Talep</a></li>
-      		<li><a href="/positive/branch/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Taleplerim</a></li>
-      		<li><a href="/positive/branch/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe isteklerim</a></li>
+      		<li id="branch_1"><a href="/positive/branch/offerRequest.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Yeni Talep</a></li>
+      		<li id="branch_2"><a href="/positive/branch/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Taleplerim</a></li>
+      		<li id="branch_3"><a href="/positive/branch/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe isteklerim</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
-      		<li><a href="#">Finans</a></li>
+      		<li id="finance_1"><a href="#">Finans</a></li>
       	<?php }?>
       </ul>
       <ul class="nav navbar-nav navbar-right">

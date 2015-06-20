@@ -95,5 +95,7 @@
 	</div>
 </div>
 <script src="/positive/js/search.js"></script>
-
+<script type="text/javascript">
+	$('#admin_1').addClass("active");
+</script>
 </body>

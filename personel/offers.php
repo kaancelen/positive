@@ -69,5 +69,7 @@
 		</table>
 	</div>
 </div>
-
+<script type="text/javascript">
+	$('#personel_1').addClass("active");
+</script>
 </body>

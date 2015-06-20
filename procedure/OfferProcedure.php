@@ -3,6 +3,7 @@ include_once (__DIR__.'/../db/db.php');
 include_once (__DIR__.'/../Logger/ALogger.php');
 include_once (__DIR__.'/Procedures.php');
 include_once (__DIR__.'/../classes/offerRequest.php');
+include_once (__DIR__.'/../classes/policyRequest.php');
 
 class OfferProcedures extends Procedures{
 
@@ -11,7 +12,17 @@ class OfferProcedures extends Procedures{
 	public function __construct(){
 		parent::__construct();
 	}
-	
+	/**
+	 * @param unknown $plaka
+	 * @param unknown $tckn
+	 * @param unknown $vergi
+	 * @param unknown $belge
+	 * @param unknown $asbis
+	 * @param unknown $description
+	 * @param unknown $user_id
+	 * @param unknown $companies
+	 * @return NULL|number
+	 */
 	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $user_id, $companies){
 		$this->_db->beginTransaction();
 		
@@ -35,7 +46,10 @@ class OfferProcedures extends Procedures{
 			return $request_id;
 		}
 	}
-	
+	/**
+	 * @param unknown $request_id
+	 * @return NULL|multitype:unknown multitype: NULL
+	 */
 	public function getOfferRequest($request_id){
 		$sql = "SELECT * FROM OFFER_REQUEST WHERE ID = ?";
 		$this->_db->query($sql, array($request_id));
@@ -72,7 +86,11 @@ class OfferProcedures extends Procedures{
 			return $offerRequest;
 		}
 	}
-	
+	/**
+	 * @param unknown $user_id
+	 * @param unknown $all
+	 * @return NULL|multitype:
+	 */
 	public function getAllRequests($user_id, $all){
 		$user_id_array = null;
 		$user_id_part = " ";
@@ -128,7 +146,14 @@ class OfferProcedures extends Procedures{
 			return $allOffers;
 		}
 	}
-	
+	/**
+	 * @param unknown $user_id
+	 * @param unknown $request_id
+	 * @param unknown $company_id
+	 * @param unknown $prim
+	 * @param unknown $komisyon
+	 * @return NULL|number
+	 */
 	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon){
 		$this->_db->beginTransaction();
 		
@@ -150,7 +175,10 @@ class OfferProcedures extends Procedures{
 			return $offer_id;
 		}
 	}
-	
+	/**
+	 * @param unknown $request_id
+	 * @return NULL|multitype:
+	 */
 	public function getOffers($request_id){
 		$sql = "SELECT * FROM OFFER_RESPONSE ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.OFFER_ID AND orc.REQUEST_ID = ?";
 		$this->_db->query($sql, array($request_id));
@@ -175,7 +203,10 @@ class OfferProcedures extends Procedures{
 			return $allOffers;
 		}
 	}
-	
+	/**
+	 * @param unknown $offer_id
+	 * @return NULL|multitype:NULL
+	 */
 	public function getOffer($offer_id){
 		$sql = "SELECT * FROM OFFER_RESPONSE ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.OFFER_ID AND ofr.ID = ?";
 		$this->_db->query($sql, array($offer_id));
@@ -196,7 +227,14 @@ class OfferProcedures extends Procedures{
 			return $offer;
 		}
 	}
-	
+	/**
+	 * @param unknown $offer_id
+	 * @param unknown $name
+	 * @param unknown $card_no
+	 * @param unknown $expire_date
+	 * @param unknown $cvc
+	 * @return NULL|number
+	 */
 	public function addCardInfos($offer_id, $name, $card_no, $expire_date, $cvc){
 		$this->_db->beginTransaction();
 		
@@ -225,6 +263,62 @@ class OfferProcedures extends Procedures{
 			$this->_db->commit();
 			return $card_id;
 		}
+	}
+	/**
+	 * @param string $user_id
+	 * @param string $all
+	 */
+	public function getAllPolicyRequest($user_id){
+		$sql = "SELECT ofr.ID REQUEST_ID, ofre.ID OFFER_ID, ofre.USER_ID PERSONEL_ID, ofr.ID BRANCH_ID, ofre.PRIM, ofre.KOMISYON, ";
+		$sql .= "ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, ";
+		$sql .= "OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ofre.ID = orc.OFFER_ID ";
+		$sql .= "AND co.ID = orc.COMPANY_ID AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) AND orc.CARD_ID = 1";
+		
+		$this->_db->query($sql, array($user_id, $user_id));
+		$result = $this->_db->all();
+		
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "policy requests[".$user_id."] not found in DB");
+			return null;
+		}else{
+			$allPolicyRequests = array();
+			foreach ($result as $object){
+				$policyRequest = array();
+				$policyRequest[PolicyRequest::REQUEST_ID] = $object->REQUEST_ID;
+				$policyRequest[PolicyRequest::OFFER_ID] = $object->OFFER_ID;
+				$policyRequest[PolicyRequest::PERSONEL_ID] = $object->PERSONEL_ID;
+				$policyRequest[PolicyRequest::BRANCH_ID] = $object->BRANCH_ID;
+				$policyRequest[PolicyRequest::OFFER_DATE] = $object->OFFER_DATE;
+				$policyRequest[PolicyRequest::PLAKA] = $object->PLAKA;
+				$policyRequest[PolicyRequest::COMPANY_NAME] = $object->COMPANY_NAME;
+				$policyRequest[PolicyRequest::PRIM] = $object->PRIM;
+				$policyRequest[PolicyRequest::KOMISYON] = $object->KOMISYON;
+				
+				$sql = "SELECT NAME FROM USER WHERE ID = ?";
+				$this->_db->query($sql, array($policyRequest[PolicyRequest::PERSONEL_ID]));
+				if(!$this->_db->error()){
+					$personel_user = $this->_db->first();
+					$policyRequest[PolicyRequest::PERSONEL_NAME] = $personel_user->NAME;
+						
+					$this->_db->query($sql, array($policyRequest[PolicyRequest::BRANCH_ID]));
+					if(!$this->_db->error()){
+						$branch_user = $this->_db->first();
+						$policyRequest[PolicyRequest::BRANCH_NAME] = $branch_user->NAME;
+					}else{
+						$this->_logger->write(ALogger::DEBUG, self::TAG, "BRANCH_NAME [".$policyRequest[PolicyRequest::BRANCH_NAME]."] not found in DB");
+						return null;
+					}
+				}else{
+					$this->_logger->write(ALogger::DEBUG, self::TAG, "PERSONEL_NAME [".$policyRequest[PolicyRequest::PERSONEL_NAME]."] not found in DB");
+					return null;
+				}
+				
+				array_push($allPolicyRequests, $policyRequest);
+			}
+			
+			return $allPolicyRequests;
+		}
+		
 	}
 }
 
