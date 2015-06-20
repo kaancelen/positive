@@ -17,7 +17,7 @@
 	
 	$offerService = new OfferService();
 	//bu kullanıcının poliçe isteği yapılmış ancak poliçeleşmemiş isteklerini getir
-	$allPolicyRequests = $offerService->getAllPolicyRequest($user[User::ID]);
+	$allPolicyRequests = $offerService->getAllPolicyRequest();
 	if(empty($allPolicyRequests)){
 	?>
 			<div id="user_table_msg" align="center">
@@ -57,7 +57,7 @@
 					<td><?php echo $policyRequest[PolicyRequest::KOMISYON]; ?></td>
 					<td>
 						<button id="open_policy_req_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="location.href = '/positive/personel/policyReqDetails.php?'">
+							onclick="location.href = '/positive/personel/policyReqDetails.php?offer_id=<?php echo $policyRequest[PolicyRequest::OFFER_ID];?>'">
 						  <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
 						</button>
 					</td>

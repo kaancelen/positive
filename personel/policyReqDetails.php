@@ -14,5 +14,16 @@
 		}
 	}
 	include_once (__DIR__.'/../navigationBar.php');
+	
+	$offerId = null;
+	if(isset($_GET['offer_id'])){
+		$offerId = Util::cleanInput($_GET['offer_id']);
+	}
+	if(empty($offerId)){
+		Util::redirect("/positive/error/404.php");
+	}
+	
+	$offerService = new OfferService();
+	$policyReqDetail = $offerService->getPolicyRequest($offerId, null);
 ?>
 </body>

@@ -265,16 +265,26 @@ class OfferProcedures extends Procedures{
 		}
 	}
 	/**
-	 * @param string $user_id
-	 * @param string $all
+	 * @param unknown $user_id
+	 * @return NULL|multitype:
 	 */
 	public function getAllPolicyRequest($user_id){
-		$sql = "SELECT ofr.ID REQUEST_ID, ofre.ID OFFER_ID, ofre.USER_ID PERSONEL_ID, ofr.ID BRANCH_ID, ofre.PRIM, ofre.KOMISYON, ";
-		$sql .= "ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, ";
-		$sql .= "OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ofre.ID = orc.OFFER_ID ";
-		$sql .= "AND co.ID = orc.COMPANY_ID AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) AND orc.CARD_ID = 1";
+		$paramArray = null;
 		
-		$this->_db->query($sql, array($user_id, $user_id));
+		$sql = "SELECT ofr.ID REQUEST_ID, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
+		$sql .= "PERSONEL_NAME, (SELECT NAME FROM USER WHERE ID = ofr.ID) BRANCH_NAME, ofre.PRIM, ofre.KOMISYON, ";
+		$sql .= "ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, ";
+		$sql .= "OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ";
+		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID ";
+		
+		if(!is_null($user_id)){
+			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) ";
+			$paramArray = array($user_id, $user_id);
+		}
+		
+		$sql .= "AND orc.CARD_ID <> 0";
+		
+		$this->_db->query($sql, $paramArray);
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -283,36 +293,7 @@ class OfferProcedures extends Procedures{
 		}else{
 			$allPolicyRequests = array();
 			foreach ($result as $object){
-				$policyRequest = array();
-				$policyRequest[PolicyRequest::REQUEST_ID] = $object->REQUEST_ID;
-				$policyRequest[PolicyRequest::OFFER_ID] = $object->OFFER_ID;
-				$policyRequest[PolicyRequest::PERSONEL_ID] = $object->PERSONEL_ID;
-				$policyRequest[PolicyRequest::BRANCH_ID] = $object->BRANCH_ID;
-				$policyRequest[PolicyRequest::OFFER_DATE] = $object->OFFER_DATE;
-				$policyRequest[PolicyRequest::PLAKA] = $object->PLAKA;
-				$policyRequest[PolicyRequest::COMPANY_NAME] = $object->COMPANY_NAME;
-				$policyRequest[PolicyRequest::PRIM] = $object->PRIM;
-				$policyRequest[PolicyRequest::KOMISYON] = $object->KOMISYON;
-				
-				$sql = "SELECT NAME FROM USER WHERE ID = ?";
-				$this->_db->query($sql, array($policyRequest[PolicyRequest::PERSONEL_ID]));
-				if(!$this->_db->error()){
-					$personel_user = $this->_db->first();
-					$policyRequest[PolicyRequest::PERSONEL_NAME] = $personel_user->NAME;
-						
-					$this->_db->query($sql, array($policyRequest[PolicyRequest::BRANCH_ID]));
-					if(!$this->_db->error()){
-						$branch_user = $this->_db->first();
-						$policyRequest[PolicyRequest::BRANCH_NAME] = $branch_user->NAME;
-					}else{
-						$this->_logger->write(ALogger::DEBUG, self::TAG, "BRANCH_NAME [".$policyRequest[PolicyRequest::BRANCH_NAME]."] not found in DB");
-						return null;
-					}
-				}else{
-					$this->_logger->write(ALogger::DEBUG, self::TAG, "PERSONEL_NAME [".$policyRequest[PolicyRequest::PERSONEL_NAME]."] not found in DB");
-					return null;
-				}
-				
+				$policyRequest = json_decode(json_encode($object), true);
 				array_push($allPolicyRequests, $policyRequest);
 			}
 			
@@ -320,6 +301,39 @@ class OfferProcedures extends Procedures{
 		}
 		
 	}
+	/**
+	 * @param unknown $offer_id
+	 * @param unknown $user_id
+	 */
+	public function getPolicyRequest($offer_id, $user_id){
+		$paramArray = array($offer_id);
+		
+		$sql = "SELECT ofr.ID REQUEST_ID, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ofr.PLAKA PLAKA, ";
+		$sql .= "ofr.TCKN TCKN, ofr.VERGI VERGI, ofr.BELGE BELGE, ofr.ASBIS ASBIS, ofr.DESCRIPTION EK_BILGI, ofre.ID OFFER_ID, ";
+		$sql .= "ofre.USER_ID PERSONEL_ID, ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.CREATION_DATE OFFER_DATE, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
+		$sql .= "cc.NAME CARD_NAME, cc.CARD_NO CARD_NO, cc.EXPIRE_DATE EXPIRE_DATE, cc.CVC_CODE CVC_CODE, ";
+		$sql .= "cc.CREATION_DATE POLICY_REQ_DATE FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, ";
+		$sql .= "OFFER_RESPONSE ofre,COMPANY co, CREDIT_CARDS cc WHERE ofr.ID = orc.REQUEST_ID AND ";
+		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID AND cc.ID = orc.CARD_ID AND ofre.ID = ?";
+		
+		if(!is_null($user_id)){
+			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) ";
+			array_push($paramArray, $user_id);
+			array_push($paramArray, $user_id);
+		}
+		
+		$this->_db->query($sql, $paramArray);
+		$result = $this->_db->first();
+		
+		if(!is_null($result)){
+			$policyReqDetail = json_decode(json_encode($result), true);
+			return $policyReqDetail;
+		}else{
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "policy requests[".$offer_id."] not found in DB");
+			return null;
+		}
+	}
 }
-
 ?>
