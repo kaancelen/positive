@@ -106,4 +106,7 @@
 		<hr>	
 	</div>
 </div>
+<script type="text/javascript">
+	$('#personel_2').addClass("active");
+</script>
 </body>

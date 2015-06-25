@@ -130,10 +130,14 @@
 	</div>
 </div>
 <script type="text/javascript">
+	<?php $monthYear = explode("/", $policyReqDetail[PolicyRequest::EXPIRE_DATE]);?>
 	$('#name').val('<?php echo $policyReqDetail[PolicyRequest::CARD_NAME];?>');
 	$('#card').val('<?php echo $policyReqDetail[PolicyRequest::CARD_NO];?>');
 	$('#cvc').val('<?php echo $policyReqDetail[PolicyRequest::CVC_CODE];?>');
-	$('#expireMonth').val(2);
-	$('#expireYear').val(2016);//TODO
+	$('#expireMonth').val(<?php echo $monthYear[0]; ?>);
+	$('#expireYear').val(<?php echo $monthYear[1]; ?>);
+</script>
+<script type="text/javascript">
+	$('#branch_3').addClass("active");
 </script>
 </body>

@@ -123,4 +123,7 @@ include_once(__DIR__.'/../head.php');
 		<?php }?>
 	</script>
 </div>
+<script type="text/javascript">
+	$('#personel_1').addClass("active");
+</script>
 </body>
