@@ -6,10 +6,10 @@ class PolicyRequest{
 	const BRANCH_ID = "BRANCH_ID";
 	const PLAKA = "PLAKA";
 	const TCKN = "TCKN";
-	const VERGI = "PLAKA";
-	const BELGE = "PLAKA";
-	const ASBIS = "PLAKA";
-	const EK_BILGI = "PLAKA";
+	const VERGI = "VERGI";
+	const BELGE = "BELGE";
+	const ASBIS = "ASBIS";
+	const EK_BILGI = "EK_BILGI";
 	const OFFER_ID = "OFFER_ID";
 	const PERSONEL_ID = "PERSONEL_ID";
 	const PRIM = "PRIM";

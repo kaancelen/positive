@@ -61,7 +61,7 @@
 					<td><?php echo $policyRequest[PolicyRequest::KOMISYON]; ?></td>
 					<td>
 						<button id="open_policy_req_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="">
+							onclick="location.href = '/positive/branch/policyReqDetails.php?offer_id=<?php echo $policyRequest[PolicyRequest::OFFER_ID];?>'">
 						  <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
 						</button>
 					</td>

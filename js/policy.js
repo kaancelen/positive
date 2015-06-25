@@ -45,5 +45,10 @@ function validatePolicyRequest(){
 		var form = $('#policy-request-form');
 		form.submit();
 	}
+}
+/**
+ * 
+ */
+function editCardInfo(){
 	
 }

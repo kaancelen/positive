@@ -64,6 +64,9 @@ body{
     width: 100%;
     border-collapse: collapse;
 }
+.offer-request-info-table thead td{
+	font-weight: bold;
+}
 .offer-request-info-table td, .offer-request-info-table th {
     font-size: 1em;
     border: 1px solid #4fa7ff;
