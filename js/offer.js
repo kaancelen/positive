@@ -60,8 +60,8 @@ function validateOfferRequest(companies){
 		var tckn = $('#tckn').val();
 		if(tckn == null || tckn.length == 0){
 			message += "TC kimlik bilgisini boş bırakmayınız.<br>";
-		}else if(tckn.length != 11){
-			message += "TC kimlik bilgisi 11 haneli olmalıdır.<br>";
+		}else if(!tckn.match("[0-9]{11}$")){
+			message += "TC kimlik bilgisi 11 rakam olmalıdır.<br>";
 		}
 	}
 	
@@ -69,8 +69,8 @@ function validateOfferRequest(companies){
 		var vergi = $('#vergiNo').val();
 		if(vergi == null || vergi.length == 0){
 			message += "Vergi no bilgisini boş bırakmayınız.<br>";
-		}else if(vergi.length != 10){
-			message += "Vergi no bilgisi 10 haneli olmalıdır.<br>";
+		}else if(!vergi.match("[0-9]{10}$")){
+			message += "Vergi no bilgisi 10 rakam olmalıdır.<br>";
 		}
 	}
 	
@@ -78,8 +78,8 @@ function validateOfferRequest(companies){
 		var belge = $('#belgeNo').val();
 		if(belge == null || belge.length == 0){
 			message += "Belge no bilgisini boş bırakmayınız.<br>";
-		}else if(belge.length != 10){
-			message += "Belge no bilgisi 10 haneli olmalıdır.<br>";
+		}else if(!belge.match("[A-Z]{2}[0-9]{6}$")){
+			message += "Belge no formata uygun değildir[ör: 'UC123456']<br>";
 		}
 	}
 	

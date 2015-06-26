@@ -272,7 +272,7 @@ class OfferProcedures extends Procedures{
 		$paramArray = null;
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
-		$sql .= "PERSONEL_NAME, (SELECT NAME FROM USER WHERE ID = ofr.ID) BRANCH_NAME, ofre.PRIM, ofre.KOMISYON, ";
+		$sql .= "PERSONEL_NAME, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofre.PRIM, ofre.KOMISYON, ";
 		$sql .= "ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, ";
 		$sql .= "OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ";
 		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID ";
@@ -282,7 +282,7 @@ class OfferProcedures extends Procedures{
 			$paramArray = array($user_id, $user_id);
 		}
 		
-		$sql .= "AND orc.CARD_ID <> 0";
+		$sql .= "AND orc.CARD_ID <> 0 ORDER BY OFFER_DATE DESC";
 		
 		$this->_db->query($sql, $paramArray);
 		$result = $this->_db->all();
@@ -312,7 +312,7 @@ class OfferProcedures extends Procedures{
 		$sql .= "ofr.TCKN TCKN, ofr.VERGI VERGI, ofr.BELGE BELGE, ofr.ASBIS ASBIS, ofr.DESCRIPTION EK_BILGI, ofre.ID OFFER_ID, ";
 		$sql .= "ofre.USER_ID PERSONEL_ID, ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.CREATION_DATE OFFER_DATE, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
-		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
 		$sql .= "cc.NAME CARD_NAME, cc.CARD_NO CARD_NO, cc.EXPIRE_DATE EXPIRE_DATE, cc.CVC_CODE CVC_CODE, ";
 		$sql .= "cc.CREATION_DATE POLICY_REQ_DATE FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, ";
 		$sql .= "OFFER_RESPONSE ofre,COMPANY co, CREDIT_CARDS cc WHERE ofr.ID = orc.REQUEST_ID AND ";

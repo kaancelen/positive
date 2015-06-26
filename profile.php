@@ -84,7 +84,7 @@
 			<br>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Oluşturulma tarihi</span>
-				<label class="form-control"><?php echo $user[User::CREATION_DATE]; ?></label>
+				<label class="form-control"><?php echo DateUtil::format($user[User::CREATION_DATE]); ?></label>
 			</div>
 			<br>
 			<div class="input-group">

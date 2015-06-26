@@ -50,7 +50,7 @@
 				<tr>
 					<td><?php echo $policyReqDetail[PolicyRequest::REQUEST_ID];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::BRANCH_NAME];?></td>
-					<td><?php echo $policyReqDetail[PolicyRequest::REQUEST_DATE];?></td>
+					<td><?php echo DateUtil::format($policyReqDetail[PolicyRequest::REQUEST_DATE]);?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::PLAKA];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::TCKN];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::VERGI];?></td>
@@ -76,7 +76,7 @@
 				<tr>
 					<td><?php echo $policyReqDetail[PolicyRequest::OFFER_ID];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::PERSONEL_NAME];?></td>
-					<td><?php echo $policyReqDetail[PolicyRequest::OFFER_DATE];?></td>
+					<td><?php echo DateUtil::format($policyReqDetail[PolicyRequest::OFFER_DATE]);?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::COMPANY_NAME];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::PRIM];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::KOMISYON];?></td>

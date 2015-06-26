@@ -51,7 +51,7 @@
 				<tr>
 					<td><?php echo $offerRequest[OfferRequest::ID]; ?></td>
 					<td><?php echo $tempUser[User::NAME]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::CREATION_DATE]; ?></td>
+					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::TCKN]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::VERGI]; ?></td>

@@ -31,9 +31,11 @@
 	
 	$offerService = new OfferService();
 	$companyService = new CompanyService();
+	$userService = new UserService();
 	$offer = $offerService->getOffer($offerId);
 	$request = $offerService->getOfferRequest($offer[OfferResponse::REQUEST_ID]);
 	$company = $companyService->getCompany($offer[OfferResponse::COMPANY_ID]);
+	$offerUser = $userService->getUser($offer[OfferRequest::USER_ID]);
 	
 	if(!empty($_POST)){
 		$card_name = Util::cleanInput($_POST['name']);
@@ -71,7 +73,7 @@
 		<tbody>
 			<tr>
 				<td><?php echo $request[OfferRequest::ID];?></td>
-				<td><?php echo $request[OfferRequest::CREATION_DATE];?></td>
+				<td><?php echo DateUtil::format($request[OfferRequest::CREATION_DATE]);?></td>
 				<td><?php echo $request[OfferRequest::PLAKA];?></td>
 				<td><?php echo $request[OfferRequest::TCKN];?></td>
 				<td><?php echo $request[OfferRequest::VERGI];?></td>
@@ -86,6 +88,7 @@
 		<thead>
 			<tr>
 				<td>Teklif No</td>
+				<td>Teknikçi</td>
 				<td>Prim</td>
 				<td>Komisyon</td>
 				<td>Şirket</td>
@@ -94,6 +97,7 @@
 		<tbody>
 			<tr>
 				<td><?php echo $offer[OfferResponse::ID];?></td>
+				<td><?php echo $offerUser[User::NAME];?></td>
 				<td><?php echo $offer[OfferResponse::PRIM];?></td>
 				<td><?php echo $offer[OfferResponse::KOMISYON];?></td>
 				<td><?php echo $company[Company::NAME];?></td>

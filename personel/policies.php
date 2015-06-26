@@ -50,7 +50,7 @@
 					<td><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::BRANCH_NAME]; ?></td>
-					<td><?php echo $policyRequest[PolicyRequest::OFFER_DATE]; ?></td>
+					<td><?php echo DateUtil::format($policyRequest[PolicyRequest::OFFER_DATE]); ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::PLAKA]; ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::COMPANY_NAME]; ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::PRIM]; ?></td>
