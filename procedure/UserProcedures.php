@@ -48,6 +48,7 @@ class UserProcedures extends Procedures{
 				$user[User::DESCRIPTION] = $object->DESCRIPTION;
 				$user[User::FIRST_LOGIN] = $object->FIRST_LOGIN;
 				$user[User::CREATION_DATE] = $object->CREATION_DATE;
+				$user[User::KOMISYON_RATE] = $object->KOMISYON_RATE;
 				array_push($users, $user);
 			}
 			return $users;
@@ -74,11 +75,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function addUser($name, $username, $password, $role, $desc){
-		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION) VALUES(?, ?, ?, ?, ?, ?)";
+	public function addUser($name, $username, $password, $role, $desc, $komisyon_rate){
+		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION, KOMISYON_RATE) VALUES(?, ?, ?, ?, ?, ?, ?)";
 		$salt = Hash::unique();
 		$hash = Hash::make($password, $salt);
-		$params = array($name, $username, $role, $hash, $salt, $desc);
+		$params = array($name, $username, $role, $hash, $salt, $desc, $komisyon_rate);
 		
 		$this->_db->beginTransaction();
 		$this->_db->query($sql, $params);
@@ -93,11 +94,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function updateUser($user_id, $name, $role, $desc){
-		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ? WHERE ID = ?";
+	public function updateUser($user_id, $name, $role, $desc, $komisyon_rate){
+		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ?, KOMISYON_RATE = ? WHERE ID = ?";
 		
 		$this->_db->beginTransaction();
-		$this->_db->query($sql, array($name, $role, $desc, $user_id));
+		$this->_db->query($sql, array($name, $role, $desc, $komisyon_rate, $user_id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -140,6 +141,7 @@ class UserProcedures extends Procedures{
 			$user[User::DESCRIPTION] = $result->DESCRIPTION;
 			$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
 			$user[User::CREATION_DATE] = $result->CREATION_DATE;
+			$user[User::KOMISYON_RATE] = $result->KOMISYON_RATE;
 			return $user;
 		}
 	}

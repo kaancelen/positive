@@ -93,6 +93,11 @@
 			</div>
 			<br>
 			<?php if($loggedInUser[User::ROLE] == User::BRANCH || ($user[User::ROLE] == User::BRANCH && $loggedInUser[User::ROLE] == User::ADMIN)){ ?>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
+					<label class="form-control"><?php echo $user[User::KOMISYON_RATE]; ?></label>
+				</div>
+				<br>
 				<form class="form-signin" id="agent_detail" action="" method="post" autocomplete="off">
 					<h2 class="form-signin-heading">Acente Bilgileri</h2>
 					<label class="login-error" id="executive-error"></label>

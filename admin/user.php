@@ -35,11 +35,12 @@
 		$role = Util::cleanInput($_POST['select_role']);
 		$desc = Util::cleanInput($_POST['description']);
 		$operation = Util::cleanInput($_POST['operation']);
+		$komisyon_rate = Util::cleanInput($_POST['komisyon_rate']);
 		
 		if($operation == 'add'){
 			$logger->write(ALogger::INFO, __FILE__, "user add operation to [".$username."] by [".$user[User::CODE]."]");
 			$password = $username;
-			$result = $userService->addUser($name, $username, $password, $role, $desc);
+			$result = $userService->addUser($name, $username, $password, $role, $desc, $komisyon_rate);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı ekleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -52,7 +53,7 @@
 			}
 		}else if($operation == 'edit'){
 			$logger->write(ALogger::INFO, __FILE__, "user edit to operation to [".$selected_user[User::CODE]."] by [".$user[User::CODE]."]");
-			$result = $userService->updateUser($user_id, $name, $role, $desc);
+			$result = $userService->updateUser($user_id, $name, $role, $desc, $komisyon_rate);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı düzenleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -74,6 +75,7 @@
 </div>
 <div class="container user_form">
 	<div class="well well-lg">
+		<h2 class="form-signin-heading">Kullanıcı Bilgileri</h2>
 		<form class="form-signin" id="positive_user" action="" method="post" autocomplete="off">
 			<label class="login-error" id="user-error"></label>
 	        <div class="input-group">
@@ -102,6 +104,11 @@
 				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description"></textarea>
 			</div>
 	        <br>
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
+				<input class="form-control" id="komisyon_rate" name="komisyon_rate">
+			</div>
+			<br>
 	        <input type="hidden" id="user_id" name="user_id">
 	        <input type="hidden" id="operation" name="operation">
 	        <button class="btn btn-lg btn-primary btn-block" type="button" id="update_button"
@@ -131,6 +138,9 @@
 	if(!is_null($selected_user)){
 		echo '$("#username").prop("readonly", true);';
 		echo 'fillUserForm('.json_encode($selected_user).');';
+		if($selected_user[User::ROLE] == User::BRANCH){
+			echo "$('#komisyon_rate').val(".$selected_user[User::KOMISYON_RATE].");";
+		}
 	}
 	
 	if(!is_null($post_flag)){
@@ -141,6 +151,9 @@
 		echo "$('#name').val('".$name."');";
 		echo "$('#description').val('".$desc."');";
 		echo "$('#select_role').val(".$role.");";
+		if($selected_user[User::ROLE] == User::BRANCH){
+			echo "$('#komisyon_rate').val(".$komisyon_rate.");";
+		}
 	}
 ?>
 </script>

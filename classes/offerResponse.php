@@ -5,6 +5,7 @@ class OfferResponse{
 	const USER_ID = "USER_ID";
 	const PRIM = "PRIM";
 	const KOMISYON = "KOMISYON";
+	const PROD_KOMISYON = "PROD_KOMISYON";
 	const CREATION_DATE = "CREATION_DATE";
 	
 	const REQUEST_ID = "REQUEST_ID";

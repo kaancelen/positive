@@ -26,7 +26,7 @@ class LoginProcedures extends Procedures{
 		}		
 		//Check password
 		$hash = Hash::make($password, $result->SALT);
-		if($hash == $result->HASH){//Not matched
+		if($hash == $result->HASH){//matched
 			$user = array();
 			$user[User::ID] = $result->ID;
 			$user[User::ROLE] = $result->ROLE;
@@ -35,6 +35,7 @@ class LoginProcedures extends Procedures{
 			$user[User::DESCRIPTION] = $result->DESCRIPTION;
 			$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
 			$user[User::CREATION_DATE] = $result->CREATION_DATE;
+			$user[User::KOMISYON_RATE] = $result->KOMISYON_RATE;
 			return $user;
 		}else{
 			//password is wrong
@@ -86,6 +87,7 @@ class LoginProcedures extends Procedures{
 		$user[User::DESCRIPTION] = $result->DESCRIPTION;
 		$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
 		$user[User::CREATION_DATE] = $result->CREATION_DATE;
+		$user[User::KOMISYON_RATE] = $result->KOMISYON_RATE;
 		$this->_logger->write(ALogger::DEBUG, self::TAG, "Login with hash succeed [".$user[User::CODE]."]");
 		
 		return $user;
