@@ -6,6 +6,7 @@ include_once (__DIR__.'/session.php');
 include_once (__DIR__.'/cookie.php');
 include_once (__DIR__.'/Hash.php');
 include_once (__DIR__.'/dateutil.php');
+include_once (__DIR__.'/../classes/policy.php');
 include_once (__DIR__.'/../classes/user.php');
 include_once (__DIR__.'/../classes/agent.php');
 include_once (__DIR__.'/../classes/offerRequest.php');

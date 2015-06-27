@@ -17,7 +17,7 @@ class OfferRequest{
 	const COMPANY_ID = "COMPANY_ID";
 	const OFFER_ID = "OFFER_ID";
 	const CARD_ID = "CARD_ID";
-	const POLICY_STATUS = "POLICY_STATUS";
+	const POLICY_ID = "POLICY_ID";
 }
 
 ?>

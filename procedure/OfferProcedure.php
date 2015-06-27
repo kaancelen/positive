@@ -106,7 +106,7 @@ class OfferProcedures extends Procedures{
 				$status_part = " WHERE STATUS = 0 ";
 			}
 		}
-		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."ORDER BY CREATION_DATE DESC";
+		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."ORDER BY CREATION_DATE ASC";
 		$this->_db->query($sql, $user_id_array);
 		$result = $this->_db->all();
 		
@@ -284,7 +284,7 @@ class OfferProcedures extends Procedures{
 			$paramArray = array($user_id, $user_id);
 		}
 		
-		$sql .= "AND orc.CARD_ID <> 0 ORDER BY OFFER_DATE DESC";
+		$sql .= "AND orc.CARD_ID <> 0 AND orc.POLICY_ID = 0 ORDER BY OFFER_DATE DESC";
 		
 		$this->_db->query($sql, $paramArray);
 		$result = $this->_db->all();
@@ -335,6 +335,65 @@ class OfferProcedures extends Procedures{
 		}else{
 			$this->_logger->write(ALogger::DEBUG, self::TAG, "policy requests[".$offer_id."] not found in DB");
 			return null;
+		}
+	}
+	
+	public function addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id){
+		$this->_db->beginTransaction();
+		
+		$sql = "INSERT INTO POLICY(USER_ID, POLICY_PATH, MAKBUZ_PATH) VALUES(?,?,?)";
+		$this->_db->query($sql, array($user_id, $policyPath, $makbuzPath));
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return null;
+		}else{
+			$policy_id = (int)$this->_db->lastInsertId();
+			$sql = "UPDATE OFFER_REQUEST_COMPANY SET POLICY_ID = ? WHERE REQUEST_ID = ? AND OFFER_ID = ? AND CARD_ID = ?";
+			$this->_db->query($sql, array($policy_id, $request_id, $offer_id, $card_id));
+			if($this->_db->error()){
+				$this->_db->rollback();
+				return null;
+			}
+		}
+		
+		$this->_db->commit();
+		return $policy_id;
+	}
+	
+	public function getCompletedPolicies($user_id = null){
+		$paramArray = array();
+		
+		$sql = "SELECT ofr.PLAKA PLAKA, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
+		$sql .= "po.ID POLICY_ID, po.CREATION_DATE POLICY_COMPLETE_DATE, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = po.USER_ID) POLICY_COMPLETE_PERSONEL ";
+		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre, COMPANY co, ";
+		$sql .= "POLICY po WHERE ofr.ID = orc.REQUEST_ID AND ofre.ID = orc.OFFER_ID AND ";
+		$sql .= "co.ID = orc.COMPANY_ID AND po.ID = orc.POLICY_ID ";
+
+		if(!is_null($user_id)){
+			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ? OR po.USER_ID = ?) ";
+			array_push($paramArray, $user_id);
+			array_push($paramArray, $user_id);
+			array_push($paramArray, $user_id);
+		}
+		
+		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC";
+		
+		$this->_db->query($sql, $paramArray);
+		$result = $this->_db->all();
+		
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "completed policies [".$user_id."] not found in DB");
+			return null;
+		}else{
+			$allPolicies = array();
+			foreach ($result as $object){
+				$policy = json_decode(json_encode($object), true);
+				array_push($allPolicies, $policy);
+			}
+				
+			return $allPolicies;
 		}
 	}
 }

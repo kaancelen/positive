@@ -46,6 +46,14 @@ class OfferService implements Service{
 	public function getPolicyRequest($offer_id, $user_id = null){
 		return $this->_offerProcedures->getPolicyRequest($offer_id, $user_id);
 	}
+	
+	public function addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id){
+		return $this->_offerProcedures->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id);
+	}
+	
+	public function getCompletedPolicies($user_id = null){
+		return $this->_offerProcedures->getCompletedPolicies($user_id);
+	}
 }
 
 ?>

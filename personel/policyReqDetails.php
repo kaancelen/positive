@@ -14,6 +14,7 @@
 		}
 	}
 	include_once (__DIR__.'/../navigationBar.php');
+	include_once (__DIR__.'/../files/FileUploader.php');
 	
 	$offerId = null;
 	if(isset($_GET['offer_id'])){
@@ -25,7 +26,37 @@
 	
 	$offerService = new OfferService();
 	$policyReqDetail = $offerService->getPolicyRequest($offerId, null);
+	
+	if(!empty($_POST)){
+		$request_id = Util::cleanInput($_POST['request_id']);
+		$offer_id = Util::cleanInput($_POST['offer_id']);
+		$card_id = Util::cleanInput($_POST['card_id']);
+		
+		$fileUploader = new FileUploader();
+		$policyPath = $fileUploader->uploadPolicy($offer_id, $_FILES['policyFile']);
+		$makbuzPath = $fileUploader->uploadMakbuz($offer_id, $_FILES['makbuzFile']);
+		
+		if(is_null($policyPath) || is_null($makbuzPath)){
+			?>
+			<div align="center">
+				<div class="alert alert-danger" role="alert">Dosyalar yüklenemedi, bir hata ile karşılaşıldı!</div>
+			</div>
+			<?php
+		}
+		
+		$result = $offerService->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user[User::ID]);
+		if(is_null($result)){
+			?>
+			<div align="center">
+				<div class="alert alert-danger" role="alert">Poliçe onaylanamadı, bir hata ile karşılaşıldı!</div>
+			</div>
+			<?php
+		}else{
+			Util::redirect("/positive/personel/completedPolicies.php");
+		}
+	}
 ?>
+<script src="/positive/js/policyReq.js"></script>
 <div class="container offer-request-screen">
 	<div class="offers-column">
 		<table class="offer-request-info-table">
@@ -100,8 +131,24 @@
 				</tr>
 			</tbody>
 		</table>
-		Burada dosyaları yüklemek için file upload olsun <br>
-		bu dosyayı yükleyince poliçe yapıldı olsun.
+		<br>
+		<form action="" method="post" autocomplete="off" class="form-signin" id="policy_complete_form" enctype="multipart/form-data">
+			<input type="hidden" id="request_id" name="request_id" value='<?php echo $policyReqDetail[PolicyRequest::REQUEST_ID];?>'>
+			<input type="hidden" id="offer_id" name="offer_id" value='<?php echo $policyReqDetail[PolicyRequest::OFFER_ID];?>'>
+			<input type="hidden" id="card_id" name="card_id" value='<?php echo $policyReqDetail[PolicyRequest::CARD_ID];?>'>
+			<label class="login-error" id="policy-file-error"></label>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Poliçe Dosyası</span>
+				<input type="file" class="form-control" aria-describedby="basic-addon1" id="policyFile" name="policyFile">
+			</div>
+			<label class="login-error" id="makbuz-file-error"></label>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Makbuz Dosyası</span>
+				<input type="file" class="form-control" aria-describedby="basic-addon1" id="makbuzFile" name="makbuzFile">
+			</div>
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validatePolicy()' id="offer-request-button">Poliçeyi onayla</button>
+		</form>
 	</div>
 	<div class="well chat-column">
 		<h4 style="text-align:center">Konuşma</h4>
