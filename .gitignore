@@ -3,3 +3,4 @@
 .settings/
 logs/
 db_config.xml
+*.pdf

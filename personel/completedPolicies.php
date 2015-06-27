@@ -46,7 +46,7 @@
 					<td><?php echo $policySummary[Policy::POLICY_COMPLETE_PERSONEL]; ?></td>
 					<td>
 						<button id="open_policy_req_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="location.href = '/positive/personel/policyDetails.php?policy_id=<?php echo $policySummary[Policy::POLICY_ID];?>'">
+							onclick="location.href = '/positive/personel/policyDetail.php?policy_id=<?php echo $policySummary[Policy::POLICY_ID];?>'">
 						  <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
 						</button>
 					</td>
