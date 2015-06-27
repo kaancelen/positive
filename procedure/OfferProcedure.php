@@ -154,11 +154,11 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $komisyon
 	 * @return NULL|number
 	 */
-	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon){
+	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon, $prod_komisyon){
 		$this->_db->beginTransaction();
 		
-		$sql = "INSERT INTO OFFER_RESPONSE(USER_ID, PRIM, KOMISYON) VALUES(?,?,?)";
-		$this->_db->query($sql, array($user_id, $prim, $komisyon));
+		$sql = "INSERT INTO OFFER_RESPONSE(USER_ID, PRIM, KOMISYON, PROD_KOMISYON) VALUES(?,?,?,?)";
+		$this->_db->query($sql, array($user_id, $prim, $komisyon, $prod_komisyon));
 		if($this->_db->error()){
 			$this->_db->rollback();
 			return null;
@@ -195,6 +195,7 @@ class OfferProcedures extends Procedures{
 				$offerResponse[OfferResponse::USER_ID] = $offerObject->USER_ID;
 				$offerResponse[OfferResponse::PRIM] = $offerObject->PRIM;
 				$offerResponse[OfferResponse::KOMISYON] = $offerObject->KOMISYON;
+				$offerResponse[OfferResponse::PROD_KOMISYON] = $offerObject->PROD_KOMISYON;
 				$offerResponse[OfferResponse::COMPANY_ID] = $offerObject->COMPANY_ID;
 				$offerResponse[OfferResponse::REQUEST_ID] = $offerObject->REQUEST_ID;
 				
@@ -221,6 +222,7 @@ class OfferProcedures extends Procedures{
 			$offer[OfferResponse::USER_ID] = $result->USER_ID;
 			$offer[OfferResponse::PRIM] = $result->PRIM;
 			$offer[OfferResponse::KOMISYON] = $result->KOMISYON;
+			$offer[OfferResponse::PROD_KOMISYON] = $result->PROD_KOMISYON;
 			$offer[OfferResponse::COMPANY_ID] = $result->COMPANY_ID;
 			$offer[OfferResponse::REQUEST_ID] = $result->REQUEST_ID;
 			
@@ -273,7 +275,7 @@ class OfferProcedures extends Procedures{
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
 		$sql .= "PERSONEL_NAME, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofre.PRIM, ofre.KOMISYON, ";
-		$sql .= "ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, ";
+		$sql .= "ofre.PROD_KOMISYON, ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, ";
 		$sql .= "OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ";
 		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID ";
 		
@@ -310,9 +312,9 @@ class OfferProcedures extends Procedures{
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ofr.PLAKA PLAKA, ";
 		$sql .= "ofr.TCKN TCKN, ofr.VERGI VERGI, ofr.BELGE BELGE, ofr.ASBIS ASBIS, ofr.DESCRIPTION EK_BILGI, ofre.ID OFFER_ID, ";
-		$sql .= "ofre.USER_ID PERSONEL_ID, ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.CREATION_DATE OFFER_DATE, ";
-		$sql .= "(SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
-		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
+		$sql .= "ofre.USER_ID PERSONEL_ID, ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.PROD_KOMISYON PROD_KOMISYON, ";
+		$sql .= "ofre.CREATION_DATE OFFER_DATE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, cc.ID CARD_ID, ";
 		$sql .= "cc.NAME CARD_NAME, cc.CARD_NO CARD_NO, cc.EXPIRE_DATE EXPIRE_DATE, cc.CVC_CODE CVC_CODE, ";
 		$sql .= "cc.CREATION_DATE POLICY_REQ_DATE FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, ";
 		$sql .= "OFFER_RESPONSE ofre,COMPANY co, CREDIT_CARDS cc WHERE ofr.ID = orc.REQUEST_ID AND ";

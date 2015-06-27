@@ -23,6 +23,10 @@ class AgentService implements Service{
 		return $this->_agentProcedures->get($user_id);
 	}
 	
+	public function updateCardInfo($card_id, $card_name, $card_no, $expire_date, $cvc){
+		return $this->_agentProcedures->updateCardInfo($card_id, $card_name, $card_no, $expire_date, $cvc);
+	}
+	
 }
 
 ?>

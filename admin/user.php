@@ -104,11 +104,13 @@
 				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description"></textarea>
 			</div>
 	        <br>
-	        <div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
-				<input class="form-control" id="komisyon_rate" name="komisyon_rate">
-			</div>
-			<br>
+	        <?php if($selected_user[User::ROLE] == User::BRANCH){ ?>
+		        <div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
+					<input class="form-control" id="komisyon_rate" name="komisyon_rate">
+				</div>
+				<br>
+		    <?php } ?>
 	        <input type="hidden" id="user_id" name="user_id">
 	        <input type="hidden" id="operation" name="operation">
 	        <button class="btn btn-lg btn-primary btn-block" type="button" id="update_button"

@@ -66,6 +66,7 @@
 					<td>Şirket</td>
 					<td>Prim</td>
 					<td>Komisyon</td>
+					<td>Prod Komisyonu</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -76,6 +77,7 @@
 					<td><?php echo $policyReqDetail[PolicyRequest::COMPANY_NAME];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::PRIM];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::KOMISYON];?></td>
+					<td><?php echo $policyReqDetail[PolicyRequest::PROD_KOMISYON];?></td>
 				</tr>
 			</tbody>
 		</table>

@@ -3,6 +3,7 @@ function writeToOfferRow(offer, username){
 	$('#personel_id_'+offer['COMPANY_ID']).html(username);
 	$('#prim_'+offer['COMPANY_ID']).val(offer['PRIM']);
 	$('#komisyon_'+offer['COMPANY_ID']).val(offer['KOMISYON']);
+	$('#prod_komisyon_'+offer['COMPANY_ID']).val(offer['PROD_KOMISYON']);
 	$('#make_policy_'+offer['COMPANY_ID']).css("display", "block");
 }
 

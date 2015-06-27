@@ -1,4 +1,5 @@
 <!-- BRANCH -->
+<!DOCTYPE html>
 <head>
 <?php 
 	include_once(__DIR__.'/../head.php'); 
@@ -70,6 +71,7 @@
 					<td>Şirket</td>
 					<td>Prim</td>
 					<td>Komisyon</td>
+					<td>Prod Komisyonu</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -80,6 +82,7 @@
 					<td><?php echo $policyReqDetail[PolicyRequest::COMPANY_NAME];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::PRIM];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::KOMISYON];?></td>
+					<td><?php echo $policyReqDetail[PolicyRequest::PROD_KOMISYON];?></td>
 				</tr>
 			</tbody>
 		</table>
@@ -108,7 +111,7 @@
 					    <?php } ?>
 					</select>
 					<select class="form-control" id="expireYear" name="expireYear">
-						<?php for ($i = 2015; $i <= 2050; $i++){ ?>
+						<?php for ($i = date('Y'); $i <= date('Y') + 30; $i++){ ?>
 					    	<option><?php echo $i; ?></option>
 					    <?php } ?>
 					</select>
@@ -120,7 +123,7 @@
 					<input type="text" class="form-control" aria-describedby="basic-addon1" id="cvc" name="cvc">
 				</div>
 				<br>
-				<button class="btn btn-lg btn-primary btn-block" type="button" onclick='editCardInfo()' id="policy-request-button">Poliçeleştir</button>
+				<button class="btn btn-lg btn-primary btn-block" type="button" onclick='editCardInfo(<?php echo $policyReqDetail[PolicyRequest::CARD_ID]; ?>)' id="policy-request-button">Kart bilgilerini değiştir</button>
 			</div>
 		</form>
 	</div>

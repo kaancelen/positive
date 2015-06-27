@@ -49,7 +49,7 @@
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
 				<?php $tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);?>
 				<tr>
-					<td><?php echo $offerRequest[OfferRequest::ID]; ?></td>
+					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
 					<td><?php echo $tempUser[User::NAME]; ?></td>
 					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>

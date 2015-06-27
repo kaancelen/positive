@@ -23,8 +23,8 @@ class OfferService implements Service{
 		return $this->_offerProcedures->getAllRequests($user_id, $all);
 	}
 	
-	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon){
-		return $this->_offerProcedures->addOffer($user_id, $request_id, $company_id, $prim, $komisyon);
+	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon, $prod_komisyon){
+		return $this->_offerProcedures->addOffer($user_id, $request_id, $company_id, $prim, $komisyon, $prod_komisyon);
 	}
 	
 	public function getOffers($request_id){

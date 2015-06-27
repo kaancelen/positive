@@ -3,6 +3,7 @@ function disableOfferRow(offer){
 	$('#prim_'+offer['COMPANY_ID']).val(offer['PRIM']);
 	$('#prim_'+offer['COMPANY_ID']).prop('readonly', true);
 	$('#komisyon_'+offer['COMPANY_ID']).val(offer['KOMISYON']);
+	$('#prod_komisyon_'+offer['COMPANY_ID']).val(offer['PROD_KOMISYON']);
 	$('#komisyon_'+offer['COMPANY_ID']).prop('readonly', true);
 	$('#give_offer_'+offer['COMPANY_ID']).remove();
 }
@@ -10,6 +11,7 @@ function disableOfferRow(offer){
 function giveOffer(talepNo, companyId, companyName, user_id){
 	var prim = $('#prim_'+companyId).val();
 	var komisyon = $('#komisyon_'+companyId).val();
+	var prod_komisyon = $('#prod_komisyon_'+companyId).val();
 	
 	if(prim == null || prim.length == 0){
 		alert("Lütfen prim bilgisini giriniz!");
@@ -33,6 +35,7 @@ function giveOffer(talepNo, companyId, companyName, user_id){
 	data.append('company_id', companyId);
 	data.append('prim', prim);
 	data.append('komisyon', komisyon);
+	data.append('prod_komisyon', prod_komisyon);
 	
 	//make ajax request
     $.ajax({

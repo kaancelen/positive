@@ -28,11 +28,13 @@
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
       		<li id="personel_1"><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
       		<li id="personel_2"><a href="/positive/personel/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istekleri</a></li>
+      		<li id="personel_3"><a href="/positive/personel"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçeler</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
       		<li id="branch_1"><a href="/positive/branch/offerRequest.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Yeni Talep</a></li>
       		<li id="branch_2"><a href="/positive/branch/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Taleplerim</a></li>
       		<li id="branch_3"><a href="/positive/branch/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe isteklerim</a></li>
+      		<li id="branch_4"><a href="/positive/branch"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçelerim</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
       		<li id="finance_1"><a href="#">Finans</a></li>
@@ -40,6 +42,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
+          <li><a>Copyright© by Hero Sigorta Ltd. Şti.</a></li>
       	  <li><a href="/positive"><?php echo $nav_user[User::NAME]; ?></a></li>
         </ul>
         <li class="dropdown">

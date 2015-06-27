@@ -122,6 +122,13 @@ class AgentProcedures extends Procedures{
 			}
 		}
 	}
+	
+	public function updateCardInfo($card_id, $card_name, $card_no, $expire_date, $cvc){
+		$sql = "UPDATE CREDIT_CARDS SET NAME = ?, CARD_NO = ?, EXPIRE_DATE = ?, CVC_CODE = ? WHERE ID = ?";
+		$this->_db->query($sql, array($card_name, $card_no, $expire_date, $cvc, $card_id));
+		$error = $this->_db->error();
+		return $error;
+	}
 }
 
 ?>

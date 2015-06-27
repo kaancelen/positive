@@ -51,7 +51,7 @@
 			</div>
 			<?php
 		}else{
-			Util::redirect("/positive/branch");
+			Util::redirect("/positive/branch/policies.php");
 		}
 	}
 ?>
@@ -91,6 +91,7 @@
 				<td>Teknikçi</td>
 				<td>Prim</td>
 				<td>Komisyon</td>
+				<td>Prod Komisyonu</td>
 				<td>Şirket</td>
 			</tr>
 		</thead>
@@ -100,6 +101,7 @@
 				<td><?php echo $offerUser[User::NAME];?></td>
 				<td><?php echo $offer[OfferResponse::PRIM];?></td>
 				<td><?php echo $offer[OfferResponse::KOMISYON];?></td>
+				<td><?php echo $offer[OfferResponse::PROD_KOMISYON];?></td>
 				<td><?php echo $company[Company::NAME];?></td>
 			</tr>
 		</tbody>
@@ -131,7 +133,7 @@
 				    <?php } ?>
 				</select>
 				<select class="form-control" id="expireYear" name="expireYear">
-					<?php for ($i = 2015; $i <= 2050; $i++){ ?>
+					<?php for ($i = date('Y'); $i <= date('Y')+30; $i++){ ?>
 				    	<option><?php echo $i; ?></option>
 				    <?php } ?>
 				</select>
@@ -147,5 +149,7 @@
 		</div>
 	</div>
 </form>
-
+<script type="text/javascript">
+	$('#branch_2').addClass("active");
+</script>
 </body>

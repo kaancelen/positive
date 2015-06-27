@@ -74,6 +74,7 @@ include_once(__DIR__.'/../head.php');
 						<td><b>Sigorta şirketi</b></td>
 						<td><b>Prim</b></td>
 						<td><b>Komisyon</b></td>
+						<td><b>Prod Komisyonu</b></td>
 						<td><b>Teklif ver</b></td>
 					</tr>
 					<tr>
@@ -84,16 +85,22 @@ include_once(__DIR__.'/../head.php');
 					<tr>
 						<td id="offer_id_<?php echo $company[Company::ID]; ?>"></td>
 						<td><?php echo $company[Company::NAME]; ?></td>
-						<td style="width:20%">
+						<td style="width:15%">
 							<div class="input-group input-group-sm">
 							  <span class="input-group-addon">₺</span>
 							  <input type="text" class="form-control input-tl" id="prim_<?php echo $company[Company::ID]; ?>" name="prim_<?php echo $company[Company::ID]; ?>">
 							</div>
 						</td>
-						<td style="width:20%">
+						<td style="width:15%">
 							<div class="input-group input-group-sm">
 							  <span class="input-group-addon">₺</span>
 							  <input type="text" class="form-control input-tl" id="komisyon_<?php echo $company[Company::ID]; ?>" name="komisyon_<?php echo $company[Company::ID]; ?>">
+							</div>
+						</td>
+						<td style="width:15%">
+							<div class="input-group input-group-sm">
+							  <span class="input-group-addon">₺</span>
+							  <input type="text" readonly="readonly" class="form-control input-tl" id="prod_komisyon_<?php echo $company[Company::ID]; ?>" name="prod_komisyon_<?php echo $company[Company::ID]; ?>">
 							</div>
 						</td>
 						<td>
@@ -117,6 +124,12 @@ include_once(__DIR__.'/../head.php');
 		<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){?>
 			$('#prim_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
 			$('#komisyon_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
+			$('#komisyon_<?php echo $company[Company::ID]; ?>').keyup(function() {
+				var komisyon = $(this).val();
+				komisyon = komisyon.replace('.', '').replace(',', '.');
+				var prod_komisyon = (komisyon * <?php echo $tempUser[User::KOMISYON_RATE]; ?>) / 100;
+				$('#prod_komisyon_<?php echo $company[Company::ID]; ?>').val(prod_komisyon);
+			});
 		<?php }?>
 		<?php foreach($offerResponses as $offerResponse){?>
 			disableOfferRow(<?php echo json_encode($offerResponse); ?>);

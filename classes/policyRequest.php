@@ -14,10 +14,12 @@ class PolicyRequest{
 	const PERSONEL_ID = "PERSONEL_ID";
 	const PRIM = "PRIM";
 	const KOMISYON = "KOMISYON";
+	const PROD_KOMISYON = "PROD_KOMISYON";
 	const OFFER_DATE = "OFFER_DATE";
 	const PERSONEL_NAME = "PERSONEL_NAME";
 	const BRANCH_NAME = "BRANCH_NAME";
 	const COMPANY_NAME = "COMPANY_NAME";
+	const CARD_ID = "CARD_ID";
 	const CARD_NAME = "CARD_NAME";
 	const CARD_NO = "CARD_NO";
 	const EXPIRE_DATE = "EXPIRE_DATE";

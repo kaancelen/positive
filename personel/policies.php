@@ -39,6 +39,7 @@
 					<td><b>Şirket</b></td>
 					<td><b>Prim</b></td>
 					<td><b>Komisyon</b></td>
+					<td><b>Prod Komisyonu</b></td>
 					<td><b>Aç</b></td>
 				</tr>
 				<tr>
@@ -47,14 +48,15 @@
 			<tbody>
 			<?php foreach ($allPolicyRequests as $policyRequest){ ?>
 				<tr>
-					<td><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></td>
-					<td><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></td>
+					<td><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
+					<td><b><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></b></td>
 					<td><?php echo $policyRequest[PolicyRequest::BRANCH_NAME]; ?></td>
 					<td><?php echo DateUtil::format($policyRequest[PolicyRequest::OFFER_DATE]); ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::PLAKA]; ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::COMPANY_NAME]; ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::PRIM]; ?></td>
 					<td><?php echo $policyRequest[PolicyRequest::KOMISYON]; ?></td>
+					<td><?php echo $policyRequest[PolicyRequest::PROD_KOMISYON]; ?></td>
 					<td>
 						<button id="open_policy_req_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/personel/policyReqDetails.php?offer_id=<?php echo $policyRequest[PolicyRequest::OFFER_ID];?>'">
