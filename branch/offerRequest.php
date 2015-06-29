@@ -41,9 +41,16 @@
 		$asbis = Util::cleanInput($_POST['asbis']);
 		$description = Util::cleanInput($_POST['description']);
 		$user_id = $user[User::ID];
+		$policy_type = "Tanımsız";
+		
+		if(isset($_POST['radio_trafik'])){
+			$policy_type = "Trafik";
+		}else if($_POST['radio_kasko']){
+			$policy_type = "Kasko";
+		}
 		
 		$offerService = new OfferService();
-		$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $user_id, $companyIds);
+		$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companyIds);
 		if(!is_null($offerRequestId)){
 			Util::redirect("/positive/branch/offer.php?request_id=".$offerRequestId);
 		}else{ ?>
@@ -82,6 +89,17 @@
 		</div>
 		<div class="offer-column well">
 			<h2 class="form-signin-heading">Talep Bilgileri</h2>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">
+					<input type="radio" id="radio_trafik" name="radio_trafik" checked="checked" onchange="on_radio_trafik_change()">
+					Trafik Poliçesi
+				</span>
+				<span class="input-group-addon" id="basic-addon1">
+					<input type="radio" id="radio_kasko" name="radio_kasko" onchange="on_radio_kasko_change()">
+					Kasko Poliçesi
+				</span>
+			</div>
+			<br>
 			<label class="login-error" id="offer-request-error"></label>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Plaka No</span>

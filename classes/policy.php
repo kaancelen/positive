@@ -3,6 +3,7 @@
 class Policy{
 	const REQUEST_ID = "REQUEST_ID";
 	const REQUEST_DATE = "REQUEST_DATE";
+	const POLICY_TYPE = "POLICY_TYPE";
 	const BRANCH_ID = "BRANCH_ID";
 	const PLAKA = "PLAKA";
 	const TCKN = "TCKN";

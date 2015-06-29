@@ -7,7 +7,16 @@ function onCompanyAllChange(companies){
 		}
 	}
 }
-
+function on_radio_trafik_change(){
+	if($('#radio_trafik').is(':checked')){
+		$('#radio_kasko').prop('checked', false);
+	}
+}
+function on_radio_kasko_change(){
+	if($('#radio_kasko').is(':checked')){
+		$('#radio_trafik').prop('checked', false);
+	}
+}
 function on_radio_tckn_change(){
 	$('#radio_vergi').prop('checked', false);
 	$('#tckn').prop('readonly', false);

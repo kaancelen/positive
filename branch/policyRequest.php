@@ -61,6 +61,7 @@
 		<thead>
 			<tr>
 				<td>Talep No</td>
+				<td>Poliçe</td>
 				<td>İstek tarihi</td>
 				<td>Plaka</td>
 				<td>TC Kimlik No</td>
@@ -73,6 +74,7 @@
 		<tbody>
 			<tr>
 				<td><?php echo $request[OfferRequest::ID];?></td>
+				<td><?php echo $request[OfferRequest::POLICY_TYPE];?></td>
 				<td><?php echo DateUtil::format($request[OfferRequest::CREATION_DATE]);?></td>
 				<td><?php echo $request[OfferRequest::PLAKA];?></td>
 				<td><?php echo $request[OfferRequest::TCKN];?></td>

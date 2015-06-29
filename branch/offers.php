@@ -35,12 +35,9 @@
 			<thead>
 				<tr>
 					<td><b>Talep No</b></td>
+					<td><b>Poliçe</b></td>
 					<td><b>İstek Tarihi</b></td>
 					<td><b>Plaka</b></td>
-					<td><b>TC Kimlik No</b></td>
-					<td><b>Vergi No</b></td>
-					<td><b>Belge No</b></td>
-					<td><b>ASBİS No</b></td>
 					<td><b>Aç</b></td>
 				</tr>
 				<tr>
@@ -50,12 +47,9 @@
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
 				<tr>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
+					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
 					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::TCKN]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::VERGI]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::BELGE]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::ASBIS]; ?></td>
 					<td>
 						<button id="make_policies_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/branch/offer.php?request_id=<?php echo urldecode($offerRequest[OfferRequest::ID]);?>';">

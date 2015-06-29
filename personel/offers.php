@@ -33,12 +33,9 @@
 				<tr>
 					<td><b>Talep No</b></td>
 					<td><b>Kullanıcı Adı</b></td>
+					<td><b>Poliçe</b></td>
 					<td><b>İstek Tarihi</b></td>
 					<td><b>Plaka</b></td>
-					<td><b>TC Kimlik No</b></td>
-					<td><b>Vergi No</b></td>
-					<td><b>Belge No</b></td>
-					<td><b>ASBİS No</b></td>
 					<td><b>Aç</b></td>
 				</tr>
 				<tr>
@@ -51,12 +48,9 @@
 				<tr>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
 					<td><?php echo $tempUser[User::NAME]; ?></td>
+					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
 					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::TCKN]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::VERGI]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::BELGE]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::ASBIS]; ?></td>
 					<td>
 						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/personel/offer.php?request_id=<?php echo urldecode($offerRequest[OfferRequest::ID]);?>';">

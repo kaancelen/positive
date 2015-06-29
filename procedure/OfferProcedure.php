@@ -23,11 +23,11 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $companies
 	 * @return NULL|number
 	 */
-	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $user_id, $companies){
+	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companies){
 		$this->_db->beginTransaction();
 		
-		$sql = "INSERT INTO OFFER_REQUEST(PLAKA, TCKN, VERGI, BELGE, ASBIS, USER_ID, DESCRIPTION) VALUES(?,?,?,?,?,?,?)";
-		$this->_db->query($sql, array($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $description));
+		$sql = "INSERT INTO OFFER_REQUEST(PLAKA, TCKN, VERGI, BELGE, ASBIS, USER_ID, DESCRIPTION, POLICY_TYPE) VALUES(?,?,?,?,?,?,?,?)";
+		$this->_db->query($sql, array($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $description, $policy_type));
 		
 		if($this->_db->error()){
 			$this->_db->rollback();
@@ -80,6 +80,7 @@ class OfferProcedures extends Procedures{
 			$offerRequest[OfferRequest::VERGI] = $result->VERGI;
 			$offerRequest[OfferRequest::BELGE] = $result->BELGE;
 			$offerRequest[OfferRequest::ASBIS] = $result->ASBIS;
+			$offerRequest[OfferRequest::POLICY_TYPE] = $result->POLICY_TYPE;
 			$offerRequest[OfferRequest::DESCRIPTION] = $result->DESCRIPTION;
 			$offerRequest[OfferRequest::COMPANIES] = $companies;
 			
@@ -137,6 +138,7 @@ class OfferProcedures extends Procedures{
 				$offerRequest[OfferRequest::VERGI] = $offerObject->VERGI;
 				$offerRequest[OfferRequest::BELGE] = $offerObject->BELGE;
 				$offerRequest[OfferRequest::ASBIS] = $offerObject->ASBIS;
+				$offerRequest[OfferRequest::POLICY_TYPE] = $offerObject->POLICY_TYPE;
 				$offerRequest[OfferRequest::DESCRIPTION] = $offerObject->DESCRIPTION;
 				$offerRequest[OfferRequest::COMPANIES] = $companies;
 				
@@ -273,7 +275,7 @@ class OfferProcedures extends Procedures{
 	public function getAllPolicyRequest($user_id){
 		$paramArray = null;
 		
-		$sql = "SELECT ofr.ID REQUEST_ID, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
+		$sql = "SELECT ofr.ID REQUEST_ID, ofr.POLICY_TYPE, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
 		$sql .= "PERSONEL_NAME, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofre.PRIM, ofre.KOMISYON, ";
 		$sql .= "ofre.PROD_KOMISYON, ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, ";
 		$sql .= "OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ";
@@ -310,7 +312,7 @@ class OfferProcedures extends Procedures{
 	public function getPolicyRequest($offer_id, $user_id){
 		$paramArray = array($offer_id);
 		
-		$sql = "SELECT ofr.ID REQUEST_ID, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ofr.PLAKA PLAKA, ";
+		$sql = "SELECT ofr.ID REQUEST_ID, ofr.POLICY_TYPE POLICY_TYPE, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ofr.PLAKA PLAKA, ";
 		$sql .= "ofr.TCKN TCKN, ofr.VERGI VERGI, ofr.BELGE BELGE, ofr.ASBIS ASBIS, ofr.DESCRIPTION EK_BILGI, ofre.ID OFFER_ID, ";
 		$sql .= "ofre.USER_ID PERSONEL_ID, ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.PROD_KOMISYON PROD_KOMISYON, ";
 		$sql .= "ofre.CREATION_DATE OFFER_DATE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
@@ -363,7 +365,7 @@ class OfferProcedures extends Procedures{
 	public function getCompletedPolicies($user_id = null){
 		$paramArray = array();
 		
-		$sql = "SELECT ofr.PLAKA PLAKA, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
+		$sql = "SELECT ofr.PLAKA PLAKA, ofr.POLICY_TYPE POLICY_TYPE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
 		$sql .= "po.ID POLICY_ID, po.CREATION_DATE POLICY_COMPLETE_DATE, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = po.USER_ID) POLICY_COMPLETE_PERSONEL ";

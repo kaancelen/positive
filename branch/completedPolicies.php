@@ -26,6 +26,7 @@
 			<thead>
 				<tr>
 					<td><b>Poliçe No</b></td>
+					<td><b>Poliçe</b></td>
 					<td><b>Plaka</b></td>
 					<td><b>Şirket</b></td>
 					<td><b>Onay tarihi</b></td>
@@ -41,6 +42,7 @@
 			<?php foreach ($allPolicies as $policySummary){ ?>
 				<tr>
 					<td><b><?php echo $policySummary[Policy::POLICY_ID]; ?></b></td>
+					<td><?php echo $policySummary[Policy::POLICY_TYPE]; ?></td>
 					<td><?php echo $policySummary[Policy::PLAKA]; ?></td>
 					<td><?php echo $policySummary[Policy::COMPANY_NAME]; ?></td>
 					<td><?php echo DateUtil::format($policySummary[Policy::POLICY_COMPLETE_DATE]); ?></td>

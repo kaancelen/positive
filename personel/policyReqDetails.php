@@ -64,6 +64,7 @@
 				<tr>
 					<td>Talep No</td>
 					<td>Acenta</td>
+					<td>Poliçe</td>
 					<td>İstek tarihi</td>
 					<td>Plaka</td>
 					<td>TC Kimlik No</td>
@@ -77,6 +78,7 @@
 				<tr>
 					<td><?php echo $policyReqDetail[PolicyRequest::REQUEST_ID];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::BRANCH_NAME];?></td>
+					<td><?php echo $policyReqDetail[PolicyRequest::POLICY_TYPE];?></td>
 					<td><?php echo DateUtil::format($policyReqDetail[PolicyRequest::REQUEST_DATE]);?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::PLAKA];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::TCKN];?></td>

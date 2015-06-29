@@ -11,6 +11,7 @@ class OfferRequest{
 	const ASBIS = "ASBIS";
 	const STATUS = "STATUS";
 	const DESCRIPTION = "DESCRIPTION";
+	const POLICY_TYPE = "POLICY_TYPE";
 	const COMPANIES = "COMPANIES";
 	
 	const REQUEST_ID = "REQUEST_ID";
