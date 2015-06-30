@@ -182,7 +182,10 @@ class OfferProcedures extends Procedures{
 	 * @return NULL|multitype:
 	 */
 	public function getOffers($request_id){
-		$sql = "SELECT * FROM OFFER_RESPONSE ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.OFFER_ID AND orc.REQUEST_ID = ?";
+		$sql = "SELECT orc.OFFER_ID ID, ofr.USER_ID USER_ID, user.NAME PERSONEL_NAME, ofr.PRIM PRIM, ";
+		$sql .= "ofr.KOMISYON KOMISYON, ofr.PROD_KOMISYON PROD_KOMISYON, orc.COMPANY_ID COMPANY_ID, ";
+		$sql .= "orc.REQUEST_ID REQUEST_ID FROM OFFER_RESPONSE ofr, OFFER_REQUEST_COMPANY orc, ";
+		$sql .= "USER user WHERE ofr.ID = orc.OFFER_ID AND ofr.USER_ID = user.ID AND orc.REQUEST_ID = ?";
 		$this->_db->query($sql, array($request_id));
 		$result = $this->_db->all();
 		
@@ -195,6 +198,7 @@ class OfferProcedures extends Procedures{
 				$offerResponse = array();
 				$offerResponse[OfferResponse::ID] = $offerObject->ID;
 				$offerResponse[OfferResponse::USER_ID] = $offerObject->USER_ID;
+				$offerResponse[OfferResponse::PERSONEL_NAME] = $offerObject->PERSONEL_NAME;
 				$offerResponse[OfferResponse::PRIM] = $offerObject->PRIM;
 				$offerResponse[OfferResponse::KOMISYON] = $offerObject->KOMISYON;
 				$offerResponse[OfferResponse::PROD_KOMISYON] = $offerObject->PROD_KOMISYON;
@@ -211,7 +215,10 @@ class OfferProcedures extends Procedures{
 	 * @return NULL|multitype:NULL
 	 */
 	public function getOffer($offer_id){
-		$sql = "SELECT * FROM OFFER_RESPONSE ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.OFFER_ID AND ofr.ID = ?";
+		$sql = "SELECT orc.OFFER_ID ID, ofr.USER_ID USER_ID, user.NAME PERSONEL_NAME, ofr.PRIM PRIM, ";
+		$sql .= "ofr.KOMISYON KOMISYON, ofr.PROD_KOMISYON PROD_KOMISYON, orc.COMPANY_ID COMPANY_ID, ";
+		$sql .= "orc.REQUEST_ID REQUEST_ID FROM OFFER_RESPONSE ofr, OFFER_REQUEST_COMPANY orc, ";
+		$sql .= "USER user WHERE ofr.ID = orc.OFFER_ID AND ofr.USER_ID = user.ID AND orc.OFFER_ID = ?";
 		$this->_db->query($sql, array($offer_id));
 		$result = $this->_db->first();
 		
@@ -222,6 +229,7 @@ class OfferProcedures extends Procedures{
 			$offer = array();
 			$offer[OfferResponse::ID] = $result->ID;
 			$offer[OfferResponse::USER_ID] = $result->USER_ID;
+			$offer[OfferResponse::PERSONEL_NAME] = $result->PERSONEL_NAME;
 			$offer[OfferResponse::PRIM] = $result->PRIM;
 			$offer[OfferResponse::KOMISYON] = $result->KOMISYON;
 			$offer[OfferResponse::PROD_KOMISYON] = $result->PROD_KOMISYON;

@@ -3,6 +3,7 @@
 class OfferResponse{
 	const ID = "ID";
 	const USER_ID = "USER_ID";
+	const PERSONEL_NAME = "PERSONEL_NAME";
 	const PRIM = "PRIM";
 	const KOMISYON = "KOMISYON";
 	const PROD_KOMISYON = "PROD_KOMISYON";

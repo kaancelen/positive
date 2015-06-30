@@ -19,6 +19,13 @@
 	}
 	$offerService = new OfferService();
 	$allPolicies = $offerService->getCompletedPolicies($user[User::ID]);
+	if(empty($allPolicies)){
+		?>
+			<div id="user_table_msg" align="center">
+				<div class="alert alert-warning" role="alert">Hiç Poliçeniz bulunmamaktadır.</div>
+			</div>
+		<?php
+	}
 ?>
 <div class="container">
 	<div id="policy_table" class="table-responsive">

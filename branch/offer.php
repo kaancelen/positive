@@ -128,9 +128,10 @@ include_once(__DIR__.'/../head.php');
 	</div>
 	<script type="text/javascript">
 		<?php foreach($offerResponses as $offerResponse){?>
-			<?php $personelUser = $userService->getUser($offerResponse[OfferResponse::USER_ID]);?>
-			writeToOfferRow(<?php echo json_encode($offerResponse); ?>, '<?php echo $personelUser[User::NAME];?>');
+			writeToOfferRow(<?php echo json_encode($offerResponse); ?>);
 		<?php }?>
+		//pull new offers
+		pullOffers(<?php echo $offerRequest[OfferRequest::ID];?>);
 	</script>
 </div>
 <script type="text/javascript">
