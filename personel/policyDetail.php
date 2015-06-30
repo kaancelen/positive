@@ -109,6 +109,7 @@
 	<table class="offer-request-info-table">
 		<thead>
 			<tr>
+				<td>Poliçe id</td>
 				<td>Poliçe no</td>
 				<td>Poliçe türü</td>
 				<td>Poliçe tarihi</td>
@@ -120,6 +121,7 @@
 		<tbody>
 			<tr>
 				<td><?php echo $policy[Policy::POLICY_ID];?></td>
+				<td><?php echo $policy[Policy::POLICY_NUMBER];?></td>
 				<td><?php echo $policy[Policy::POLICY_TYPE];?></td>
 				<td><?php echo $policy[Policy::POLICY_COMPLETE_DATE];?></td>
 				<td><?php echo $policy[Policy::POLICY_COMPLETE_PERSONEL];?></td>

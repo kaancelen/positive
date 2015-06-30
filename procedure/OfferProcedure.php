@@ -340,11 +340,11 @@ class OfferProcedures extends Procedures{
 		}
 	}
 	
-	public function addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id){
+	public function addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id, $policy_number){
 		$this->_db->beginTransaction();
 		
-		$sql = "INSERT INTO POLICY(USER_ID, POLICY_PATH, MAKBUZ_PATH) VALUES(?,?,?)";
-		$this->_db->query($sql, array($user_id, $policyPath, $makbuzPath));
+		$sql = "INSERT INTO POLICY(USER_ID, POLICY_PATH, MAKBUZ_PATH, POLICY_NUMBER) VALUES(?,?,?,?)";
+		$this->_db->query($sql, array($user_id, $policyPath, $makbuzPath, $policy_number));
 		if($this->_db->error()){
 			$this->_db->rollback();
 			return null;
@@ -365,7 +365,7 @@ class OfferProcedures extends Procedures{
 	public function getCompletedPolicies($user_id = null){
 		$paramArray = array();
 		
-		$sql = "SELECT ofr.PLAKA PLAKA, ofr.POLICY_TYPE POLICY_TYPE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
+		$sql = "SELECT ofr.PLAKA PLAKA, po.POLICY_NUMBER POLICY_NUMBER,ofr.POLICY_TYPE POLICY_TYPE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
 		$sql .= "po.ID POLICY_ID, po.CREATION_DATE POLICY_COMPLETE_DATE, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = po.USER_ID) POLICY_COMPLETE_PERSONEL ";
@@ -402,7 +402,8 @@ class OfferProcedures extends Procedures{
 	public function getCompletedPolicy($policy_id, $user_id){
 		$paramArray = array($policy_id);
 		
-		$sql = "SELECT ofr.ID REQUEST_ID, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ofr.POLICY_TYPE POLICY_TYPE, ";
+		$sql = "SELECT ofr.ID REQUEST_ID, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ";
+		$sql .= "ofr.POLICY_TYPE POLICY_TYPE, po.POLICY_NUMBER POLICY_NUMBER, ";
 		$sql .= "ofr.PLAKA PLAKA, ofr.TCKN TCKN, ofr.VERGI VERGI, ofr.BELGE BELGE, ofr.ASBIS ASBIS, ";
 		$sql .= "ofr.DESCRIPTION EK_BILGI, ofre.ID OFFER_ID, ofre.USER_ID PERSONEL_ID, ";
 		$sql .= "ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.PROD_KOMISYON PROD_KOMISYON, ";

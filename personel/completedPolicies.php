@@ -38,7 +38,7 @@
 			<tbody>
 			<?php foreach ($allPolicies as $policySummary){ ?>
 				<tr>
-					<td><b><?php echo $policySummary[Policy::POLICY_ID]; ?></b></td>
+					<td><b><?php echo $policySummary[Policy::POLICY_NUMBER]; ?></b></td>
 					<td><?php echo $policySummary[Policy::POLICY_TYPE]; ?></td>
 					<td><?php echo $policySummary[Policy::PLAKA]; ?></td>
 					<td><?php echo $policySummary[Policy::COMPANY_NAME]; ?></td>

@@ -5,7 +5,15 @@ var file_type = "application/pdf";
 function validatePolicy(){
 	var policyFile = $('#policyFile');
 	var makbuzFile = $('#makbuzFile');
+	var policy_number = $('#policy_number').val();
 	var failFlag = false;
+	
+	if(policy_number == null || policy_number.length == 0){
+		$('#policy-number-error').html("Lütfen poliçe numarasını giriniz!");
+		failFlag = true;
+	}else{
+		$('#policy-number-error').html("");
+	}
 	
 	//policy check
 	if(policyFile[0].files[0] == null){

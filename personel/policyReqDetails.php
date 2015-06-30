@@ -31,6 +31,7 @@
 		$request_id = Util::cleanInput($_POST['request_id']);
 		$offer_id = Util::cleanInput($_POST['offer_id']);
 		$card_id = Util::cleanInput($_POST['card_id']);
+		$policy_number = Util::cleanInput($_POST['policy_number']);
 		
 		$fileUploader = new FileUploader();
 		$policyPath = $fileUploader->uploadPolicy($offer_id, $_FILES['policyFile']);
@@ -44,7 +45,7 @@
 			<?php
 		}
 		
-		$result = $offerService->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user[User::ID]);
+		$result = $offerService->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user[User::ID], $policy_number);
 		if(is_null($result)){
 			?>
 			<div align="center">
@@ -138,6 +139,11 @@
 			<input type="hidden" id="request_id" name="request_id" value='<?php echo $policyReqDetail[PolicyRequest::REQUEST_ID];?>'>
 			<input type="hidden" id="offer_id" name="offer_id" value='<?php echo $policyReqDetail[PolicyRequest::OFFER_ID];?>'>
 			<input type="hidden" id="card_id" name="card_id" value='<?php echo $policyReqDetail[PolicyRequest::CARD_ID];?>'>
+			<label class="login-error" id="policy-number-error"></label>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Poliçe numarası</span>
+				<input type="text" class="form-control" aria-describedby="basic-addon1" id="policy_number" name="policy_number">
+			</div>
 			<label class="login-error" id="policy-file-error"></label>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Poliçe Dosyası</span>
