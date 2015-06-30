@@ -398,5 +398,41 @@ class OfferProcedures extends Procedures{
 			return $allPolicies;
 		}
 	}
+	
+	public function getCompletedPolicy($policy_id, $user_id){
+		$paramArray = array($policy_id);
+		
+		$sql = "SELECT ofr.ID REQUEST_ID, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ofr.POLICY_TYPE POLICY_TYPE, ";
+		$sql .= "ofr.PLAKA PLAKA, ofr.TCKN TCKN, ofr.VERGI VERGI, ofr.BELGE BELGE, ofr.ASBIS ASBIS, ";
+		$sql .= "ofr.DESCRIPTION EK_BILGI, ofre.ID OFFER_ID, ofre.USER_ID PERSONEL_ID, ";
+		$sql .= "ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.PROD_KOMISYON PROD_KOMISYON, ";
+		$sql .= "ofre.CREATION_DATE OFFER_DATE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, ";
+		$sql .= "cc.ID CARD_ID, cc.NAME CARD_NAME, cc.CARD_NO CARD_NO, cc.EXPIRE_DATE EXPIRE_DATE, ";
+		$sql .= "cc.CVC_CODE CVC_CODE, cc.CREATION_DATE POLICY_REQ_DATE, po.ID POLICY_ID, ";
+		$sql .= "po.CREATION_DATE POLICY_COMPLETE_DATE, po.POLICY_PATH POLICY_PATH, po.MAKBUZ_PATH MAKBUZ_PATH, ";
+		$sql .= "(SELECT NAME FROM USER WHERE ID = po.USER_ID) POLICY_COMPLETE_PERSONEL ";
+		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre, COMPANY co, ";
+		$sql .= "CREDIT_CARDS cc, POLICY po WHERE ofr.ID = orc.REQUEST_ID AND ofre.ID = orc.OFFER_ID AND ";
+		$sql .= "co.ID = orc.COMPANY_ID AND cc.ID = orc.CARD_ID AND po.ID = orc.POLICY_ID AND ";
+		$sql .= "orc.POLICY_ID = ? ";
+		if(!is_null($user_id)){
+			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ? OR po.USER_ID = ?)";
+			array_push($paramArray, $user_id);
+			array_push($paramArray, $user_id);
+			array_push($paramArray, $user_id);
+		}
+		
+		$this->_db->query($sql, $paramArray);
+		$result = $this->_db->first();
+		
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "completed policy [".$policy_id.", user_id: ".$user_id."] not found in DB");
+			return null;
+		}else{
+			$policy = json_decode(json_encode($result), true);
+			return $policy;
+		}
+	}
 }
 ?>
