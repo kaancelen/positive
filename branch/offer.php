@@ -123,8 +123,8 @@ include_once(__DIR__.'/../head.php');
 		</div>
 	</div>
 	<div class="well chat-column">
-		<h4 style="text-align:center">Konuşma</h4>
-		<hr>	
+		<?php $chat_request_id = $offerRequest[OfferRequest::ID];?>
+		<?php include_once (__DIR__.'/../chat.php'); ?>
 	</div>
 	<script type="text/javascript">
 		<?php foreach($offerResponses as $offerResponse){?>

@@ -87,3 +87,10 @@ body{
 .input-tl{
 	text-align:right;
 }
+.chat_messages{
+	height: 280px;
+}
+.chatline{
+	height: 100%;
+	overflow: auto;
+}
