@@ -35,6 +35,7 @@
 			<thead>
 				<tr>
 					<td><b>Talep No</b></td>
+					<td><b>Teklif Sayısı</b></td>
 					<td><b>Poliçe</b></td>
 					<td><b>İstek Tarihi</b></td>
 					<td><b>Plaka</b></td>
@@ -47,6 +48,7 @@
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
 				<tr>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
+					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
 					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>

@@ -24,13 +24,13 @@ include_once(__DIR__.'/../head.php');
 	if(isset($_GET['request_id'])){
 		$offerRequestId = urlencode($_GET['request_id']);
 	}
-	if(is_null($offerRequestId)){
+	if(empty($offerRequestId)){
 		Util::redirect('/positive/error/404.php');
 	}
 	
 	$offerService = new OfferService();
 	$offerRequest = $offerService->getOfferRequest($offerRequestId);
-	if(is_null($offerRequest)){
+	if(empty($offerRequest)){
 		Util::redirect('/positive/error/404.php');
 	}
 	

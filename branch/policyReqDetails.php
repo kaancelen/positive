@@ -29,7 +29,10 @@
 	}
 	
 	$offerService = new OfferService();
-	$policyReqDetail = $offerService->getPolicyRequest($offerId, null);
+	$policyReqDetail = $offerService->getPolicyRequest($offerId, $user[User::ID]);
+	if(empty($policyReqDetail)){
+		Util::redirect("/positive/error/404.php");
+	}
 ?>
 <div class="container offer-request-screen">
 	<div class="offers-column">

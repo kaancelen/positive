@@ -443,5 +443,17 @@ class OfferProcedures extends Procedures{
 			return $policy;
 		}
 	}
+	
+	public function getGivenOfferRatio($request_id){
+		$sql = "SELECT COUNT(co.NAME) ISTEK FROM OFFER_REQUEST_COMPANY orc, OFFER_REQUEST ofr, COMPANY co WHERE orc.REQUEST_ID = ofr.ID AND orc.COMPANY_ID = co.ID AND ofr.ID = ?";
+		$this->_db->query($sql, array($request_id));
+		$result1 = $this->_db->first();
+		
+		$sql = "SELECT COUNT(co.NAME) TEKLIF FROM OFFER_REQUEST_COMPANY orc, OFFER_REQUEST ofr, COMPANY co WHERE orc.REQUEST_ID = ofr.ID AND orc.COMPANY_ID = co.ID AND ofr.ID = ? AND orc.OFFER_ID <> 0;";
+		$this->_db->query($sql, array($request_id));
+		$result2 = $this->_db->first();
+		
+		return ($result2->TEKLIF.'/'.$result1->ISTEK); 
+	}
 }
 ?>

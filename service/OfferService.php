@@ -58,6 +58,10 @@ class OfferService implements Service{
 	public function getCompletedPolicy($policy_id, $user_id = null){
 		return $this->_offerProcedures->getCompletedPolicy($policy_id, $user_id);
 	}
+	
+	public function getGivenOfferRatio($request_id){
+		return $this->_offerProcedures->getGivenOfferRatio($request_id);
+	}
 }
 
 ?>

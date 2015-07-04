@@ -26,6 +26,9 @@
 	
 	$offerService = new OfferService();
 	$policyReqDetail = $offerService->getPolicyRequest($offerId, null);
+	if(empty($policyReqDetail)){
+		Util::redirect("/positive/error/404.php");
+	}
 	
 	if(!empty($_POST)){
 		$request_id = Util::cleanInput($_POST['request_id']);

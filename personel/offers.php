@@ -32,6 +32,7 @@
 			<thead>
 				<tr>
 					<td><b>Talep No</b></td>
+					<td><b>Teklif Sayısı</b></td>
 					<td><b>Kullanıcı Adı</b></td>
 					<td><b>Poliçe</b></td>
 					<td><b>İstek Tarihi</b></td>
@@ -47,6 +48,7 @@
 				<?php $tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);?>
 				<tr>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
+					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
 					<td><?php echo $tempUser[User::NAME]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
 					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>

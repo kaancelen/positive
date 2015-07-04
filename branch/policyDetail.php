@@ -21,18 +21,14 @@
 	if(isset($_GET['policy_id'])){
 		$policy_id = urlencode($_GET['policy_id']);
 	}
-	if(is_null($policy_id)){
+	if(empty($policy_id)){
 		Util::redirect('/positive/error/404.php');
 	}
 	
 	$offerService = new OfferService();
 	$policy = $offerService->getCompletedPolicy($policy_id, $user[User::ID]);
-	if(is_null($policy)){
-		?>
-		<div id="user_form_msg" align="center">
-			<div class="alert alert-danger" role="alert">Poliçe bulunamadı!</div>
-		</div>
-		<?php
+	if(empty($policy)){
+		Util::redirect('/positive/error/404.php');
 	}
 ?>
 <div class="container">
