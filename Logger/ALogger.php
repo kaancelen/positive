@@ -1,6 +1,5 @@
 <?php
 include_once(__DIR__.'/Log4php/Logger.php');
-
 /**
  * Class ALogger
  * Singleton pattern used
@@ -17,11 +16,17 @@ class ALogger {
     private static $_instance = null;
 
     private $_logger;
+    private $_username;
 
     #Constructer, its private Because we never call new Logger() only use getInstance outside
     private function __construct(){
         Logger::configure(__DIR__.'/logger_config.xml');
         $this->_logger = Logger::getLogger('logger');
+        $this->_username = "NOT_LOGGED_IN";
+        if(isset($_SESSION['USER'])){
+        	$this->_username = $_SESSION['USER']['CODE'];
+        }
+        
     }
 
     #@Override
@@ -33,7 +38,7 @@ class ALogger {
     }
 
     public function write($level, $tag, $message){
-        $msg = "[".$tag."] ".$message;
+        $msg = "[".$tag."] [".$this->_username."] ".$message;
 
         switch($level){
             case self::FATAL : $this->_logger->fatal($msg);break;

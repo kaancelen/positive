@@ -348,11 +348,11 @@ class OfferProcedures extends Procedures{
 		}
 	}
 	
-	public function addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id, $policy_number){
+	public function addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id, $policy_number, $policy_ek_bilgi){
 		$this->_db->beginTransaction();
 		
-		$sql = "INSERT INTO POLICY(USER_ID, POLICY_PATH, MAKBUZ_PATH, POLICY_NUMBER) VALUES(?,?,?,?)";
-		$this->_db->query($sql, array($user_id, $policyPath, $makbuzPath, $policy_number));
+		$sql = "INSERT INTO POLICY(USER_ID, POLICY_PATH, MAKBUZ_PATH, POLICY_NUMBER, DESCRIPTION) VALUES(?,?,?,?,?)";
+		$this->_db->query($sql, array($user_id, $policyPath, $makbuzPath, $policy_number, $policy_ek_bilgi));
 		if($this->_db->error()){
 			$this->_db->rollback();
 			return null;
@@ -411,7 +411,7 @@ class OfferProcedures extends Procedures{
 		$paramArray = array($policy_id);
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofr.USER_ID BRANCH_ID, ofr.CREATION_DATE REQUEST_DATE, ";
-		$sql .= "ofr.POLICY_TYPE POLICY_TYPE, po.POLICY_NUMBER POLICY_NUMBER, ";
+		$sql .= "ofr.POLICY_TYPE POLICY_TYPE, po.POLICY_NUMBER POLICY_NUMBER, po.DESCRIPTION POLICE_EK_BILGI, ";
 		$sql .= "ofr.PLAKA PLAKA, ofr.TCKN TCKN, ofr.VERGI VERGI, ofr.BELGE BELGE, ofr.ASBIS ASBIS, ";
 		$sql .= "ofr.DESCRIPTION EK_BILGI, ofre.ID OFFER_ID, ofre.USER_ID PERSONEL_ID, ";
 		$sql .= "ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.PROD_KOMISYON PROD_KOMISYON, ";

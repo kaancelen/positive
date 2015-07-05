@@ -6,6 +6,7 @@ function validatePolicy(){
 	var policyFile = $('#policyFile');
 	var makbuzFile = $('#makbuzFile');
 	var policy_number = $('#policy_number').val();
+	var policyEkBilgi = $('#policeEkBilgi').val();
 	var failFlag = false;
 	
 	if(policy_number == null || policy_number.length == 0){
@@ -13,6 +14,13 @@ function validatePolicy(){
 		failFlag = true;
 	}else{
 		$('#policy-number-error').html("");
+	}
+	
+	if(policyEkBilgi != null && policyEkBilgi.length > 1024){
+		$('#ek-bilgi-error').html("Poliçe ek bilgi en fazla 1024 karakter olabilir.");
+		failFlag = true;
+	}else{
+		$('#ek-bilgi-error').html("");
 	}
 	
 	//policy check

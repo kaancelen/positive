@@ -129,6 +129,19 @@
 			</tr>
 		</tbody>
 	</table>
+	<br>
+	<table class="offer-request-info-table">
+		<thead>
+			<tr>
+				<td>Poliçe Ek Bilgi</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><?php echo $policy[Policy::POLICE_EK_BILGI];?></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <script type="text/javascript">
 	$('#branch_4').addClass("active");

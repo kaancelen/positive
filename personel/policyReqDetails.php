@@ -35,6 +35,7 @@
 		$offer_id = Util::cleanInput($_POST['offer_id']);
 		$card_id = Util::cleanInput($_POST['card_id']);
 		$policy_number = Util::cleanInput($_POST['policy_number']);
+		$policy_ek_bilgi = Util::cleanInput($_POST['policeEkBilgi']);
 		
 		$fileUploader = new FileUploader();
 		$policyPath = $fileUploader->uploadPolicy($offer_id, $_FILES['policyFile']);
@@ -48,7 +49,7 @@
 			<?php
 		}
 		
-		$result = $offerService->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user[User::ID], $policy_number);
+		$result = $offerService->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user[User::ID], $policy_number, $policy_ek_bilgi);
 		if(is_null($result)){
 			?>
 			<div align="center">
@@ -156,6 +157,11 @@
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Makbuz Dosyası</span>
 				<input type="file" class="form-control" aria-describedby="basic-addon1" id="makbuzFile" name="makbuzFile">
+			</div>
+			<label class="login-error" id="ek-bilgi-error"></label>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Ek Bilgi</span>
+				<textarea rows="4" class="form-control" aria-describedby="basic-addon1" id="policeEkBilgi" name="policeEkBilgi"></textarea>
 			</div>
 			<br>
 			<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validatePolicy()' id="offer-request-button">Poliçeyi onayla</button>
