@@ -19,7 +19,8 @@
 	}
 	
 	$offerService = new OfferService();
-	$allOfferRequest = $offerService->getAllRequests($user[User::ID], 1);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
+	$time = date(DateUtil::DB_DATE_FORMAT, time() - DateUtil::OFFER_REQUEST_TIMEOUT_MILLIS);//before 48 hour
+	$allOfferRequest = $offerService->getAllRequests($time, $user[User::ID], 1);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
 	
 	if(empty($allOfferRequest)){
 		?>

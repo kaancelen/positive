@@ -16,7 +16,8 @@
 	include_once (__DIR__.'/../navigationBar.php');
 	
 	$offerService = new OfferService();
-	$allOfferRequest = $offerService->getAllRequests(null, 1);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+	$time = date(DateUtil::DB_DATE_FORMAT, time() - DateUtil::OFFER_REQUEST_TIMEOUT_MILLIS);//before 48 hour
+	$allOfferRequest = $offerService->getAllRequests($time, null, 1);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	
 	if(empty($allOfferRequest)){
 		?>
@@ -25,8 +26,31 @@
 			</div>
 		<?php
 	}
+	
+	$companyService = new CompanyService();
+	$companies = $companyService->getAll();
+	
+	if(Cookie::exists('companies')){
+		$cookieCompanies = json_decode(Cookie::get('companies'));
+	}
 ?>
 <div class="container">
+	<div class="row">
+    	<div class="col-lg-12">
+	    	<div class="button-group">
+	        	<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="badge" id="num_of_selected"><?php if(isset($cookieCompanies)){echo count($cookieCompanies);}else{echo 0;}?></span>&nbsp;Şirket seç<span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					<?php foreach ($companies as $company){?>
+					<?php 	if($company[Company::ACTIVE] == Company::IS_ACTIVE){?>
+						<li><a href="#" class="small" data-value="<?php echo $company[Company::ID]?>" tabIndex="-1"><input id="comp_<?php echo $company[Company::ID]?>" type="checkbox"/><?php echo $company[Company::NAME];?></a></li>
+					<?php 	}?>
+					<?php } ?>
+				</ul>
+				<button type="button" class="btn btn-default btn-sm" onclick="location.reload();">Yenile</button>
+			</div>
+		</div>
+	</div>
+	<script src="/positive/js/dropdown.js"></script>
 	<div id="user_table" class="table-responsive">
 		<table class="table">
 			<thead>
@@ -45,6 +69,20 @@
 			<tbody>
 			<?php $userService = new UserService(); ?>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
+				<?php 
+					//Check if this contains requested companies
+					if(isset($cookieCompanies) && !empty($cookieCompanies)){
+						$showFlag = false;
+						foreach ($offerRequest[OfferRequest::COMPANIES] as $company){
+							if(in_array($company[Company::ID], $cookieCompanies)){
+								$showFlag = true;
+							}
+						}
+						if(!$showFlag){
+							continue;
+						}
+					}
+				?>
 				<?php $tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);?>
 				<tr>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
@@ -60,7 +98,7 @@
 						</button>
 					</td>
 				</tr>
-			<?php } ?>
+			<?php }?>
 			</tbody>
 		</table>
 	</div>

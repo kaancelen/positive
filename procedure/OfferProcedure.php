@@ -92,7 +92,7 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $all
 	 * @return NULL|multitype:
 	 */
-	public function getAllRequests($user_id, $all){
+	public function getAllRequests($time, $user_id, $all){
 		$user_id_array = null;
 		$user_id_part = " ";
 		$status_part = " ";
@@ -107,7 +107,7 @@ class OfferProcedures extends Procedures{
 				$status_part = " WHERE STATUS = 0 ";
 			}
 		}
-		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."ORDER BY CREATION_DATE ASC";
+		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."AND CREATION_DATE >= ".$time." ORDER BY CREATION_DATE ASC";
 		$this->_db->query($sql, $user_id_array);
 		$result = $this->_db->all();
 		
