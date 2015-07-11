@@ -59,6 +59,14 @@ body{
 	float: right;
 	width: 30%;
 }
+.search-column{
+	float: left;
+	width: 50%;
+}
+.result-column{
+	float: right;
+	width: 50%;
+}
 .offer-request-info-table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     width: 100%;

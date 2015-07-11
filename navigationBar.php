@@ -39,6 +39,7 @@
       	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
       		<li id="finance_1"><a href="#">Finans</a></li>
       	<?php }?>
+      		<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
