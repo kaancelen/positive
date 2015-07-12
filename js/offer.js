@@ -10,11 +10,19 @@ function onCompanyAllChange(companies){
 function on_radio_trafik_change(){
 	if($('#radio_trafik').is(':checked')){
 		$('#radio_kasko').prop('checked', false);
+		$('#radio_kasko_trafik').prop('checked', false);
 	}
 }
 function on_radio_kasko_change(){
 	if($('#radio_kasko').is(':checked')){
 		$('#radio_trafik').prop('checked', false);
+		$('#radio_kasko_trafik').prop('checked', false);
+	}
+}
+function on_radio_kasko_trafik_change(){
+	if($('#radio_kasko_trafik').is(':checked')){
+		$('#radio_trafik').prop('checked', false);
+		$('#radio_kasko').prop('checked', false);
 	}
 }
 function on_radio_tckn_change(){
@@ -51,13 +59,15 @@ function validateOfferRequest(companies){
 			companySelected = true;
 		}
 	}
+	
+	var message = "";
 	if(!companySelected){
 		$('#offer-request-company-error').html("En az bir sigorta şirketi seçiniz.");
+		message += "En az bir sigorta şirketi seçiniz."
 	}else{
 		$('#offer-request-company-error').html("");
 	}
 	
-	var message = "";
 	var plaka = $('#plaka').val();
 	if(plaka == null || plaka.length == 0){
 		message += "Plaka bilgisini boş bırakmayınız.<br>";

@@ -47,11 +47,22 @@
 			$policy_type = "Trafik";
 		}else if($_POST['radio_kasko']){
 			$policy_type = "Kasko";
+		}else if($_POST['radio_kasko_trafik']){
+			$policy_type = "KaskoTrafik";
 		}
 		
 		$offerService = new OfferService();
-		$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companyIds);
+		$offerRequestId = null;
+		
+		if($policy_type == "KaskoTrafik"){
+			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, "Kasko", $user_id, $companyIds);
+			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, "Trafik", $user_id, $companyIds);
+		}else{
+			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companyIds);
+		}
+		
 		if(!is_null($offerRequestId)){
+			Session::flash(Session::FLASH, "Hem Kasko Hem Trafik talebi sisteme eklendi.");
 			Util::redirect("/positive/branch/offer.php?request_id=".$offerRequestId);
 		}else{ ?>
 			<div id="user_form_msg" align="center">
@@ -97,6 +108,10 @@
 				<span class="input-group-addon" id="basic-addon1">
 					<input type="radio" id="radio_kasko" name="radio_kasko" onchange="on_radio_kasko_change()">
 					Kasko Poliçesi
+				</span>
+				<span class="input-group-addon" id="basic-addon1">
+					<input type="radio" id="radio_kasko_trafik" name="radio_kasko_trafik" onchange="on_radio_kasko_trafik_change()">
+					Kasko ve Trafik Poliçesi
 				</span>
 			</div>
 			<br>

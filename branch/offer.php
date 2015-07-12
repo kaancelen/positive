@@ -36,6 +36,15 @@ include_once(__DIR__.'/../head.php');
 	
 	$offerResponses = $offerService->getOffers($offerRequestId);
 	$userService = new UserService();
+	
+	if(Session::exists(Session::FLASH)){
+		?>
+		<div id="user_form_msg" align="center">
+			<div class="alert alert-success" role="alert"><?php echo Session::get(Session::FLASH); ?></div>
+		</div>
+		<?php
+		Session::delete(Session::FLASH);//Remove message
+	}
 ?>
 <script src="/positive/js/branch.js"></script>
 <div class="well offer-request-label">

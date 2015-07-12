@@ -363,6 +363,14 @@ class OfferProcedures extends Procedures{
 			if($this->_db->error()){
 				$this->_db->rollback();
 				return null;
+			}else{
+				$sql = "UPDATE CREDIT_CARDS SET EXPIRE_DATE = 'XX/XXXX', CVC_CODE = 'XXX',";
+				$sql .= " CARD_NO = CONCAT('XXXX XXXX XXXX ',RIGHT(CARD_NO, 4)) WHERE ID = ?";
+				$this->_db->query($sql, array($card_id));
+				if($this->_db->error()){
+					$this->_db->rollback();
+					return null;
+				}
 			}
 		}
 		
