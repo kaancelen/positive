@@ -18,6 +18,9 @@
 	$offerService = new OfferService();
 	$time = date(DateUtil::DB_DATE_FORMAT, time() - DateUtil::OFFER_REQUEST_TIMEOUT_MILLIS);//before 48 hour
 	$allOfferRequest = $offerService->getAllRequests($time, null, 1);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+	//offer polling job
+	Cookie::put(Cookie::LAST_ENTER_OFFER_REQ, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_OFFER_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 	
 	if(empty($allOfferRequest)){
 		?>
@@ -71,7 +74,7 @@
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
 				<?php 
 					//Check if this contains requested companies
-					if(isset($cookieCompanies) && !empty($cookieCompanies)){
+					if(isset($cookieCompanies)){
 						$showFlag = false;
 						foreach ($offerRequest[OfferRequest::COMPANIES] as $company){
 							if(in_array($company[Company::ID], $cookieCompanies)){

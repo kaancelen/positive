@@ -18,6 +18,10 @@
 	$offerService = new OfferService();
 	//bu kullanıcının poliçe isteği yapılmış ancak poliçeleşmemiş isteklerini getir
 	$allPolicyRequests = $offerService->getAllPolicyRequest();
+	//policy polling job
+	Cookie::put(Cookie::LAST_ENTER_POLICY_REQ, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_POLICY_FLAG, "off", Cookie::REMEMBER_EXPIRE);
+	
 	if(empty($allPolicyRequests)){
 	?>
 			<div id="user_table_msg" align="center">

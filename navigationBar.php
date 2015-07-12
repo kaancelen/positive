@@ -29,6 +29,7 @@
       		<li id="personel_1"><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
       		<li id="personel_2"><a href="/positive/personel/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istekleri</a></li>
       		<li id="personel_3"><a href="/positive/personel/completedPolicies.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçeler</a></li>
+      		<script src="/positive/js/offerPolicyPolling.js"></script>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
       		<li id="branch_1"><a href="/positive/branch/offerRequest.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Yeni Talep</a></li>
@@ -43,7 +44,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
-          <li><a>Copyright© by Hero Sigorta Ltd. Şti.</a></li>
+          <li><a style="font-size: 10">Copyright© by Hero Sigorta Ltd. Şti.</a></li>
       	  <li><a href="/positive"><?php echo $nav_user[User::NAME]; ?></a></li>
         </ul>
         <li class="dropdown">

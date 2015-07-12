@@ -166,6 +166,42 @@ class SearchProcedures extends Procedures{
 			return $response;
 		}
 	}
+	
+	public function checkNewOfferPolicy($companies, $last_enter_offer_req, $last_enter_policy_req){
+		$sql = "SELECT ofr.ID FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ";
+		$sql .= "ofr.ID = orc.REQUEST_ID AND orc.COMPANY_ID IN (";
+		foreach ($companies as $id){
+			$sql .= "?,";
+		}
+		$sql = substr($sql, 0, -1);//remove last ','
+		$sql .= ") AND ofr.CREATION_DATE > ?";
+		
+		$params = array();
+		foreach ($companies as $id){
+			array_push($params, $id);
+		}
+		array_push($params, $last_enter_offer_req);
+		$this->_db->query($sql, $params);
+		$offer_req_count = $this->_db->count();
+		
+		$sql = "SELECT cc.ID FROM OFFER_REQUEST_COMPANY orc, CREDIT_CARDS cc WHERE cc.ID = orc.CARD_ID AND ";
+		$sql .= "orc.POLICY_ID = 0 AND orc.COMPANY_ID IN (";
+		foreach ($companies as $id){
+			$sql .= "?,";
+		}
+		$sql = substr($sql, 0, -1);//remove last ','
+		$sql .= ") AND cc.CREATION_DATE > ?";
+		
+		$params = array();
+		foreach ($companies as $id){
+			array_push($params, $id);
+		}
+		array_push($params, $last_enter_policy_req);
+		$this->_db->query($sql, $params);
+		$policy_req_count = $this->_db->count();
+		
+		return array($offer_req_count, $policy_req_count);
+	}
 }
 
 ?>

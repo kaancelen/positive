@@ -93,7 +93,7 @@ class OfferProcedures extends Procedures{
 	 * @return NULL|multitype:
 	 */
 	public function getAllRequests($time, $user_id, $all){
-		$user_id_array = null;
+		$user_id_array = array();
 		$user_id_part = " ";
 		$status_part = " ";
 		if(!is_null($user_id)){
@@ -107,7 +107,8 @@ class OfferProcedures extends Procedures{
 				$status_part = " WHERE STATUS = 0 ";
 			}
 		}
-		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."AND CREATION_DATE >= ".$time." ORDER BY CREATION_DATE ASC";
+		array_push($user_id_array, $time);
+		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."AND CREATION_DATE > ? ORDER BY CREATION_DATE ASC";
 		$this->_db->query($sql, $user_id_array);
 		$result = $this->_db->all();
 		
@@ -396,7 +397,7 @@ class OfferProcedures extends Procedures{
 			array_push($paramArray, $user_id);
 		}
 		
-		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC";
+		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC LIMIT 50";
 		
 		$this->_db->query($sql, $paramArray);
 		$result = $this->_db->all();

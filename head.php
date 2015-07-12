@@ -16,3 +16,4 @@
 <link rel="stylesheet" href="/positive/css/main.css">
 <script src="/positive/js/main.js"></script>
 <script src="/positive/js/cookie.js"></script>
+<?php date_default_timezone_set('Europe/Istanbul');?>

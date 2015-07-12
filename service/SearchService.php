@@ -30,6 +30,9 @@ class SearchService implements Service{
 		return $this->_searchProcedures->searchExtend($plaka_no, $tckn, $vergi_no, $belge_no, $asbis, $requester, $user_id);
 	}
 	
+	public function checkNewOfferPolicy($companies, $last_enter_offer_req, $last_enter_policy_req){
+		return $this->_searchProcedures->checkNewOfferPolicy($companies, $last_enter_offer_req, $last_enter_policy_req);
+	}
 }
 
 ?>

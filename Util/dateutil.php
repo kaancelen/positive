@@ -4,6 +4,7 @@ class DateUtil{
 	const FORMAT = "d/m/Y H:i:s";
 	const HOUR_FORMAT = "H:i";
 	const DB_DATE_FORMAT = "Y-m-d";
+	const DB_DATE_FORMAT_TIME = "Y-m-d H:i:s";
 	
 	const OFFER_REQUEST_TIMEOUT_MILLIS = 172800;//48 hour
 	

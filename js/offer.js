@@ -63,7 +63,7 @@ function validateOfferRequest(companies){
 	var message = "";
 	if(!companySelected){
 		$('#offer-request-company-error').html("En az bir sigorta şirketi seçiniz.");
-		message += "En az bir sigorta şirketi seçiniz."
+		message += "En az bir sigorta şirketi seçiniz.<br>"
 	}else{
 		$('#offer-request-company-error').html("");
 	}

@@ -102,3 +102,9 @@ body{
 	height: 100%;
 	overflow: auto;
 }
+.poll-alert-1{
+	background-color: #99FF99;
+}
+.poll-alert-2{
+	background-color: #FFCC99;
+}
