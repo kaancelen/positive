@@ -45,6 +45,16 @@ include_once(__DIR__.'/../head.php');
 		<?php
 		Session::delete(Session::FLASH);//Remove message
 	}
+	$makePolicyPermission = true;
+	if($offerRequest[OfferRequest::IS_OFFER_ACCEPTED]){
+		$makePolicyPermission = false;
+		?>
+		<div id="user_form_msg" align="center">
+			<div class="alert alert-info" role="alert">Bu talep için bir teklif kabul edilmiş ve poliçe isteklerine eklenmiş.</div>
+		</div>
+		<?php
+	}
+	//DateUtil::after(strtotime($offerRequest[OfferRequest::CREATION_DATE]), time(), DateUtil::OFFER_REQUEST_TIMEOUT_MILLIS))
 ?>
 <script src="/positive/js/branch.js"></script>
 <div class="well offer-request-label">
@@ -120,10 +130,12 @@ include_once(__DIR__.'/../head.php');
 							</div>
 						</td>
 						<td>
+							<?php if($makePolicyPermission){ ?>
 							<button id="make_policy_<?php echo $company[Company::ID]; ?>" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 								onclick="navigateToPolicyRequest(<?php echo $company[Company::ID]; ?>);" style="display: none">
 							  <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
 							</button>
+							<?php } ?>
 						</td>
 					</tr>
 				<?php } ?>

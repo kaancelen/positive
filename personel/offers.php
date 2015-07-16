@@ -84,10 +84,20 @@
 						if(!$showFlag){
 							continue;
 						}
+						$rowOfferCompleted = true;
+						foreach ($offerRequest[OfferRequest::COMPANIES] as $company){
+							foreach ($cookieCompanies as $companyId){
+								if($company[Company::ID] == $companyId){
+									if($company[OfferRequest::OFFER_ID] == 0){
+										$rowOfferCompleted = false;
+									}
+								}
+							}
+						}
 					}
 				?>
 				<?php $tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);?>
-				<tr>
+				<tr <?php if($rowOfferCompleted) echo "class='row-offer-completed'";?>>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
 					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
 					<td><?php echo $tempUser[User::NAME]; ?></td>

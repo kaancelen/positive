@@ -17,6 +17,10 @@ class DateUtil{
 		$datetime = new DateTime($date);
 		return $datetime->format(self::HOUR_FORMAT);
 	}
+	
+	public static function after($start, $end, $difference){
+		return (($end - $start) > $difference ? true : false);
+	}
 }
 
 ?>

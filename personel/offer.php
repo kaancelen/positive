@@ -31,6 +31,16 @@ include_once(__DIR__.'/../head.php');
 	$offerResponses = $offerService->getOffers($offerRequestId);
 	$userService = new UserService();
 	$tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);
+	
+	$makePolicyPermission = true;
+	if($offerRequest[OfferRequest::IS_OFFER_ACCEPTED]){
+		$makePolicyPermission = false;
+		?>
+		<div id="user_form_msg" align="center">
+			<div class="alert alert-info" role="alert">Bu talep için bir teklif kabul edilmiş ve poliçe isteklerine eklenmiş.</div>
+		</div>
+		<?php
+	}
 ?>
 <script src="/positive/js/personel.js"></script>
 <div class="well offer-request-label">
@@ -106,10 +116,12 @@ include_once(__DIR__.'/../head.php');
 							</div>
 						</td>
 						<td>
+							<?php if($makePolicyPermission){ ?>
 							<button id="give_offer_<?php echo $company[Company::ID]; ?>" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 								onclick="giveOffer(<?php echo $offerRequest[OfferRequest::ID]; ?>,<?php echo $company[Company::ID]; ?>, '<?php echo $company[Company::NAME]; ?>', <?php echo $user[User::ID]; ?>);">
 							  <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
 							</button>
+							<?php } ?>
 						</td>
 					</tr>
 				<?php } ?>
@@ -140,5 +152,6 @@ include_once(__DIR__.'/../head.php');
 </div>
 <script type="text/javascript">
 	$('#personel_1').addClass("active");
+	pullOfferPageControl(<?php echo $offerRequest[OfferRequest::ID]; ?>);
 </script>
 </body>

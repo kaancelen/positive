@@ -202,6 +202,13 @@ class SearchProcedures extends Procedures{
 		
 		return array($offer_req_count, $policy_req_count);
 	}
+	
+	public function checkNewPolicyRequest($request_id){
+		$sql = "SELECT * FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? AND CARD_ID <> 0";
+		$this->_db->query($sql, array($request_id));
+		$count = $this->_db->count();
+		return $count;
+	}
 }
 
 ?>

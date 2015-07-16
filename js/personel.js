@@ -57,3 +57,33 @@ function giveOffer(talepNo, companyId, companyName, user_id){
         }
     });
 }
+
+function pullOfferPageControl(request_id){
+	var data = new FormData();
+	data.append('request_id', request_id);
+	//in every 5 second make ajax request
+	setInterval(function(){
+		//make ajax request
+	    $.ajax({
+	        url: '/positive/ajax/pullOfferControl.php',
+	        type: 'POST',
+	        data: data,
+	        cache: false,
+	        dataType: 'json',
+	        processData: false,
+	        contentType: false,
+	        success: function(data, textStatus, jqXHR){
+	        	if(data){//new policy request has come
+	        		location.reload();
+	        	}
+	        },
+	        error: function(jqXHR, textStatus, errorThrown){
+	            console.log('pullOfferPageControl ajax error : ' + textStatus);
+	        },
+	        complete: function(jqXHR, textStatus){
+	            console.log("pullOfferPageControl ajax call complete : " + textStatus);
+	        }
+	    });
+	}, 
+	5000);
+}

@@ -54,6 +54,16 @@
 			Util::redirect("/positive/branch/policies.php");
 		}
 	}
+	
+	$makePolicyPermission = true;
+	if($request[OfferRequest::IS_OFFER_ACCEPTED]){
+		$makePolicyPermission = false;
+		?>
+		<div id="user_form_msg" align="center">
+			<div class="alert alert-info" role="alert">Bu talep için bir teklif kabul edilmiş ve poliçe isteklerine eklenmiş.</div>
+		</div>
+		<?php
+	}
 ?>
 
 <div class="well offer-request-label">
@@ -147,7 +157,9 @@
 				<input type="text" class="form-control" aria-describedby="basic-addon1" id="cvc" name="cvc">
 			</div>
 			<br>
+			<?php if($makePolicyPermission){?>
 			<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validatePolicyRequest()' id="policy-request-button">Poliçeleştir</button>
+			<?php } ?>
 		</div>
 	</div>
 </form>

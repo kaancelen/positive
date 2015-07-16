@@ -63,12 +63,17 @@ class OfferProcedures extends Procedures{
 			$this->_db->query($sql, array($request_id));
 			$result2 = $this->_db->all();
 			
+			$isOfferAccepted = 0;
 			$companies = array();
 			foreach ($result2 as $object){
 				$company = array();
 				$company[Company::ID] = $object->ID;
 				$company[Company::NAME] = $object->NAME;
 				array_push($companies, $company);
+				
+				if($object->CARD_ID != "0"){
+					$isOfferAccepted = 1;
+				}
 			}
 			
 			$offerRequest = array();
@@ -83,6 +88,7 @@ class OfferProcedures extends Procedures{
 			$offerRequest[OfferRequest::POLICY_TYPE] = $result->POLICY_TYPE;
 			$offerRequest[OfferRequest::DESCRIPTION] = $result->DESCRIPTION;
 			$offerRequest[OfferRequest::COMPANIES] = $companies;
+			$offerRequest[OfferRequest::IS_OFFER_ACCEPTED] = $isOfferAccepted;
 			
 			return $offerRequest;
 		}
@@ -127,6 +133,7 @@ class OfferProcedures extends Procedures{
 					$company = array();
 					$company[Company::ID] = $object->ID;
 					$company[Company::NAME] = $object->NAME;
+					$company[OfferRequest::OFFER_ID] = $object->OFFER_ID;
 					array_push($companies, $company);
 				}
 				

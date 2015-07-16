@@ -33,6 +33,10 @@ class SearchService implements Service{
 	public function checkNewOfferPolicy($companies, $last_enter_offer_req, $last_enter_policy_req){
 		return $this->_searchProcedures->checkNewOfferPolicy($companies, $last_enter_offer_req, $last_enter_policy_req);
 	}
+	
+	public function checkNewPolicyRequest($request_id){
+		return $this->_searchProcedures->checkNewPolicyRequest($request_id);
+	}
 }
 
 ?>
