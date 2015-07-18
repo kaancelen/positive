@@ -41,6 +41,7 @@
       		<li id="finance_1"><a href="#">Finans</a></li>
       	<?php }?>
       		<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>
+      		<li id="report_1"><a href="/positive/report.php"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Hata Bildir</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">

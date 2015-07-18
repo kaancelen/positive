@@ -35,6 +35,8 @@
 	
 	if(Cookie::exists('companies')){
 		$cookieCompanies = json_decode(Cookie::get('companies'));
+	}else{
+		$cookieCompanies = array();
 	}
 ?>
 <div class="container">

@@ -12,6 +12,10 @@ class FileUploader{
 		return $this->uploadFile($makbuz, __DIR__.'/makbuz/'.$offer_id.'_makbuz.pdf');
 	}
 	
+	public function uploadImage($imageName, $image){
+		return $this->uploadFile($image, __DIR__.'/report_images/'.$imageName);
+	}
+	
 	private function uploadFile($file, $filepath){
 		if(file_exists($filepath)){
 			unlink($filepath);//Remove if exist
