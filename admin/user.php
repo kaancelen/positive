@@ -159,5 +159,7 @@
 	}
 ?>
 </script>
-
+<script type="text/javascript">
+	$('#admin_1').addClass("active");
+</script>
 <body>

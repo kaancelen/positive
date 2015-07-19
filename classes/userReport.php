@@ -8,6 +8,10 @@ class UserReport{
 	const FILE1 = "FILE1";
 	const FILE2 = "FILE2";
 	const FEEDBACK = "FEEDBACK";
+	const USER_ID = "USER_ID";
+	const CREATION_DATE = "CREATION_DATE";
+	
+	const USER_NAME = "USER_NAME";
 }
 
 ?>

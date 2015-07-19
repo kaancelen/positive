@@ -10,7 +10,7 @@
 ?>
 	<script src="/positive/js/report.js"></script>
 	<div class="container">
-		<form class="form-signin" id="positive-report" action="/positive/saveReport.php" method="post" autocomplete="off">
+		<form class="form-signin" id="positive-report" action="/positive/saveReport.php" method="post" autocomplete="off" enctype="multipart/form-data">
 			<label for="subject" class="login-error" id="subject-error"></label>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Başlık</span>

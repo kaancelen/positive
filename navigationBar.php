@@ -24,6 +24,7 @@
       <ul class="nav navbar-nav nav-pills">
       	<?php if($nav_user[User::ROLE] == User::ADMIN){?>
       		<li id="admin_1"><a href="/positive/admin/users.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Kullanıcılar</a></li>
+      		<li id="admin_2"><a href="/positive/admin/userExceptions.php"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Hata Bildirimleri</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
       		<li id="personel_1"><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
@@ -40,8 +41,12 @@
       	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
       		<li id="finance_1"><a href="#">Finans</a></li>
       	<?php }?>
-      		<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>
+      	<?php if($nav_user[User::ROLE] == User::PERSONEL || $nav_user[User::ROLE] == User::BRANCH){ ?>
+     	 	<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>
+      	<?php } ?>
+      	<?php if($nav_user[User::ROLE] == User::PERSONEL || $nav_user[User::ROLE] == User::BRANCH || $nav_user[User::ROLE] == User::FINANCE){ ?>
       		<li id="report_1"><a href="/positive/report.php"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Hata Bildir</a></li>
+      	<?php } ?>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">

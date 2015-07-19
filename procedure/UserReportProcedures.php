@@ -12,10 +12,10 @@ class UserReportProcedures extends Procedures{
 		parent::__construct();
 	}
 	
-	public function createUserReport($subject, $content, $file1, $file2){
+	public function createUserReport($user_id, $subject, $content, $file1, $file2){
 		$this->_db->beginTransaction();
-		$sql = "INSERT INTO USER_EXCEPTION(STATUS, SUBJECT, CONTENT) VALUES(?,?,?)";
-		$this->_db->query($sql, array(0, $subject, $content));
+		$sql = "INSERT INTO USER_EXCEPTION(USER_ID, STATUS, SUBJECT, CONTENT) VALUES(?,?,?,?)";
+		$this->_db->query($sql, array($user_id, 0, $subject, $content));
 		
 		if($this->_db->error()){
 			$this->_logger->write(ALogger::ERROR, self::TAG, "User report couldn't created!");
@@ -44,6 +44,42 @@ class UserReportProcedures extends Procedures{
 			$this->_db->commit();
 			return $report_id;
 		}
+	}
+	
+	public function getAll($status){
+		$params = array();
+		$sql = "SELECT ue.ID, ue.STATUS, ue.SUBJECT, ue.CONTENT, ue.FILE1, ue.FILE2, ue.FEEDBACK, ";
+		$sql .= "ue.USER_ID, ue.CREATION_DATE, us.NAME USER_NAME FROM USER_EXCEPTION ue,USER us WHERE ue.USER_ID = us.ID";
+		if(!is_null($status)){
+			$sql .= " AND STATUS = ?";
+			array_push($params, $status);
+		}
+		$this->_db->query($sql, $params);
+		$result = $this->_db->all();
+		if(is_null($result)){
+			return null;
+		}else{
+			$response = array();
+			foreach ($result as $object){
+				$report = array();
+				$report[UserReport::ID] = $object->ID;
+				$report[UserReport::STATUS] = $object->STATUS;
+				$report[UserReport::SUBJECT] = $object->SUBJECT;
+				$report[UserReport::CONTENT] = $object->CONTENT;
+				$report[UserReport::FILE1] = $object->FILE1;
+				$report[UserReport::FILE2] = $object->FILE2;
+				$report[UserReport::FEEDBACK] = $object->FEEDBACK;
+				$report[UserReport::USER_ID] = $object->USER_ID;
+				$report[UserReport::CREATION_DATE] = $object->CREATION_DATE;
+				$report[UserReport::USER_NAME] = $object->USER_NAME;
+				array_push($response, $report);
+			}
+			return $response;
+		}
+	}
+	
+	public function get($id){
+		//TODO
 	}
 }
 

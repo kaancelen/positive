@@ -11,8 +11,16 @@ class UserReportService implements Service{
 		$this->_userReportProcedures = new UserReportProcedures();
 	}
 	
-	public function createUserReport($subject, $content, $file1, $file2){
-		return $this->_userReportProcedures->createUserReport($subject, $content, $file1, $file2);
+	public function createUserReport($user_id, $subject, $content, $file1, $file2){
+		return $this->_userReportProcedures->createUserReport($user_id, $subject, $content, $file1, $file2);
+	}
+	
+	public function getAll($status = null){
+		return $this->_userReportProcedures->getAll($status);
+	}
+	
+	public function get($id){
+		return $this->_userReportProcedures->get($id);
 	}
 }
 

@@ -47,17 +47,17 @@
 				<div class="alert alert-danger" role="alert">Dosyalar yüklenemedi, bir hata ile karşılaşıldı!</div>
 			</div>
 			<?php
-		}
-		
-		$result = $offerService->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user[User::ID], $policy_number, $policy_ek_bilgi);
-		if(is_null($result)){
-			?>
-			<div align="center">
-				<div class="alert alert-danger" role="alert">Poliçe onaylanamadı, bir hata ile karşılaşıldı!</div>
-			</div>
-			<?php
 		}else{
-			Util::redirect("/positive/personel/completedPolicies.php");
+			$result = $offerService->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user[User::ID], $policy_number, $policy_ek_bilgi);
+			if(is_null($result)){
+				?>
+				<div align="center">
+					<div class="alert alert-danger" role="alert">Poliçe onaylanamadı, bir hata ile karşılaşıldı!</div>
+				</div>
+				<?php
+			}else{
+				Util::redirect("/positive/personel/completedPolicies.php");
+			}
 		}
 	}
 ?>
