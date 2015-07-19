@@ -79,7 +79,60 @@ class UserReportProcedures extends Procedures{
 	}
 	
 	public function get($id){
-		//TODO
+		$sql = "SELECT ue.ID, ue.STATUS, ue.SUBJECT, ue.CONTENT, ue.FILE1, ue.FILE2, ue.FEEDBACK, ";
+		$sql .= "ue.USER_ID, ue.CREATION_DATE, us.NAME USER_NAME FROM USER_EXCEPTION ue,USER us ";
+		$sql .= "WHERE ue.USER_ID = us.ID AND ue.ID = ?";
+		$this->_db->query($sql, array($id));
+		$result = $this->_db->first();
+		if(is_null($result)){
+			return null;
+		}else{
+			$report = array();
+			$report[UserReport::ID] = $result->ID;
+			$report[UserReport::STATUS] = $result->STATUS;
+			$report[UserReport::SUBJECT] = $result->SUBJECT;
+			$report[UserReport::CONTENT] = $result->CONTENT;
+			$report[UserReport::FILE1] = $result->FILE1;
+			$report[UserReport::FILE2] = $result->FILE2;
+			$report[UserReport::FEEDBACK] = $result->FEEDBACK;
+			$report[UserReport::USER_ID] = $result->USER_ID;
+			$report[UserReport::CREATION_DATE] = $result->CREATION_DATE;
+			$report[UserReport::USER_NAME] = $result->USER_NAME;
+			return $report;
+		}
+	}
+	
+	public function remove($id){
+		$report = $this->get($id);
+		if(is_null($report)){
+			return false;
+		}else{
+			//first remove files
+			if(!empty($report[UserReport::FILE1])){
+				unlink($report[UserReport::FILE1]);
+			}
+			if(!empty($report[UserReport::FILE2])){
+				unlink($report[UserReport::FILE2]);
+			}
+			
+			$sql = "DELETE FROM USER_EXCEPTION WHERE ID = ?";
+			$this->_db->query($sql, array($id));
+			if($this->_db->error()){
+				return false;
+			}else{
+				return true;
+			}
+		}
+	}
+	
+	public function update($id, $status, $feedback){
+		$sql = "UPDATE USER_EXCEPTION SET STATUS = ?, FEEDBACK = ? WHERE ID = ?";
+		$this->_db->query($sql, array($status, $feedback, $id));
+		if($this->_db->error()){
+			return false;
+		}else{
+			return true;
+		}
 	}
 }
 

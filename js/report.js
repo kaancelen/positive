@@ -79,3 +79,71 @@ function ValidateSingleInput(oInput) {
     }
     return true;
 }
+
+function removeReport(report_id){
+	var r = confirm(report_id + " numarali hata bildiriminiz silmek istediğinize emin misiniz?");
+	if(!r){
+		return;
+	}
+	
+	var data = new FormData();
+	data.append('report_id', report_id);
+	
+	//make ajax request
+    $.ajax({
+        url: '/positive/ajax/remove_report.php',
+        type: 'POST',
+        data: data,
+        cache: false,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR){
+        	if(data){
+        		$('#report_'+report_id).remove();
+        		alert("Kayıt başarıyla silindi.");
+        	}else{
+        		alert("Kayıt silinemedi, bir hata oluştu!");
+        	}
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log('removeReport ajax error : ' + textStatus);
+        },
+        complete: function(jqXHR, textStatus){
+            console.log("removeReport ajax call complete : " + textStatus);
+        }
+    });
+}
+
+function on_statu0_change(){
+	if($('#statu0').is(':checked')){
+		$('#statu1').prop('checked', false);
+		$('#statu2').prop('checked', false);
+	}
+}
+function on_statu1_change(){
+	if($('#statu1').is(':checked')){
+		$('#statu0').prop('checked', false);
+		$('#statu2').prop('checked', false);
+	}
+}
+function on_statu2_change(){
+	if($('#statu2').is(':checked')){
+		$('#statu0').prop('checked', false);
+		$('#statu1').prop('checked', false);
+	}
+}
+
+function validateFeedback(){
+	var feedback = $('#feedback').val();
+	
+	if(feedback == null || feedback.length == 0){
+		$('#feedback-error').html("Lütfen feedback'i boş bırakmayınız!");
+	}else if(feedback.length > 1024){
+		$('#feedback-error').html("Feedback en fazla 1024 karakter olabilir.");
+	}else{
+		$('#feedback-error').html("");
+		var form = $('#feedback-form');
+		form.submit();
+	}
+}

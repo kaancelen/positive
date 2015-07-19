@@ -22,6 +22,14 @@ class UserReportService implements Service{
 	public function get($id){
 		return $this->_userReportProcedures->get($id);
 	}
+	
+	public function remove($id){
+		return $this->_userReportProcedures->remove($id);
+	}
+	
+	public function update($id, $status, $feedback){
+		return $this->_userReportProcedures->update($id, $status, $feedback);
+	}
 }
 
 ?>

@@ -111,3 +111,11 @@ body{
 .row-offer-completed{
 	color: #00CC33;
 }
+.left-column{
+	float: left;
+	width: 70%;
+}
+.right-column{
+	float: right;
+	width: 30%;
+}

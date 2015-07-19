@@ -20,6 +20,7 @@
 	$reports = $userReportService->getAll();
 	
 ?>
+<script src="/positive/js/report.js"></script>
 <div class="container">
 	<div id="user_table" class="table-responsive">
 		<table class="table">
@@ -29,6 +30,7 @@
 					<td><b>Durum</b></td>
 					<td><b>Başlık</b></td>
 					<td><b>Rapor eden</b></td>
+					<td><b>Kullanıcı id</b></td>
 					<td><b>Rapor tarihi</b></td>
 					<td></td>
 					<td></td>
@@ -38,21 +40,31 @@
 			</thead>
 			<tbody>
 			<?php foreach ($reports as $report){ ?>
-				<tr>
+				<?php 
+					switch ($report[UserReport::STATUS]){
+						case 1: $image = "/positive/images/yellow.png";break;
+						case 2: $image = "/positive/images/green.png";break;
+						case 0: 
+						default: $image = "/positive/images/red.png";break; 
+					}
+				?>
+			
+				<tr id="report_<?php echo $report[UserReport::ID]; ?>">
 					<td><b><?php echo $report[UserReport::ID]; ?></b></td>
-					<td><?php echo $report[UserReport::STATUS]; ?></td>
+					<td><img src="<?php echo $image; ?>"> </td>
 					<td><?php echo $report[UserReport::SUBJECT]; ?></td>
 					<td><?php echo $report[UserReport::USER_NAME]; ?></td>
+					<td><?php echo $report[UserReport::USER_ID]; ?></td>
 					<td><?php echo DateUtil::format($report[UserReport::CREATION_DATE]); ?></td>
 					<td>
 						<button id="make_policies_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="">
+							onclick="location.href = '/positive/admin/userException.php?report_id=<?php echo urlencode($report[UserReport::ID]);?>'">
 						  <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
 						</button>
 					</td>
 					<td>
 						<button id="make_policies_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="">
+							onclick="removeReport(<?php echo $report[UserReport::ID]; ?>)">
 						  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 						</button>
 					</td>
