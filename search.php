@@ -8,6 +8,13 @@
 	include_once (__DIR__.'/Util/init.php');
 	include_once (__DIR__.'/navigationBar.php');
 	include_once (__DIR__.'/classes/search.php');
+	
+	if($loggedIn){
+		$user = Session::get(Session::USER);
+		if($user[User::ROLE] == User::BRANCH && $user[User::FIRST_LOGIN] == User::FIRST_LOGIN_FLAG){
+			Util::redirect("/positive/profile.php");
+		}
+	}
 ?>
 <script src="/positive/js/policySearch.js"></script>
 <div class="container offer-request-screen">
