@@ -25,7 +25,6 @@ class DB{
 	// Constructor
 	private function __construct() {
 		$this->_logger = ALogger::getInstance();
-		$infos = Util::readXML(__DIR__."/db_config.xml");
 		try {
 			$this->_pdo = new PDO("mysql:host=localhost;dbname=positive", "root", "");
 			$this->query("SET NAMES UTF8");//prevent turkish char problem
