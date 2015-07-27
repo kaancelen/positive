@@ -35,7 +35,8 @@
 		$role = Util::cleanInput($_POST['select_role']);
 		$desc = Util::cleanInput($_POST['description']);
 		$operation = Util::cleanInput($_POST['operation']);
-		$komisyon_rate = Util::cleanInput($_POST['komisyon_rate']);
+		$komisyon_rate = (isset($_POST['komisyon_rate']) ? Util::cleanInput($_POST['komisyon_rate']) : 0);
+		
 		
 		if($operation == 'add'){
 			$logger->write(ALogger::INFO, __FILE__, "user add operation to [".$username."] by [".$user[User::CODE]."]");
