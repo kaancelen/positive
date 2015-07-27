@@ -7,7 +7,6 @@ if(cookieCompanies){
 		$('#comp_'+options[i]).prop('checked', true);
 	}
 }
-cookieCompanies = cookieCompanies.filter(function(n){ return n != undefined });//remove null elements
 
 $( '.dropdown-menu a' ).on( 'click', function( event ) {
    var $target = $( event.currentTarget ),
@@ -25,6 +24,7 @@ $( '.dropdown-menu a' ).on( 'click', function( event ) {
 
    $( event.target ).blur();
    $('#num_of_selected').html(options.length);
+   options = options.filter(function(n){ return n != undefined });//check for null before set again
    setCookie('companies', JSON.stringify(options), 1);
    
    return false;

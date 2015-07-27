@@ -34,7 +34,7 @@
 	$companies = $companyService->getAll();
 	
 	if(Cookie::exists('companies')){
-		$cookieCompanies = json_decode(Cookie::get('companies'));
+		$cookieCompanies = array_filter(json_decode(Cookie::get('companies')));//remove null elements
 	}else{
 		$cookieCompanies = array();
 	}
