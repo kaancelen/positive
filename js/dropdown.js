@@ -7,6 +7,7 @@ if(cookieCompanies){
 		$('#comp_'+options[i]).prop('checked', true);
 	}
 }
+cookieCompanies = cookieCompanies.filter(function(n){ return n != undefined });//remove null elements
 
 $( '.dropdown-menu a' ).on( 'click', function( event ) {
    var $target = $( event.currentTarget ),

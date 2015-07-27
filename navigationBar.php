@@ -56,10 +56,10 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $nav_user[User::CODE];?><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/positive/profile.php">Profil</a></li>
-            <li><a href="/positive/password.php">Şifre Değiştir</a></li>
+            <li><a href="#" onclick="location.href = '/positive/profile.php'">Profil</a></li>
+            <li><a href="#" onclick="location.href = '/positive/password.php'">Şifre Değiştir</a></li>
             <li class="divider"></li>
-            <li><a href="/positive/logout.php">Çıkış</a></li>
+            <li><a href="#" onclick="location.href = '/positive/logout.php'">Çıkış</a></li>
           </ul>
         </li>
       </ul>
