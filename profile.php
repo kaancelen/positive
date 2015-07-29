@@ -146,6 +146,12 @@
 						<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="agents" name="agents"></textarea>
 					</div>
 					<br>
+					<label class="login-error" id="terms-error"></label>
+					<div>
+						<input type="checkbox" id="accept_terms" name="accept_terms">
+						<a href="/positive/usage.pdf" target="_blank">Sözleşme şartlarını</a> okudum ve kabul ediyorum
+					</div>
+					<br>
 					<input type="hidden" id="user_id" name="user_id">
 					<button class="btn btn-lg btn-primary btn-block" type="button" id="agent_button" onclick="validateAgentForm()">Güncelle</button>
 				</form>
@@ -174,7 +180,11 @@
 					$('#iban').val('<?php echo $agent_user[Agent::IBAN];?>');
 					$('#bank').val('<?php echo $agent_user[Agent::BANK];?>');
 					$('#agents').val('<?php echo $agent_user[Agent::AGENTS];?>');
+					$('#accept_terms').prop("checked", true);
 			<?php }?>
 		</script>
 	<?php }?>
+<script type="text/javascript">
+	$('#admin_1').addClass("active");
+</script>
 </body>

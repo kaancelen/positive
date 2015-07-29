@@ -30,4 +30,9 @@
 <?php } ?>
 <script type="text/javascript">
 	pullChat(<?php echo $chat_request_id; ?>);
+	$("#chat_input").keyup(function (e) {
+	    if (e.keyCode == 13) {
+	    	$('#chat_send_btn').trigger("click");//trigger send button
+	    }
+	});
 </script>

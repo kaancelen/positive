@@ -69,9 +69,10 @@ function validateOfferRequest(companies){
 	}
 	
 	var plaka = $('#plaka').val();
+	plaka = plaka.trim();
 	if(plaka == null || plaka.length == 0){
 		message += "Plaka bilgisini boş bırakmayınız.<br>";
-	}else if(!plaka.match("[0-9]{2} [A-Z]{1,3} [0-9]{1,4}$")){
+	}else if(!plaka.match("[0-9]{2}[A-Za-z]{1,3}[0-9]{1,4}$")){
 		message += "Plaka formata uygun değildir[ör: '01 ABC 23'].<br>";
 	}
 	

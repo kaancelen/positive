@@ -100,3 +100,12 @@ function showPostMessage(post_flag, post_message){
 		success_label.css("visibility", "hidden");
 	}
 }
+
+function onChangeUserRole(){
+	var value = document.getElementById("select_role").value;
+	if(value == 3){
+		document.getElementById("komisyon_div").style.visibility = "visible";
+	}else{
+		document.getElementById("komisyon_div").style.visibility = "hidden";
+	}
+}

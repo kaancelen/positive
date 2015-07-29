@@ -1,4 +1,5 @@
 function validateAgentForm(){
+	var accept_terms = $("#accept_terms").is(':checked');
 	var executive = $('#executive').val();
 	var address = $('#address').val();
 	var phone = $('#phone').val();
@@ -10,6 +11,13 @@ function validateAgentForm(){
 	var agents = $('#agents').val();
 	
 	var success_flag = true;
+
+	if(!accept_terms){
+		$('#terms-error').html("Sözleşme şartlarını okumalı ve kabul etmelisiniz.");
+		success_flag = false;
+	}else{
+		$('#terms-error').html("");
+	}
 	
 	if(executive == null || executive.length == 0){
 		$('#executive-error').html("Yetkili ismini boş bırakmayınız.");

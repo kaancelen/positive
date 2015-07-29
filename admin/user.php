@@ -91,7 +91,7 @@
 	        <br>
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">Hesap türü</span>
-				<select id="select_role" name="select_role" class="form-control">
+				<select id="select_role" name="select_role" class="form-control" onchange="onChangeUserRole();">
 					<option value="0">Rol Seçiniz</option>
 					<option value="1">Admin</option>
 					<option value="2">Teknik</option>
@@ -105,13 +105,11 @@
 				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description"></textarea>
 			</div>
 	        <br>
-	        <?php if($selected_user[User::ROLE] == User::BRANCH){ ?>
-		        <div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
-					<input class="form-control" id="komisyon_rate" name="komisyon_rate">
-				</div>
-				<br>
-		    <?php } ?>
+	        <div id="komisyon_div" class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
+				<input class="form-control" id="komisyon_rate" name="komisyon_rate">
+			</div>
+		    <br>
 	        <input type="hidden" id="user_id" name="user_id">
 	        <input type="hidden" id="operation" name="operation">
 	        <button class="btn btn-lg btn-primary btn-block" type="button" id="update_button"
@@ -137,6 +135,11 @@
 <script src="/positive/js/userPage.js"></script>
 <script type="text/javascript">
 <?php
+	if($selected_user[User::ROLE] == User::BRANCH){
+		echo 'document.getElementById("komisyon_div").style.visibility = "visible";';
+	}else{
+		echo 'document.getElementById("komisyon_div").style.visibility = "hidden";';
+	}
 	echo '$("#operation").val("'.$operation.'");';
 	if(!is_null($selected_user)){
 		echo '$("#username").prop("readonly", true);';
