@@ -71,11 +71,13 @@
 					<td>Acenta</td>
 					<td>Poliçe</td>
 					<td>İstek tarihi</td>
-					<td>Plaka</td>
-					<td>TC Kimlik No</td>
-					<td>Vergi No</td>
-					<td>Belge No</td>
-					<td>ASBİS No</td>
+					<?php if($policyReqDetail[PolicyRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
+						<td>Plaka</td>
+						<td>TC Kimlik No</td>
+						<td>Vergi No</td>
+						<td>Belge No</td>
+						<td>ASBİS No</td>
+					<?php } ?>
 					<td>Ek Bilgi</td>
 				</tr>
 			</thead>
@@ -85,11 +87,13 @@
 					<td><?php echo $policyReqDetail[PolicyRequest::BRANCH_NAME];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::POLICY_TYPE];?></td>
 					<td><?php echo DateUtil::format($policyReqDetail[PolicyRequest::REQUEST_DATE]);?></td>
-					<td><?php echo $policyReqDetail[PolicyRequest::PLAKA];?></td>
-					<td><?php echo $policyReqDetail[PolicyRequest::TCKN];?></td>
-					<td><?php echo $policyReqDetail[PolicyRequest::VERGI];?></td>
-					<td><?php echo $policyReqDetail[PolicyRequest::BELGE];?></td>
-					<td><?php echo $policyReqDetail[PolicyRequest::ASBIS];?></td>
+					<?php if($policyReqDetail[PolicyRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
+						<td><?php echo $policyReqDetail[PolicyRequest::PLAKA];?></td>
+						<td><?php echo $policyReqDetail[PolicyRequest::TCKN];?></td>
+						<td><?php echo $policyReqDetail[PolicyRequest::VERGI];?></td>
+						<td><?php echo $policyReqDetail[PolicyRequest::BELGE];?></td>
+						<td><?php echo $policyReqDetail[PolicyRequest::ASBIS];?></td>
+					<?php } ?>
 					<td><?php echo $policyReqDetail[PolicyRequest::EK_BILGI];?></td>
 				</tr>
 			</tbody>

@@ -44,19 +44,21 @@
 		$policy_type = "Tanımsız";
 		
 		if(isset($_POST['radio_trafik'])){
-			$policy_type = "Trafik";
+			$policy_type = PolicyType::TRAFIK;
 		}else if($_POST['radio_kasko']){
-			$policy_type = "Kasko";
+			$policy_type = PolicyType::KASKO;
 		}else if($_POST['radio_kasko_trafik']){
-			$policy_type = "KaskoTrafik";
+			$policy_type = PolicyType::KASKO_TRAFIK;
+		}else if($_POST['radio_other']){
+			$policy_type = PolicyType::DIGER;
 		}
 		
 		$offerService = new OfferService();
 		$offerRequestId = null;
 		
-		if($policy_type == "KaskoTrafik"){
-			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, "Kasko", $user_id, $companyIds);
-			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, "Trafik", $user_id, $companyIds);
+		if($policy_type == PolicyType::KASKO_TRAFIK){
+			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::KASKO, $user_id, $companyIds);
+			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::TRAFIK, $user_id, $companyIds);
 		}else{
 			$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companyIds);
 		}
@@ -113,52 +115,59 @@
 					<input type="radio" id="radio_kasko_trafik" name="radio_kasko_trafik" onchange="on_radio_kasko_trafik_change()">
 					Kasko ve Trafik Poliçesi
 				</span>
+				<span class="input-group-addon" id="basic-addon1">
+					<input type="radio" id="radio_other" name="radio_other" onchange="on_radio_other_change()">
+					Diğer
+				</span>
 			</div>
 			<br>
 			<label class="login-error" id="offer-request-error"></label>
-			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">Plaka No</span>
-				<input type="text" class="form-control" aria-describedby="basic-addon1" id="plaka" name="plaka" placeholder="99 XXX 99999">
+			<div id="not_desc_fields">
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Plaka No</span>
+					<input type="text" class="form-control" aria-describedby="basic-addon1" id="plaka" name="plaka" placeholder="99 XXX 99999">
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">
+						<input type="radio" id="radio_tckn" checked="checked" onchange="on_radio_tckn_change()">
+						TC Kimlik No
+					</span>
+					<input type="text" class="form-control" aria-describedby="basic-addon1" id="tckn" name="tckn">
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">
+						<input type="radio" id="radio_vergi" onchange="on_radio_vergi_change()">
+						Vergi No
+					</span>
+					<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="vergiNo" name="vergiNo">
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">
+						<input type="radio" id="radio_belge" checked="checked" onchange="on_radio_belge_change()">
+						Belge No
+					</span>
+					<input type="text" class="form-control" aria-describedby="basic-addon1" id="belgeNo" name="belgeNo">
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">
+						<input type="radio" id="radio_asbis" onchange="on_radio_asbis_change()">
+						ASBİS
+					</span>
+					<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="asbis" name="asbis">
+				</div>
+				<br>
 			</div>
-			<br>
-			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_tckn" checked="checked" onchange="on_radio_tckn_change()">
-					TC Kimlik No
-				</span>
-				<input type="text" class="form-control" aria-describedby="basic-addon1" id="tckn" name="tckn">
-			</div>
-			<br>
-			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_vergi" onchange="on_radio_vergi_change()">
-					Vergi No
-				</span>
-				<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="vergiNo" name="vergiNo">
-			</div>
-			<br>
-			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_belge" checked="checked" onchange="on_radio_belge_change()">
-					Belge No
-				</span>
-				<input type="text" class="form-control" aria-describedby="basic-addon1" id="belgeNo" name="belgeNo">
-			</div>
-			<br>
-			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon1">
-					<input type="radio" id="radio_asbis" onchange="on_radio_asbis_change()">
-					ASBİS
-				</span>
-				<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="asbis" name="asbis">
-			</div>
-			<br>
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">
 					Ek Bilgi
 				</span>
-				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description" placeholder="Müşteri adı soyadı, araba markası, rengi vs."></textarea>
+				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description" placeholder="Müşteri adı soyadı, sigorta ile alakalı diğer ek bilgiler"></textarea>
 			</div>
+			<h5><small><b>En fazla 2048 karakter</b></small></h5>
 			<br>
 			<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validateOfferRequest(<?php echo json_encode($companies);?>)' id="offer-request-button">Teklif iste</button>
 		</div>

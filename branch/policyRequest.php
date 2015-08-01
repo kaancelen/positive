@@ -73,11 +73,13 @@
 				<td>Talep No</td>
 				<td>Poliçe</td>
 				<td>İstek tarihi</td>
-				<td>Plaka</td>
-				<td>TC Kimlik No</td>
-				<td>Vergi No</td>
-				<td>Belge No</td>
-				<td>ASBİS No</td>
+				<?php if($request[OfferRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
+					<td>Plaka</td>
+					<td>TC Kimlik No</td>
+					<td>Vergi No</td>
+					<td>Belge No</td>
+					<td>ASBİS No</td>
+				<?php } ?>
 				<td>Ek Bilgi</td>
 			</tr>
 		</thead>
@@ -86,11 +88,13 @@
 				<td><?php echo $request[OfferRequest::ID];?></td>
 				<td><?php echo $request[OfferRequest::POLICY_TYPE];?></td>
 				<td><?php echo DateUtil::format($request[OfferRequest::CREATION_DATE]);?></td>
-				<td><?php echo $request[OfferRequest::PLAKA];?></td>
-				<td><?php echo $request[OfferRequest::TCKN];?></td>
-				<td><?php echo $request[OfferRequest::VERGI];?></td>
-				<td><?php echo $request[OfferRequest::BELGE];?></td>
-				<td><?php echo $request[OfferRequest::ASBIS];?></td>
+				<?php if($request[OfferRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
+					<td><?php echo $request[OfferRequest::PLAKA];?></td>
+					<td><?php echo $request[OfferRequest::TCKN];?></td>
+					<td><?php echo $request[OfferRequest::VERGI];?></td>
+					<td><?php echo $request[OfferRequest::BELGE];?></td>
+					<td><?php echo $request[OfferRequest::ASBIS];?></td>
+				<?php } ?>
 				<td><?php echo $request[OfferRequest::DESCRIPTION];?></td>
 			</tr>
 		</tbody>

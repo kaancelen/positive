@@ -1,0 +1,1 @@
+<span style="font-size: 10">Copyright© by Hero Sigorta Ltd. Şti.</span>

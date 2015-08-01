@@ -1,6 +1,6 @@
 function validateChatInput(){
 	var text = $('#chat_input').val();
-	var text = text.trim();
+	var text = text.replace(/(\r\n|\n|\r)/gm,"");
 	if(text == null || text.length == 0 || text.trim().length == 0){
 		$('#chat_error').html('Boş mesaj gönderemezsiniz.');
 		return;

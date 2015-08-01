@@ -51,11 +51,13 @@ include_once(__DIR__.'/../head.php');
 				<td>Poliçe</td>
 				<td>Kullanıcı Adı</td>
 				<td>İstek tarihi</td>
-				<td>Plaka</td>
-				<td>TC Kimlik No</td>
-				<td>Vergi No</td>
-				<td>Belge No</td>
-				<td>ASBİS No</td>
+				<?php if($offerRequest[OfferRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
+					<td>Plaka</td>
+					<td>TC Kimlik No</td>
+					<td>Vergi No</td>
+					<td>Belge No</td>
+					<td>ASBİS No</td>
+				<?php } ?>
 				<td>Ek Bilgi</td>
 			</tr>
 		</thead>
@@ -65,11 +67,13 @@ include_once(__DIR__.'/../head.php');
 				<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE];?></td>
 				<td><?php echo $tempUser[User::NAME];?></td>
 				<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]);?></td>
-				<td><?php echo $offerRequest[OfferRequest::PLAKA];?></td>
-				<td><?php echo $offerRequest[OfferRequest::TCKN];?></td>
-				<td><?php echo $offerRequest[OfferRequest::VERGI];?></td>
-				<td><?php echo $offerRequest[OfferRequest::BELGE];?></td>
-				<td><?php echo $offerRequest[OfferRequest::ASBIS];?></td>
+				<?php if($offerRequest[OfferRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
+					<td><?php echo $offerRequest[OfferRequest::PLAKA];?></td>
+					<td><?php echo $offerRequest[OfferRequest::TCKN];?></td>
+					<td><?php echo $offerRequest[OfferRequest::VERGI];?></td>
+					<td><?php echo $offerRequest[OfferRequest::BELGE];?></td>
+					<td><?php echo $offerRequest[OfferRequest::ASBIS];?></td>
+				<?php } ?>
 				<td><?php echo $offerRequest[OfferRequest::DESCRIPTION];?></td>
 			</tr>
 		</tbody>

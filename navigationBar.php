@@ -51,7 +51,6 @@
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
           <li><a href="/positive/usage.pdf" target="_blank"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></li>
-          <li><a style="font-size: 10">Copyright© by Hero Sigorta Ltd. Şti.</a></li>
       	  <li><a href="/positive"><?php echo $nav_user[User::NAME]; ?></a></li>
         </ul>
         <li class="dropdown">
