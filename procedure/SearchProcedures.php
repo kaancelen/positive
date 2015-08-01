@@ -209,6 +209,20 @@ class SearchProcedures extends Procedures{
 		$count = $this->_db->count();
 		return $count;
 	}
+
+	public function checkNewPolicy($user_id, $last_enter_policy_page, $last_enter_offer_resp){
+		$sql = "SELECT ofr.ID FROM OFFER_REQUEST ore, OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofr ";
+		$sql .= "WHERE ore.ID = orc.REQUEST_ID AND ofr.ID = orc.OFFER_ID AND ore.USER_ID = ? AND ofr.CREATION_DATE > ?";
+		$this->_db->query($sql, array($user_id, $last_enter_offer_resp));
+		$offer_resp_count = $this->_db->count();
+
+		$sql = "SELECT po.ID FROM POLICY po, OFFER_REQUEST_COMPANY orc, OFFER_REQUEST ore ";
+		$sql .= "WHERE po.ID = orc.POLICY_ID AND ore.ID = orc.REQUEST_ID AND ore.USER_ID = ? AND po.CREATION_DATE > ?";
+		$this->_db->query($sql, array($user_id, $last_enter_policy_page));
+		$policy_count = $this->_db->count();
+
+		return array($offer_resp_count, $policy_count);
+	}
 }
 
 ?>

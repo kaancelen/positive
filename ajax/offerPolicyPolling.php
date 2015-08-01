@@ -10,7 +10,7 @@ if(!empty($_POST)){
 	}else{
 		$user = Session::get(Session::USER);
 		if($user[User::ROLE] != User::PERSONEL){
-			$logger->write(ALogger::INFO, __FILE__, "Request not from branch");
+			$logger->write(ALogger::INFO, __FILE__, "Request not from personel");
 			echo json_encode(false);
 			return;
 		}

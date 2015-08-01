@@ -29,6 +29,9 @@
 			</div>
 		<?php
 	}
+	//policy polling job
+	Cookie::put(Cookie::LAST_ENTER_OFFER_RESP, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_OFFER_RESP_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 ?>
 <div class="container">
 	<div id="user_table" class="table-responsive">
