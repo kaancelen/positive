@@ -37,6 +37,7 @@ function validateAgentForm(){
 		success_flag = false;
 	}else{
 		$('#address-error').html("");
+		address = address.replace(/(\r\n|\n|\r)/gm," ");
 	}
 	
 	if(phone == null || phone.length == 0){
@@ -110,6 +111,7 @@ function validateAgentForm(){
 		success_flag = false;
 	}else{
 		$('#agents-error').html("");
+		agents = agents.replace(/(\r\n|\n|\r)/gm," ");
 	}
 	
 	if(success_flag){
