@@ -39,6 +39,7 @@ function validateAgentForm(){
 		$('#address-error').html("");
 		address = address.replace(/(\r\n|\n|\r)/gm," ");
 		address = address.replace(/['"]/g,"");
+		$('#address').html(address);
 	}
 	
 	if(phone == null || phone.length == 0){
@@ -114,6 +115,7 @@ function validateAgentForm(){
 		$('#agents-error').html("");
 		agents = agents.replace(/(\r\n|\n|\r)/gm," ");
 		agents = agents.replace(/['"]/g,"");
+		$('#agents').html(agents);
 	}
 	
 	if(success_flag){
