@@ -42,15 +42,20 @@
 		$description = Util::cleanInput($_POST['description']);
 		$user_id = $user[User::ID];
 		$policy_type = "Tanımsız";
+		$policy_text = "Tanımsız";
 		
 		if(isset($_POST['radio_trafik'])){
 			$policy_type = PolicyType::TRAFIK;
+			$policy_text = "Trafik poliçe";
 		}else if($_POST['radio_kasko']){
 			$policy_type = PolicyType::KASKO;
+			$policy_text = "Kasko poliçe";
 		}else if($_POST['radio_kasko_trafik']){
 			$policy_type = PolicyType::KASKO_TRAFIK;
+			$policy_text = "Kasko ve Trafik poliçe";
 		}else if($_POST['radio_other']){
 			$policy_type = PolicyType::DIGER;
+			$policy_text = "Poliçe";
 		}
 		
 		$offerService = new OfferService();
@@ -64,7 +69,7 @@
 		}
 		
 		if(!is_null($offerRequestId)){
-			Session::flash(Session::FLASH, "Hem Kasko Hem Trafik talebi sisteme eklendi.");
+			Session::flash(Session::FLASH, $policy_text." talebi sisteme eklendi.");
 			Util::redirect("/positive/branch/offer.php?request_id=".$offerRequestId);
 		}else{ ?>
 			<div id="user_form_msg" align="center">

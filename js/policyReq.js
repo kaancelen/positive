@@ -30,10 +30,10 @@ function validatePolicy(){
 	}else if(policyFile[0].files[0].size > max_file_size_byte){
 		$('#policy-file-error').html("Poliçe dosyası en fazla "+max_file_size_mb+"MB olabilir.");
 		failFlag = true;
-	}else if(policyFile[0].files[0].type != file_type){
+	}/*else if(policyFile[0].files[0].type != file_type){
 		$('#policy-file-error').html("Poliçe, pdf dosyası olmalıdır.");
 		failFlag = true;
-	}else{
+	}*/else{
 		$('#policy-file-error').html("");
 	}
 	//makbuz check
@@ -43,10 +43,10 @@ function validatePolicy(){
 	}else if(makbuzFile[0].files[0].size > max_file_size_byte){
 		$('#makbuz-file-error').html("Makbuz dosyası en fazla "+max_file_size_mb+"MB olabilir.");
 		failFlag = true;
-	}else if(makbuzFile[0].files[0].type != file_type){
+	}/*else if(makbuzFile[0].files[0].type != file_type){
 		$('#makbuz-file-error').html("Makbuz, pdf dosyası olmalıdır.");
 		failFlag = true;
-	}else{
+	}*/else{
 		$('#makbuz-file-error').html("");
 	}
 	//submit
