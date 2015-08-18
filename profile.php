@@ -30,17 +30,28 @@
 		
 		if(!empty($_POST)){
 			$agentService = new AgentService();
+
+			$p_address = Util::cleanInput($_POST['address']);
+			$p_address = trim(preg_replace('/\s+/', ' ', $p_address));
+			$p_address = str_replace('"', '', $p_address);
+			$p_address = str_replace("'", '', $p_address);
+
+			$p_agents = Util::cleanInput($_POST['agents']);
+			$p_agents = trim(preg_replace('/\s+/', ' ', $p_agents));
+			$p_agents = str_replace('"', '', $p_agents);
+			$p_agents = str_replace("'", '', $p_agents);
+
 			$agentService->update(array(
 					Agent::USER_ID => Util::cleanInput($_POST['user_id']),
 					Agent::EXECUTIVE => Util::cleanInput($_POST['executive']),
-					Agent::ADDRESS => Util::cleanInput($_POST['address']),
+					Agent::ADDRESS => $p_address,
 					Agent::PHONE => Util::cleanInput($_POST['phone']),
 					Agent::FAX => Util::cleanInput($_POST['fax']),
 					Agent::GSM => Util::cleanInput($_POST['gsm']),
 					Agent::EMAIL => Util::cleanInput($_POST['email']),
 					Agent::IBAN => Util::cleanInput($_POST['iban']),
 					Agent::BANK => Util::cleanInput($_POST['bank']),
-					Agent::AGENTS => Util::cleanInput($_POST['agents'])
+					Agent::AGENTS => $p_agents
 			));
 			if($loggedInUser[User::ID] == $user[User::ID]){//user update him/herself
 				$loggedInUser[User::FIRST_LOGIN] = 0;
