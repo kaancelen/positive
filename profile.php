@@ -171,15 +171,18 @@
 		<script type="text/javascript">
 			$('#user_id').val(<?php echo $user[User::ID]; ?>);
 			<?php if(!is_null($agent_user)){?>
+					var p_address = '<?php echo $agent_user[Agent::ADDRESS];?>'.replace(/['"]/g,"").replace(/(\r\n|\n|\r)/gm," ");
+					var p_agents = '<?php echo $agent_user[Agent::AGENTS];?>'.replace(/['"]/g,"").replace(/(\r\n|\n|\r)/gm," ");
+
 					$('#executive').val('<?php echo $agent_user[Agent::EXECUTIVE];?>');
-					$('#address').val('<?php echo $agent_user[Agent::ADDRESS];?>');
+					$('#address').val(p_address);
 					$('#phone').val('<?php echo $agent_user[Agent::PHONE];?>');
 					$('#fax').val('<?php echo $agent_user[Agent::FAX];?>');
 					$('#gsm').val('<?php echo $agent_user[Agent::GSM];?>');
 					$('#email').val('<?php echo $agent_user[Agent::EMAIL];?>');
 					$('#iban').val('<?php echo $agent_user[Agent::IBAN];?>');
 					$('#bank').val('<?php echo $agent_user[Agent::BANK];?>');
-					$('#agents').val('<?php echo $agent_user[Agent::AGENTS];?>');
+					$('#agents').val(p_agents);
 					$('#accept_terms').prop("checked", true);
 			<?php }?>
 		</script>
