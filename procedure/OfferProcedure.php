@@ -114,7 +114,7 @@ class OfferProcedures extends Procedures{
 			}
 		}
 		array_push($user_id_array, $time);
-		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."AND CREATION_DATE > ? ORDER BY CREATION_DATE ASC";
+		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."AND CREATION_DATE > ? ORDER BY CREATION_DATE DESC";
 		$this->_db->query($sql, $user_id_array);
 		$result = $this->_db->all();
 		
