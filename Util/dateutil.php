@@ -6,7 +6,7 @@ class DateUtil{
 	const DB_DATE_FORMAT = "Y-m-d";
 	const DB_DATE_FORMAT_TIME = "Y-m-d H:i:s";
 	
-	const OFFER_REQUEST_TIMEOUT_MILLIS = 172800;//48 hour
+	const OFFER_REQUEST_TIMEOUT_MILLIS = 86400;//24 hour
 	
 	public static function format($date){
 		$datetime = new DateTime($date);
