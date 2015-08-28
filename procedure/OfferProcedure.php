@@ -288,8 +288,8 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $user_id
 	 * @return NULL|multitype:
 	 */
-	public function getAllPolicyRequest($user_id){
-		$paramArray = null;
+	public function getAllPolicyRequest($user_id, $time){
+		$paramArray = array();
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofr.POLICY_TYPE, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
 		$sql .= "PERSONEL_NAME, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofre.PRIM, ofre.KOMISYON, ";
@@ -299,7 +299,12 @@ class OfferProcedures extends Procedures{
 		
 		if(!is_null($user_id)){
 			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) ";
-			$paramArray = array($user_id, $user_id);
+			array_push($paramArray, $user_id);
+			array_push($paramArray, $user_id);
+		}
+		if(!is_null($time)){
+			$sql .= "AND (SELECT CREATION_DATE FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) > ? ";
+			array_push($paramArray, $time);
 		}
 		
 		$sql .= "AND orc.CARD_ID <> 0 AND orc.POLICY_ID = 0 ORDER BY OFFER_DATE DESC";
@@ -386,7 +391,7 @@ class OfferProcedures extends Procedures{
 		return $policy_id;
 	}
 	
-	public function getCompletedPolicies($user_id = null){
+	public function getCompletedPolicies($user_id, $time){
 		$paramArray = array();
 		
 		$sql = "SELECT ofr.PLAKA PLAKA, po.POLICY_NUMBER POLICY_NUMBER,ofr.POLICY_TYPE POLICY_TYPE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
@@ -402,6 +407,10 @@ class OfferProcedures extends Procedures{
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
+		}
+		if(!is_null($time)){
+			$sql .= "AND (SELECT CREATION_DATE FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) > ? ";
+			array_push($paramArray, $time);
 		}
 		
 		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC LIMIT 50";

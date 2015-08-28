@@ -15,7 +15,8 @@
 	include_once (__DIR__.'/../navigationBar.php');
 	
 	$offerService = new OfferService();
-	$allPolicies = $offerService->getCompletedPolicies();
+	$time = date(DateUtil::DB_DATE_FORMAT, time() - DateUtil::POLICY_TIMEOUT_MILLIS);//before 30 day
+	$allPolicies = $offerService->getCompletedPolicies(null, $time);
 ?>
 <div class="container">
 	<div id="policy_table" class="table-responsive">
