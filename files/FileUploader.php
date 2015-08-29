@@ -16,6 +16,10 @@ class FileUploader{
 		return $this->uploadFile($image, __DIR__.'/report_images/'.$imageName);
 	}
 	
+	public function uploadChatFile($filename, $file){
+		return $this->uploadFile($file, __DIR__.'/chat/'.$filename);
+	}
+	
 	private function uploadFile($file, $filepath){
 		if(file_exists($filepath)){
 			unlink($filepath);//Remove if exist

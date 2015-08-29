@@ -13,6 +13,12 @@
 			
 		</ul>
 	</div>
+	<div id="uploadFile">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1">Dosya gönder</span>
+			<input type="file" class="form-control" aria-describedby="basic-addon1" id="chat_file" name="chat_file">
+		</div>
+	</div>
 	<div id="send_messages">
 		<label for="chat_input" class="login-error" id="chat_error"></label>
 		<textarea rows="4" cols="30" class="form-control" id="chat_input"></textarea>

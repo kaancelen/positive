@@ -1,4 +1,50 @@
+var max_chat_file_size = 5000000;//5mb
+var max_chat_file_size_mb = max_chat_file_size / 1000000;
+    
 function validateChatInput(){
+	//Upload file if exist
+    var chat_file = $('#chat_file');
+    if(chat_file[0].files[0]){
+    	if(chat_file[0].files[0].size > max_chat_file_size){
+			$('#chat_error').html("Gönderilecek dosya en fazla "+max_chat_file_size_mb+"MB olabilir.");
+			return;
+		}
+    	var request_id = $('#chat_request_id').val();
+    	var files = chat_file[0].files;
+    	
+    	var data = new FormData();
+    	data.append('request_id', request_id);
+    	$.each(files, function name(key, value) {
+			data.append(key, value);
+		});
+    	//make ajax request
+    	$.ajax({
+    		url: '/positive/ajax/add_chat_entry_file.php?files',
+    		type: 'POST',
+    		data: data,
+    		cache: false,
+    		dataType: 'json',
+    		processData: false,
+    		contentType: false,
+    		success: function(data, textStatus, jqXHR){
+    			if(data){
+    				$('#chat_file').val(null);//reset file input
+            		insertEntry(data['text'], data['user_name'], 'Şimdi');
+            	}else{
+            		$('#chat_error').html('Dosya gönderilemedi.');
+            	}
+    		},
+    		error: function(jqXHR, textStatus, errorThrown){
+    			console.log('add chat file ajax error : ' + textStatus);
+    			$('#chat_error').html('Dosya gönderilemedi.');
+    		},
+    		complete: function(jqXHR, textStatus){
+    			console.log("add chat file ajax call complete : " + textStatus);
+    		}
+    	});
+    }
+    
+    //send message
 	var text = $('#chat_input').val();
 	var text = text.replace(/(\r\n|\n|\r)/gm,"");
 	if(text == null || text.length == 0 || text.trim().length == 0){
