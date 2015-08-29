@@ -30,10 +30,21 @@ function pullOffers(request_id){
 	        success: function(data, textStatus, jqXHR){
 	        	console.log(data);
 	        	if(data){
+	        		var min_value = Number.MAX_VALUE;
+	        		var min_value_comp = 0;
 	        		//write offers
 		    	    for (var i = 0; i < data.length; i++) {
+		    	    	var temp_value = parseFloat(data[i]['PRIM']);
+		    			if(temp_value < min_value){
+		    				min_value = temp_value;
+		    				min_value_comp = data[i]['COMPANY_ID'];
+		    			}
+		    			$('#offer_row_'+data[i]['COMPANY_ID']).css("background-color","");//remove css
 		    	    	writeToOfferRow(data[i]);
 		    	    }
+		    	    if(min_value_comp > 0){
+		    			$('#offer_row_'+min_value_comp).css("background-color","#00FF66");//paint to green
+		    		}
 	        	}
 	        },
 	        error: function(jqXHR, textStatus, errorThrown){

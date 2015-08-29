@@ -111,7 +111,7 @@ include_once(__DIR__.'/../head.php');
 				</thead>
 				<tbody>
 				<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){ ?>
-					<tr>
+					<tr id="offer_row_<?php echo $company[Company::ID];?>">
 						<td id="offer_id_<?php echo $company[Company::ID]; ?>"></td>
 						<td id="personel_id_<?php echo $company[Company::ID]; ?>"></td>
 						<td><?php echo $company[Company::NAME]; ?></td>
@@ -152,9 +152,20 @@ include_once(__DIR__.'/../head.php');
 		<?php include_once (__DIR__.'/../chat.php'); ?>
 	</div>
 	<script type="text/javascript">
+		var min_value = Number.MAX_VALUE;
+		var min_value_comp = 0;
 		<?php foreach($offerResponses as $offerResponse){?>
+			var temp_value = <?php echo $offerResponse['PRIM'];?>;
+			if(temp_value < min_value){
+				min_value = temp_value;
+				min_value_comp = <?php echo $offerResponse['COMPANY_ID'];?>;
+			}
+			$('#offer_row_'+<?php echo $offerResponse['COMPANY_ID'];?>).css("background-color","");//remove css
 			writeToOfferRow(<?php echo json_encode($offerResponse); ?>);
 		<?php }?>
+		if(min_value_comp > 0){
+			$('#offer_row_'+min_value_comp).css("background-color","#00FF66");//paint to green
+		}
 		//pull new offers
 		pullOffers(<?php echo $offerRequest[OfferRequest::ID];?>);
 	</script>
