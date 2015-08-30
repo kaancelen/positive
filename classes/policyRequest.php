@@ -26,6 +26,7 @@ class PolicyRequest{
 	const EXPIRE_DATE = "EXPIRE_DATE";
 	const CVC_CODE = "CVC_CODE";
 	const POLICY_REQ_DATE = "POLICY_REQ_DATE";
+	const STATUS = "STATUS";
 }
 
 ?>

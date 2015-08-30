@@ -50,7 +50,7 @@
 			</thead>
 			<tbody>
 			<?php foreach ($allPolicyRequests as $policyRequest){ ?>
-				<tr>
+				<tr <?php if($policyRequest[PolicyRequest::STATUS] == 3) echo 'class="row-offer-cancelled"'; ?>>
 					<td><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
 					<td><b><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></b></td>
 					<td><?php echo $policyRequest[PolicyRequest::BRANCH_NAME]; ?></td>

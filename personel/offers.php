@@ -99,7 +99,15 @@
 					}
 				?>
 				<?php $tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);?>
-				<tr <?php if($rowOfferCompleted) echo "class='row-offer-completed'";?>>
+				<?php 
+					$class = "";
+					if($offerRequest[OfferRequest::STATUS] == 2){
+						$class = "row-offer-cancelled";
+					}else if($rowOfferCompleted){
+						$class = "row-offer-completed";
+					}
+				?>
+				<tr <?php echo "class=".$class;?>>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
 					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
 					<td><?php echo $tempUser[User::NAME]; ?></td>

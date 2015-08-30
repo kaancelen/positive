@@ -46,15 +46,23 @@ include_once(__DIR__.'/../head.php');
 		Session::delete(Session::FLASH);//Remove message
 	}
 	$makePolicyPermission = true;
+	$alertText = "";
 	if($offerRequest[OfferRequest::IS_OFFER_ACCEPTED]){
 		$makePolicyPermission = false;
-		?>
+		$alertText = "Bu talep için bir teklif kabul edilmiş ve poliçe isteklerine eklenmiş.";
+	
+	}
+	if($offerRequest[OfferRequest::STATUS] == 2){
+		$makePolicyPermission = false;
+		$alertText = "Bu talep kapatılmıştır, poliçeleştirilemez.";
+	}
+	if(!$makePolicyPermission){
+	?>
 		<div id="user_form_msg" align="center">
-			<div class="alert alert-info" role="alert">Bu talep için bir teklif kabul edilmiş ve poliçe isteklerine eklenmiş.</div>
+			<div class="alert alert-warning" role="alert"><?php echo $alertText; ?></div>
 		</div>
 		<?php
 	}
-	//DateUtil::after(strtotime($offerRequest[OfferRequest::CREATION_DATE]), time(), DateUtil::OFFER_REQUEST_TIMEOUT_MILLIS))
 ?>
 <script src="/positive/js/branch.js"></script>
 <div class="well offer-request-label">

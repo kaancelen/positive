@@ -18,5 +18,7 @@ if(file_exists($file_path)){
     header("Content-Length: {$file_size}");
     readfile($file_path);
 	exit;
+}else{
+	echo "Dosya bulunamadi!";
 }
 ?>

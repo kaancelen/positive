@@ -33,16 +33,26 @@ include_once(__DIR__.'/../head.php');
 	$tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);
 	
 	$makePolicyPermission = true;
+	$alertText = "";
 	if($offerRequest[OfferRequest::IS_OFFER_ACCEPTED]){
 		$makePolicyPermission = false;
+		$alertText = "Bu talep için bir teklif kabul edilmiş ve poliçe isteklerine eklenmiş.";
+		
+	}
+	if($offerRequest[OfferRequest::STATUS] == 2){
+		$makePolicyPermission = false;
+		$alertText = "Bu talep kapatılmıştır, yeni teklif verilemez.";
+	}
+	if(!$makePolicyPermission){
 		?>
 		<div id="user_form_msg" align="center">
-			<div class="alert alert-info" role="alert">Bu talep için bir teklif kabul edilmiş ve poliçe isteklerine eklenmiş.</div>
+			<div class="alert alert-warning" role="alert"><?php echo $alertText; ?></div>
 		</div>
 		<?php
 	}
 ?>
 <script src="/positive/js/personel.js"></script>
+<script src="/positive/js/closeRequest.js"></script>
 <div class="well offer-request-label">
 	<table class="offer-request-info-table">
 		<thead>
@@ -59,6 +69,7 @@ include_once(__DIR__.'/../head.php');
 					<td>ASBİS No</td>
 				<?php } ?>
 				<td>Ek Bilgi</td>
+				<td>Talebi kapat</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -75,6 +86,13 @@ include_once(__DIR__.'/../head.php');
 					<td><?php echo $offerRequest[OfferRequest::ASBIS];?></td>
 				<?php } ?>
 				<td><?php echo $offerRequest[OfferRequest::DESCRIPTION];?></td>
+				<td>
+					<div style="text-align: center">
+						<button type="button" class="btn btn-default btn-lg" style="color: red" onclick="closeRequest(2,<?php echo $offerRequest[OfferRequest::ID];?>);">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</td>
 			</tr>
 		</tbody>
 	</table>

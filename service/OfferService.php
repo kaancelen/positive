@@ -62,6 +62,10 @@ class OfferService implements Service{
 	public function getGivenOfferRatio($request_id){
 		return $this->_offerProcedures->getGivenOfferRatio($request_id);
 	}
+
+	public function closeRequest($request_id, $status_code){
+		return $this->_offerProcedures->closeRequest($request_id, $status_code);
+	}
 }
 
 ?>

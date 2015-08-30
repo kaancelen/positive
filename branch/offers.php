@@ -50,7 +50,7 @@
 			</thead>
 			<tbody>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
-				<tr>
+				<tr <?php if($offerRequest[OfferRequest::STATUS] == 2) echo "class='row-offer-cancelled'";?>>
 					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
 					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>

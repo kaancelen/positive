@@ -62,6 +62,7 @@
 	}
 ?>
 <script src="/positive/js/policyReq.js"></script>
+<script src="/positive/js/closeRequest.js"></script>
 <div class="container offer-request-screen">
 	<div class="offers-column">
 		<table class="offer-request-info-table">
@@ -131,6 +132,7 @@
 					<td>Kart numarası</td>
 					<td>Son kullanma tarihi</td>
 					<td>Cvc Kodu</td>
+					<td>İsteği kapat</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -139,6 +141,13 @@
 					<td><?php echo $policyReqDetail[PolicyRequest::CARD_NO];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::EXPIRE_DATE];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::CVC_CODE];?></td>
+					<td>
+						<div style="text-align: center">
+							<button type="button" class="btn btn-default btn-lg" style="color: red;" onclick="closeRequest(3,<?php echo $policyReqDetail[PolicyRequest::REQUEST_ID];?>);">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -168,7 +177,13 @@
 				<textarea rows="4" class="form-control" aria-describedby="basic-addon1" id="policeEkBilgi" name="policeEkBilgi"></textarea>
 			</div>
 			<br>
-			<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validatePolicy()' id="offer-request-button">Poliçeyi onayla</button>
+			<?php if($policyReqDetail[PolicyRequest::STATUS] == 3){?>
+				<div align="center">
+					<div class="alert alert-danger" role="alert">Poliçe isteği kapatıldı!</div>
+				</div>
+			<?php }else{ ?>
+				<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validatePolicy()' id="offer-request-button">Poliçeyi onayla</button>
+			<?php } ?>
 		</form>
 	</div>
 	<div class="well chat-column">

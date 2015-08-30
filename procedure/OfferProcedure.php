@@ -85,6 +85,7 @@ class OfferProcedures extends Procedures{
 			$offerRequest[OfferRequest::VERGI] = $result->VERGI;
 			$offerRequest[OfferRequest::BELGE] = $result->BELGE;
 			$offerRequest[OfferRequest::ASBIS] = $result->ASBIS;
+			$offerRequest[OfferRequest::STATUS] = $result->STATUS;
 			$offerRequest[OfferRequest::POLICY_TYPE] = $result->POLICY_TYPE;
 			$offerRequest[OfferRequest::DESCRIPTION] = $result->DESCRIPTION;
 			$offerRequest[OfferRequest::COMPANIES] = $companies;
@@ -106,11 +107,11 @@ class OfferProcedures extends Procedures{
 			$user_id_part = " WHERE USER_ID = ? ";
 			$user_id_array = array($user_id);
 			if(!is_null($all)){
-				$status_part = " AND STATUS = 0 ";
+				$status_part = " AND (STATUS = 0 OR STATUS = 2) ";
 			}
 		}else{
 			if(!is_null($all)){
-				$status_part = " WHERE STATUS = 0 ";
+				$status_part = " WHERE (STATUS = 0 OR STATUS = 2) ";
 			}
 		}
 		array_push($user_id_array, $time);
@@ -146,6 +147,7 @@ class OfferProcedures extends Procedures{
 				$offerRequest[OfferRequest::VERGI] = $offerObject->VERGI;
 				$offerRequest[OfferRequest::BELGE] = $offerObject->BELGE;
 				$offerRequest[OfferRequest::ASBIS] = $offerObject->ASBIS;
+				$offerRequest[OfferRequest::STATUS] = $offerObject->STATUS;
 				$offerRequest[OfferRequest::POLICY_TYPE] = $offerObject->POLICY_TYPE;
 				$offerRequest[OfferRequest::DESCRIPTION] = $offerObject->DESCRIPTION;
 				$offerRequest[OfferRequest::COMPANIES] = $companies;
@@ -293,7 +295,7 @@ class OfferProcedures extends Procedures{
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofr.POLICY_TYPE, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
 		$sql .= "PERSONEL_NAME, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofre.PRIM, ofre.KOMISYON, ";
-		$sql .= "ofre.PROD_KOMISYON, ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME FROM OFFER_REQUEST ofr, ";
+		$sql .= "ofre.PROD_KOMISYON, ofre.CREATION_DATE OFFER_DATE, ofr.PLAKA, co.NAME COMPANY_NAME, ofr.STATUS FROM OFFER_REQUEST ofr, ";
 		$sql .= "OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ";
 		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID ";
 		
@@ -338,7 +340,7 @@ class OfferProcedures extends Procedures{
 		$sql .= "ofre.USER_ID PERSONEL_ID, ofre.PRIM PRIM, ofre.KOMISYON KOMISYON, ofre.PROD_KOMISYON PROD_KOMISYON, ";
 		$sql .= "ofre.CREATION_DATE OFFER_DATE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, co.NAME COMPANY_NAME, cc.ID CARD_ID, ";
-		$sql .= "cc.NAME CARD_NAME, cc.CARD_NO CARD_NO, cc.EXPIRE_DATE EXPIRE_DATE, cc.CVC_CODE CVC_CODE, ";
+		$sql .= "cc.NAME CARD_NAME, cc.CARD_NO CARD_NO, cc.EXPIRE_DATE EXPIRE_DATE, cc.CVC_CODE CVC_CODE, ofr.STATUS, ";
 		$sql .= "cc.CREATION_DATE POLICY_REQ_DATE FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc, ";
 		$sql .= "OFFER_RESPONSE ofre,COMPANY co, CREDIT_CARDS cc WHERE ofr.ID = orc.REQUEST_ID AND ";
 		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID AND cc.ID = orc.CARD_ID AND ofre.ID = ?";
@@ -479,6 +481,18 @@ class OfferProcedures extends Procedures{
 		$result2 = $this->_db->first();
 		
 		return ($result2->TEKLIF.'/'.$result1->ISTEK); 
+	}
+
+	public function closeRequest($request_id, $status_code){
+		$this->_db->beginTransaction();
+		$sql = "UPDATE OFFER_REQUEST SET STATUS = ? WHERE ID = ?";
+		$this->_db->query($sql, array($status_code, $request_id));
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return false;
+		}
+		$this->_db->commit();
+		return true;
 	}
 }
 ?>

@@ -111,6 +111,9 @@ body{
 .row-offer-completed{
 	color: #00CC33;
 }
+.row-offer-cancelled{
+	color: #CC3333;
+}
 .left-column{
 	float: left;
 	width: 70%;

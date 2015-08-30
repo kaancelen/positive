@@ -132,7 +132,13 @@
 					<input type="text" class="form-control" aria-describedby="basic-addon1" id="cvc" name="cvc">
 				</div>
 				<br>
-				<button class="btn btn-lg btn-primary btn-block" type="button" onclick='editCardInfo(<?php echo $policyReqDetail[PolicyRequest::CARD_ID]; ?>)' id="policy-request-button">Kart bilgilerini değiştir</button>
+				<?php if($policyReqDetail[PolicyRequest::STATUS] == 3){?>
+					<div align="center">
+						<div class="alert alert-danger" role="alert">Poliçe isteği kapatıldı!</div>
+					</div>
+				<?php }else{ ?>
+					<button class="btn btn-lg btn-primary btn-block" type="button" onclick='editCardInfo(<?php echo $policyReqDetail[PolicyRequest::CARD_ID]; ?>)' id="policy-request-button">Kart bilgilerini değiştir</button>
+				<?php } ?>
 			</div>
 		</form>
 	</div>
