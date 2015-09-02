@@ -20,6 +20,10 @@ class FileUploader{
 		return $this->uploadFile($file, __DIR__.'/chat/'.$filename);
 	}
 	
+	public function uploadCancelFile($filename, $file){
+		return $this->uploadFile($file, __DIR__.'/cancel/'.$filename);
+	}
+	
 	private function uploadFile($file, $filepath){
 		if(file_exists($filepath)){
 			unlink($filepath);//Remove if exist

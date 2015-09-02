@@ -152,3 +152,50 @@ function validateOfferRequest(companies){
 		$('#offer-request-form').submit();
 	}
 }
+
+function request_input(type){
+	if(type === 0){
+		$('.request-type-buttons').css('display', 'none');
+		$('.uretim-main').css('display', '');
+	}else if(type === 1){
+		$('.request-type-buttons').css('display', 'none');
+		$('.iptal-main').css('display', '');
+	}
+}
+
+function validateCancelRequest(){
+	var max_file_size = 5000000;//5mb
+	var max_file_size_mb = max_file_size / 1000000;
+	var message = "";
+	
+	var file = $('#sozlesme');
+	if(file[0].files[0]){
+		if(file[0].files[0].size > max_file_size){
+			message += "Gönderilecek dosya en fazla "+max_file_size_mb+"MB olabilir.<br>";
+		}
+	}else{
+		message += "Lütfen Noter satış sözleşmesi ekini seçiniz.<br>";
+	}
+	
+	var policyNo = $('#policyNo').val();
+	if(policyNo == null || policyNo.length == 0){
+		message += "Lütfen poliçe numarasını boş bırakmayınız.<br>";
+	}else if(policyNo.length > 32){
+		message += "Poliçe numarası en fazla 32 karakter olabilir.<br>";
+	}
+	
+	var company = $('#company').val();
+	if(company == 0){
+		message += "Lütfen şirket seçiniz.<br>";
+	}
+	
+	var type = $('#type').val();
+	if(type == 0){
+		message += "Lütfen poliçe türü seçiniz.<br>";
+	}
+	
+	$('#cancel-request-error').html(message);
+	if(message.length == 0){
+		$('#cancel-request-form').submit();
+	}
+}

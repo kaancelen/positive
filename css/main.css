@@ -122,3 +122,11 @@ body{
 	float: right;
 	width: 30%;
 }
+.request-type-buttons{
+	width: 60%;
+	margin: auto;
+}
+.cancel_request_fields{
+	width: 60%;
+	margin: auto;
+}
