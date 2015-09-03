@@ -96,7 +96,8 @@
 				</div>
 				<?php
 			}else{
-				//TODO insert cancel request
+				$cancelService = new CancelService();
+				$cancelService->insert($user[User::ID], $filepath, $policy, $companyId, $typeOfContract, $desc);
 				Util::redirect('/positive/branch/policies.php');
 			}
 		}

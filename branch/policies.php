@@ -24,11 +24,14 @@
 	$allPolicyRequests = $offerService->getAllPolicyRequest($user[User::ID]);
 	if(empty($allPolicyRequests)){
 	?>
-			<div id="user_table_msg" align="center">
-				<div class="alert alert-warning" role="alert">Hiç poliçe isteğiniz bulunmamaktadır.</div>
-			</div>
-		<?php
+		<div id="user_table_msg" align="center">
+			<div class="alert alert-warning" role="alert">Hiç poliçe isteğiniz bulunmamaktadır.</div>
+		</div>
+	<?php
 	}
+	
+	$cancelService = new CancelService();
+	$allCancelRequest = $cancelService->getAllCancelRequest($user[User::ID]);
 ?>
 <div class="container">
 	<div id="user_table" class="table-responsive">

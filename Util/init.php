@@ -11,6 +11,7 @@ include_once (__DIR__.'/../classes/PolicyType.php');
 include_once (__DIR__.'/../classes/user.php');
 include_once (__DIR__.'/../classes/agent.php');
 include_once (__DIR__.'/../classes/offerRequest.php');
+include_once (__DIR__.'/../classes/cancelRequest.php');
 include_once (__DIR__.'/../classes/offerResponse.php');
 include_once (__DIR__.'/../classes/company.php');
 include_once (__DIR__.'/../classes/creditCard.php');
@@ -20,6 +21,7 @@ include_once (__DIR__.'/../service/UserService.php');
 include_once (__DIR__.'/../service/CompanyService.php');
 include_once (__DIR__.'/../service/AgentService.php');
 include_once (__DIR__.'/../service/OfferService.php');
+include_once (__DIR__.'/../service/CancelService.php');
 include_once (__DIR__.'/../Logger/ALogger.php');
 
 $loggedIn = false;
