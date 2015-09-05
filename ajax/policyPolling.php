@@ -18,6 +18,7 @@ if(!empty($_POST)){
 	
 	$last_enter_policy_page = urldecode(Util::cleanInput($_POST['last_enter_policy_page']));
 	$last_enter_offer_resp = urldecode(Util::cleanInput($_POST['last_enter_offer_resp']));
+	$last_enter_policy_req_page = urldecode(Util::cleanInput($_POST['last_enter_policy_req_page']));
 
 	$searchService = new SearchService();
 	$response = $searchService->checkNewPolicy($user[User::ID], $last_enter_policy_page, $last_enter_offer_resp);
@@ -27,7 +28,10 @@ if(!empty($_POST)){
 	if($response[1] > 0){
 		Cookie::put(Cookie::LE_POLICY_PAGE_FLAG, "on", Cookie::REMEMBER_EXPIRE);
 	}
-	
+	$response[2] = $searchService->checkNewCancelResponse($user[User::ID], $last_enter_policy_req_page);
+	if($response[2] > 0){
+		Cookie::put(Cookie::LE_POLICY_REQ_PAGE_FLAG, "on", Cookie::REMEMBER_EXPIRE);
+	}
 	
 	echo json_encode($response);
 }

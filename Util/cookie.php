@@ -16,6 +16,9 @@ class Cookie{
 	const LAST_ENTER_OFFER_RESP = "last_enter_offer_resp";
 	const LE_OFFER_RESP_FLAG = "le_offer_resp_flag";
 	
+	const LAST_ENTER_POLICY_REQ_PAGE = "last_enter_policy_req_page";
+	const LE_POLICY_REQ_PAGE_FLAG = "le_policy_req_page_flag";
+	
 	const HASH = "HASH";
 	const REMEMBER_EXPIRE = 604800;
 	

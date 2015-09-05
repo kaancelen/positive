@@ -4,6 +4,9 @@ var le_policy_page_flag = getCookie("le_policy_page_flag");
 var last_enter_offer_resp = getCookie("last_enter_offer_resp");
 var le_offer_resp_flag = getCookie("le_offer_resp_flag");
 
+var last_enter_policy_req_page = getCookie("last_enter_policy_req_page");
+var le_policy_req_page_flag = getCookie("le_policy_req_page_flag");
+
 //Re paint not checked tabs
 if(le_offer_resp_flag == 'on'){
     $('#branch_2').removeClass('active');
@@ -13,10 +16,15 @@ if(le_policy_page_flag == 'on'){
 	$('#branch_4').removeClass('active');
 	$('#branch_4').addClass('poll-alert-2');
 }
+if(le_policy_req_page_flag == 'on'){
+	$('#branch_3').removeClass('active');
+	$('#branch_3').addClass('poll-alert-2');
+}
 
 var data = new FormData();
 data.append('last_enter_policy_page', last_enter_policy_page);
 data.append('last_enter_offer_resp', last_enter_offer_resp);
+data.append('last_enter_policy_req_page', last_enter_policy_req_page);
 
 setInterval(function(){
 	//make ajax request
@@ -37,6 +45,10 @@ setInterval(function(){
                 if(data[1] > 0){
                     $('#branch_4').removeClass('active');
                     $('#branch_4').addClass('poll-alert-2');
+                }
+                if(data[2] > 0){
+                	$('#branch_3').removeClass('active');
+                    $('#branch_3').addClass('poll-alert-2');
                 }
 
                 console.log(data);

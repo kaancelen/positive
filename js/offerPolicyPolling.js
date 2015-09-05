@@ -16,7 +16,12 @@ if(le_policy_flag == 'on'){
 }
 
 var data = new FormData();
-data.append('companies', JSON.parse(companies));
+var companiesString = null;
+if(companies != null && companies.length > 0){
+	var companiesString = JSON.parse(companies);
+}
+
+data.append('companies', companiesString);
 data.append('last_enter_offer_req', last_enter_offer_req);
 data.append('last_enter_policy_req', last_enter_policy_req);
 
@@ -36,7 +41,7 @@ setInterval(function(){
         			$('#personel_1').removeClass('active');
                 	$('#personel_1').addClass('poll-alert-1');
         		}
-        		if(data[1] > 0){
+        		if(data[1] > 0 || data[2] > 0){
         			$('#personel_2').removeClass('active');
                 	$('#personel_2').addClass('poll-alert-2');
         		}

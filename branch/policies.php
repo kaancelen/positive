@@ -24,6 +24,10 @@
 	
 	$cancelService = new CancelService();
 	$allCancelRequests = $cancelService->getAllCancelRequests($user[User::ID]);
+	
+	//policy polling job
+	Cookie::put(Cookie::LAST_ENTER_POLICY_REQ_PAGE, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_POLICY_REQ_PAGE_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 ?>
 <script src="/positive/js/policiesPage.js"></script>
 <div class="container">
