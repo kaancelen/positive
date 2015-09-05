@@ -89,6 +89,9 @@ class CancelProcedures extends Procedures{
 		}
 	}
 	
+	public function requestOperation($cancel_id, $user_id, $status){
+		return null;//TODO
+	}
 }
 
 ?>

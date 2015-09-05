@@ -22,6 +22,10 @@ class CancelService implements Service{
 	public function getCancelRequest($cancel_id, $user_id = null){
 		return $this->_cancelProcedures->getCancelRequest($cancel_id, $user_id);
 	}
+
+	public function requestOperation($cancel_id, $user_id, $status){
+		return $this->_cancelProcedures->requestOperation($cancel_id, $user_id, $status);
+	}
 }
 
 ?>
