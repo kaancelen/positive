@@ -88,7 +88,7 @@
 				<thead>
 					<tr>
 						<td><b>Talep No</b></td>
-						<td><b>Onaylayan</b></td>
+						<td><b>İşlem Yapan</b></td>
 						<td><b>Poliçe</b></td>
 						<td><b>Giriş Tarihi</b></td>
 						<td><b>Poliçe No</b></td>
@@ -100,7 +100,15 @@
 				</thead>
 				<tbody>
 				<?php foreach ($allCancelRequests as $cancelRequest){ ?>
-					<tr>
+					<?php 
+						$class = "";
+						if($cancelRequest[CancelRequest::STATUS] == 1){
+							$class = "row-offer-completed";
+						}else if($cancelRequest[CancelRequest::STATUS] == 2){
+							$class = "row-offer-cancelled";
+						}
+					?>
+					<tr <?php echo "class=".$class;?>>
 						<td><b><?php echo $cancelRequest[CancelRequest::ID]; ?></b></td>
 						<td><b><?php echo $cancelRequest[CancelRequest::PERSONEL_NAME]; ?></b></td>
 						<td><?php echo $cancelRequest[CancelRequest::POLICY_TYPE]; ?></td>

@@ -90,7 +90,18 @@ class CancelProcedures extends Procedures{
 	}
 	
 	public function requestOperation($cancel_id, $user_id, $status){
-		return null;//TODO
+		$this->_db->beginTransaction();
+		
+		$sql = "UPDATE CANCEL_REQUEST SET PERSONEL_ID = ?, COMPLETE_DATE = SYSDATE(), STATUS = ? WHERE ID = ?";
+		$this->_db->query($sql, array($user_id, $status, $cancel_id));
+		if($this->_db->error()){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "cancel requests[".$cancel_id."] couldn't updated");
+			$this->_db->rollback();
+			return false;
+		}else{
+			$this->_db->commit();
+			return true;
+		}
 	}
 }
 

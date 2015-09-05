@@ -60,8 +60,8 @@
 		<table class="offer-request-info-table">
 			<thead>
 				<tr>
-					<td>Onaylayan</td>
-					<td>Onaylanma Tarihi</td>
+					<td>İşlem Yapan</td>
+					<td>İşlem Tarihi</td>
 					<td>Ek Bilgi</td>
 					<td>Satış Sözleşme Eki</td>
 				</tr>
@@ -69,7 +69,7 @@
 			<tbody>
 				<tr>
 					<td><?php echo $cancelReqDetail[CancelRequest::PERSONEL_NAME];?></td>
-					<td><?php echo DateUtil::format(null);?></td>
+					<td><?php echo DateUtil::format($cancelReqDetail[CancelRequest::COMPLETE_DATE]);?></td>
 					<td><?php echo $cancelReqDetail[CancelRequest::EK_BILGI];?></td>
 					<td><a target="_blank" href="/positive/download.php?file=<?php echo $cancelReqDetail[CancelRequest::SOZLESME];?>"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>İndir</a></td>
 				</tr>
