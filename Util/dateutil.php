@@ -11,6 +11,9 @@ class DateUtil{
 	const POLICY_TIMEOUT_MILLIS = 2592000;//30 day
 	
 	public static function format($date){
+		if(is_null($date)){
+			return null;
+		}
 		$datetime = new DateTime($date);
 		return $datetime->format(self::FORMAT);
 	}

@@ -130,3 +130,9 @@ body{
 	width: 60%;
 	margin: auto;
 }
+.policy_tabs{
+	width: 30%;
+	margin: auto;
+	text-align: center;
+	padding-left: 8%;
+}
