@@ -5,6 +5,7 @@ class CancelRequest{
 	const USER_ID = "USER_ID";
 	const PERSONEL_ID = "PERSONEL_ID";
 	const CREATION_DATE = "CREATION_DATE";
+	const COMPLETE_DATE = "COMPLETE_DATE";
 	const SOZLESME = "SOZLESME";
 	const POLICY_NUMBER = "POLICY_NUMBER";
 	const COMPANY_ID = "COMPANY_ID";
