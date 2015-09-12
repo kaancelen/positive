@@ -11,4 +11,6 @@
 			</ul>
 		</li>
 	</ul>
+	<br><br><br>
+	<p>Uygulamadaki değişikliklerin yansıması için <br> bulunduğunuz sayfayı en az 1 defa <b>ctrl+f5</b> tuşları ile yenileyiniz.</p>
 </div>
