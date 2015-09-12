@@ -15,5 +15,5 @@
 	}
 	include_once (__DIR__.'/../navigationBar.php');
 ?>
-
+<?php include_once (__DIR__.'/../changelog.php');?>
 </body>
