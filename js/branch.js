@@ -35,11 +35,13 @@ function pullOffers(request_id){
 	        		//write offers
 		    	    for (var i = 0; i < data.length; i++) {
 		    	    	var temp_value = parseFloat(data[i]['PRIM']);
-		    			if(temp_value < min_value){
-		    				min_value = temp_value;
-		    				min_value_comp = data[i]['COMPANY_ID'];
-		    			}
-		    			$('#offer_row_'+data[i]['COMPANY_ID']).css("background-color","");//remove css
+		    	    	if(temp_value > 0){
+		    	    		if(temp_value < min_value){
+			    				min_value = temp_value;
+			    				min_value_comp = data[i]['COMPANY_ID'];
+			    			}
+		    	    	}
+		    	    	$('#offer_row_'+data[i]['COMPANY_ID']).css("background-color","");//remove css
 		    	    	writeToOfferRow(data[i]);
 		    	    }
 		    	    if(min_value_comp > 0){

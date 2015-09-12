@@ -164,9 +164,11 @@ include_once(__DIR__.'/../head.php');
 		var min_value_comp = 0;
 		<?php foreach($offerResponses as $offerResponse){?>
 			var temp_value = <?php echo $offerResponse['PRIM'];?>;
-			if(temp_value < min_value){
-				min_value = temp_value;
-				min_value_comp = <?php echo $offerResponse['COMPANY_ID'];?>;
+			if(temp_value > 0){
+				if(temp_value < min_value){
+					min_value = temp_value;
+					min_value_comp = <?php echo $offerResponse['COMPANY_ID'];?>;
+				}
 			}
 			$('#offer_row_'+<?php echo $offerResponse['COMPANY_ID'];?>).css("background-color","");//remove css
 			writeToOfferRow(<?php echo json_encode($offerResponse); ?>);
