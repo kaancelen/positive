@@ -17,8 +17,12 @@ function closeRequest(type,request_id){
 		processData: false,
 		contentType: false,
 		success: function(data, textStatus, jqXHR){
-			console.log(data);
-			location.reload();
+			if(data){
+				location.reload();
+			}else{
+				alert((type==2?"Talep":"Poliçe isteği")+" kapatılamadı, bir hata ile karşılaşıldı!");
+			}
+			
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log('close request ajax error : ' + textStatus);

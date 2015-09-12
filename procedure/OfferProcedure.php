@@ -487,12 +487,19 @@ class OfferProcedures extends Procedures{
 		$this->_db->beginTransaction();
 		$sql = "UPDATE OFFER_REQUEST SET STATUS = ? WHERE ID = ?";
 		$this->_db->query($sql, array($status_code, $request_id));
-		if($this->_db->error()){
+		if($this->_db->count() > 0){
+			if($status_code == 3){
+				$sql = "UPDATE CREDIT_CARDS SET EXPIRE_DATE = 'XX/XXXX', CVC_CODE = 'XXX', ";
+				$sql .= "CARD_NO = CONCAT('XXXX XXXX XXXX ',RIGHT(CARD_NO, 4)) ";
+				$sql .= "WHERE ID = (SELECT DISTINCT CARD_ID FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? AND CARD_ID <> 0)";
+				$this->_db->query($sql, array($request_id));
+			}
+			$this->_db->commit();
+			return true;
+		}else{
 			$this->_db->rollback();
 			return false;
 		}
-		$this->_db->commit();
-		return true;
 	}
 
 	public function removeOffer($talep_no, $company_id, $offer_id){
