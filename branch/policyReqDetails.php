@@ -33,6 +33,9 @@
 	if(empty($policyReqDetail)){
 		Util::redirect("/positive/error/404.php");
 	}
+	
+	$genericService = new GenericService();
+	$genericService->updateUserEnter($user[User::ID], $policyReqDetail[PolicyRequest::REQUEST_ID], 1);
 ?>
 <div class="container offer-request-screen">
 	<div class="offers-column">

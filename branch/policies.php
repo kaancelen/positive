@@ -29,6 +29,7 @@
 	Cookie::put(Cookie::LAST_ENTER_POLICY_REQ_PAGE, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
 	Cookie::put(Cookie::LE_POLICY_REQ_PAGE_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 ?>
+<script src="/positive/js/pullNewChat.js"></script>
 <script src="/positive/js/policiesPage.js"></script>
 <div class="container">
 	<div class="policy_tabs">
@@ -62,7 +63,7 @@
 				<tbody>
 				<?php foreach ($allPolicyRequests as $policyRequest){ ?>
 					<tr <?php if($policyRequest[PolicyRequest::STATUS] == 3) echo "class='row-offer-cancelled'";?>>
-						<td><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
+						<td id="request_<?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?>"><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
 						<td><b><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></b></td>
 						<td><?php echo $policyRequest[PolicyRequest::PERSONEL_NAME]; ?></td>
 						<td><?php echo $policyRequest[PolicyRequest::POLICY_TYPE]; ?></td>
@@ -113,7 +114,7 @@
 						}
 					?>
 					<tr <?php echo "class=".$class;?>>
-						<td><b><?php echo $cancelRequest[CancelRequest::ID]; ?></b></td>
+						<td id="request_-<?php echo $cancelRequest[CancelRequest::ID]; ?>"><b><?php echo $cancelRequest[CancelRequest::ID]; ?></b></td>
 						<td><b><?php echo $cancelRequest[CancelRequest::PERSONEL_NAME]; ?></b></td>
 						<td><?php echo $cancelRequest[CancelRequest::POLICY_TYPE]; ?></td>
 						<td><?php echo DateUtil::format($cancelRequest[CancelRequest::CREATION_DATE]); ?></td>
@@ -133,6 +134,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+	pullNewChatEntries();
 	$('#branch_3').addClass("active");
 </script>
 </body>

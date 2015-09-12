@@ -39,6 +39,7 @@
 		$cookieCompanies = array();
 	}
 ?>
+<script src="/positive/js/pullNewChat.js"></script>
 <div class="container">
 	<div class="row">
     	<div class="col-lg-12">
@@ -108,7 +109,7 @@
 					}
 				?>
 				<tr <?php echo "class=".$class;?>>
-					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
+					<td id="request_<?php echo $offerRequest[OfferRequest::ID]; ?>"><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
 					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
 					<td><?php echo $tempUser[User::NAME]; ?></td>
 					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
@@ -127,6 +128,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+	pullNewChatEntries();
 	$('#personel_1').addClass("active");
 </script>
 </body>

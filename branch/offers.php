@@ -33,6 +33,7 @@
 	Cookie::put(Cookie::LAST_ENTER_OFFER_RESP, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
 	Cookie::put(Cookie::LE_OFFER_RESP_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 ?>
+<script src="/positive/js/pullNewChat.js"></script>
 <div class="container">
 	<div id="user_table" class="table-responsive">
 		<table class="table">
@@ -51,7 +52,7 @@
 			<tbody>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
 				<tr <?php if($offerRequest[OfferRequest::STATUS] == 2) echo "class='row-offer-cancelled'";?>>
-					<td><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
+					<td id="request_<?php echo $offerRequest[OfferRequest::ID]; ?>"><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
 					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
 					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
 					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
@@ -69,6 +70,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+	pullNewChatEntries();
 	$('#branch_2').addClass("active");
 </script>
 </body>

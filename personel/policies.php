@@ -34,6 +34,7 @@
 	<?php
 	}
 ?>
+<script src="/positive/js/pullNewChat.js"></script>
 <script src="/positive/js/policiesPage.js"></script>
 <div class="container">
 	<div class="policy_tabs">
@@ -67,7 +68,7 @@
 				<tbody>
 				<?php foreach ($allPolicyRequests as $policyRequest){ ?>
 					<tr <?php if($policyRequest[PolicyRequest::STATUS] == 3) echo 'class="row-offer-cancelled"'; ?>>
-						<td><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
+						<td id="request_<?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?>"><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
 						<td><b><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></b></td>
 						<td><?php echo $policyRequest[PolicyRequest::BRANCH_NAME]; ?></td>
 						<td><?php echo $policyRequest[PolicyRequest::POLICY_TYPE]; ?></td>
@@ -118,7 +119,7 @@
 						}
 					?>
 					<tr <?php echo "class=".$class;?>>
-						<td><b><?php echo $cancelRequest[CancelRequest::ID]; ?></b></td>
+						<td id="request_-<?php echo $cancelRequest[CancelRequest::ID]; ?>"><b><?php echo $cancelRequest[CancelRequest::ID]; ?></b></td>
 						<td><b><?php echo $cancelRequest[CancelRequest::BRANCH_NAME]; ?></b></td>
 						<td><?php echo $cancelRequest[CancelRequest::POLICY_TYPE]; ?></td>
 						<td><?php echo DateUtil::format($cancelRequest[CancelRequest::CREATION_DATE]); ?></td>
@@ -138,6 +139,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+	pullNewChatEntries();
 	$('#personel_2').addClass("active");
 </script>
 </body>

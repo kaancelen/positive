@@ -33,6 +33,9 @@
 	if(empty($cancelReqDetail)){
 		Util::redirect("/positive/error/404.php");
 	}
+	
+	$genericService = new GenericService();
+	$genericService->updateUserEnter($user[User::ID], (-1)*$cancel_id, 2);
 ?>
 <div class="container offer-request-screen">
 	<div class="offers-column">

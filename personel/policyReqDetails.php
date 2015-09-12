@@ -30,6 +30,9 @@
 		Util::redirect("/positive/error/404.php");
 	}
 	
+	$genericService = new GenericService();
+	$genericService->updateUserEnter($user[User::ID], $policyReqDetail[PolicyRequest::REQUEST_ID], 1);
+	
 	if(!empty($_POST)){
 		$request_id = Util::cleanInput($_POST['request_id']);
 		$offer_id = Util::cleanInput($_POST['offer_id']);

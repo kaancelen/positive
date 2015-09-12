@@ -84,7 +84,7 @@ function removeOffer(talepNo, companyId, companyName){
         success: function(data, textStatus, jqXHR){
         	console.log(data);
         	if(data){
-        		//location.reload();
+        		location.reload();
         	}else{
         		alert("Teklif silinemedi, bir hata ile karşılaşıldı!");
         	}

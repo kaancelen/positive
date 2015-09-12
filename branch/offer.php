@@ -63,6 +63,9 @@ include_once(__DIR__.'/../head.php');
 		</div>
 		<?php
 	}
+	
+	$genericService = new GenericService();
+	$genericService->updateUserEnter($user[User::ID], $offerRequestId, 0);
 ?>
 <script src="/positive/js/branch.js"></script>
 <div class="well offer-request-label">

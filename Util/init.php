@@ -18,6 +18,7 @@ include_once (__DIR__.'/../classes/creditCard.php');
 include_once (__DIR__.'/../classes/policyRequest.php');
 include_once (__DIR__.'/../service/LoginService.php');
 include_once (__DIR__.'/../service/UserService.php');
+include_once (__DIR__.'/../service/GenericService.php');
 include_once (__DIR__.'/../service/CompanyService.php');
 include_once (__DIR__.'/../service/AgentService.php');
 include_once (__DIR__.'/../service/OfferService.php');
