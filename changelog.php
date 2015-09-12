@@ -8,6 +8,7 @@
 			Sohbet bildirimleri eklendi.Sohbete yeni bir girdi yapıldığında.
 			<ul>
 				<li>Talep, poliçe ve iptal istekleri ekranında ilgili talep numarası <span class="new-message">maviye</span> dönüyor.</li>
+				<li>Sohbet bildirimi alınabilmesi için o talep,poliçe veya iptal isteğinin en az 1 defa açılması gerekmektedir.</li>
 			</ul>
 		</li>
 	</ul>
