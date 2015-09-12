@@ -6,6 +6,7 @@ function disableOfferRow(offer){
 	$('#prod_komisyon_'+offer['COMPANY_ID']).val(offer['PROD_KOMISYON']);
 	$('#komisyon_'+offer['COMPANY_ID']).prop('readonly', true);
 	$('#give_offer_'+offer['COMPANY_ID']).remove();
+	$('#remove_offer_'+offer['COMPANY_ID']).css('display','');
 }
 
 function giveOffer(talepNo, companyId, companyName, user_id){
@@ -48,6 +49,45 @@ function giveOffer(talepNo, companyId, companyName, user_id){
         contentType: false,
         success: function(data, textStatus, jqXHR){
         	disableOfferRow(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log('add offer ajax error : ' + textStatus);
+        },
+        complete: function(jqXHR, textStatus){
+            console.log("add offer ajax call complete : " + textStatus);
+        }
+    });
+}
+
+function removeOffer(talepNo, companyId, companyName){
+	var offerId = $('#offer_id_'+companyId).html();//get offer id
+	
+	var r = confirm("["+companyName+"] için verilen ["+offerId+"] numaralı teklifi silmek istediğinize emin misiniz?");
+	if(!r){
+		return;
+	}
+	
+	var data = new FormData();
+	data.append('talep_no', talepNo);
+	data.append('company_id', companyId);
+	data.append('offer_id', offerId);
+	
+	//make ajax request
+    $.ajax({
+        url: '/positive/ajax/remove_offer.php',
+        type: 'POST',
+        data: data,
+        cache: false,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR){
+        	console.log(data);
+        	if(data){
+        		//location.reload();
+        	}else{
+        		alert("Teklif silinemedi, bir hata ile karşılaşıldı!");
+        	}
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.log('add offer ajax error : ' + textStatus);

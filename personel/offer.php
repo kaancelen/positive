@@ -143,6 +143,10 @@ include_once(__DIR__.'/../head.php');
 								onclick="giveOffer(<?php echo $offerRequest[OfferRequest::ID]; ?>,<?php echo $company[Company::ID]; ?>, '<?php echo $company[Company::NAME]; ?>', <?php echo $user[User::ID]; ?>);">
 							  <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
 							</button>
+							<button id="remove_offer_<?php echo $company[Company::ID]; ?>" type="button" class="btn btn-default btn-sm" aria-label="Left Align" style="display: none"
+								onclick="removeOffer(<?php echo $offerRequest[OfferRequest::ID]; ?>, <?php echo $company[Company::ID]; ?>, '<?php echo $company[Company::NAME]; ?>');" >
+							  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button>
 							<?php } ?>
 						</td>
 					</tr>

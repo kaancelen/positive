@@ -66,6 +66,10 @@ class OfferService implements Service{
 	public function closeRequest($request_id, $status_code){
 		return $this->_offerProcedures->closeRequest($request_id, $status_code);
 	}
+
+	public function removeOffer($talep_no, $company_id, $offer_id){
+		return $this->_offerProcedures->removeOffer($talep_no, $company_id, $offer_id);
+	}
 }
 
 ?>

@@ -494,5 +494,25 @@ class OfferProcedures extends Procedures{
 		$this->_db->commit();
 		return true;
 	}
+
+	public function removeOffer($talep_no, $company_id, $offer_id){
+		$this->_db->beginTransaction();
+		$sql = "UPDATE OFFER_REQUEST_COMPANY SET OFFER_ID = 0 WHERE REQUEST_ID = ? AND COMPANY_ID = ?";
+		$this->_db->query($sql, array($talep_no, $company_id));
+		if($this->_db->count() > 0){
+			$sql = "DELETE FROM OFFER_REQUEST WHERE ID = ?";
+			$this->_db->query($sql, array($offer_id));
+			if($this->_db->error()){
+				$this->_db->rollback();
+				return false;
+			}else{
+				$this->_db->commit();
+				return true;
+			}
+		}else{
+			$this->_db->rollback();
+			return false;
+		}
+	}
 }
 ?>
