@@ -27,8 +27,8 @@ class AgentService implements Service{
 		return $this->_agentProcedures->updateCardInfo($card_id, $card_name, $card_no, $expire_date, $cvc);
 	}
 
-	public function changePolicyAgent($request_id, $new_user_id){
-		return $this->_agentProcedures->changePolicyAgent($request_id, $new_user_id);
+	public function changePolicyAgent($request_id, $offer_id, $new_user_id){
+		return $this->_agentProcedures->changePolicyAgent($request_id, $offer_id, $new_user_id);
 	}
 }
 

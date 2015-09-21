@@ -130,7 +130,7 @@ class AgentProcedures extends Procedures{
 		return $error;
 	}
 
-	public function changePolicyAgent($request_id, $new_user_id){
+	public function changePolicyAgent($request_id, $offer_id, $new_user_id){
 		$this->_db->beginTransaction();
 		$sql = "UPDATE OFFER_REQUEST SET USER_ID = ? WHERE ID = ?";
 		$this->_db->query($sql, array($new_user_id, $request_id));
@@ -138,9 +138,18 @@ class AgentProcedures extends Procedures{
 			$this->_db->rollback();
 			return false;
 		}else{
-			$this->_db->commit();
-			return true;
+			$sql = "UPDATE OFFER_RESPONSE SET PROD_KOMISYON = (KOMISYON*(SELECT KOMISYON_RATE FROM USER WHERE ID = ?))/100";
+			$sql .= " WHERE ID = ?";
+			$this->_db->query($sql, array($new_user_id, $offer_id));
+			if($this->_db->error()){
+				$this->_db->rollback();
+				return false;
+			}else{
+				$this->_db->commit();
+				return true;
+			}
 		}
+		
 	}
 }
 

@@ -169,7 +169,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
-	        	<button type="button" class="btn btn-primary" onclick="onChangeAgentInfo(<?php echo $policy[Policy::REQUEST_ID];?>);">Kaydet</button>
+	        	<button type="button" class="btn btn-primary" onclick="onChangeAgentInfo(<?php echo $policy[Policy::REQUEST_ID];?>, <?php echo $policy[Policy::OFFER_ID];?>);">Kaydet</button>
 			</div>
 		</div>
 	</div>

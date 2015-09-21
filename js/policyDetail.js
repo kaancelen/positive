@@ -1,4 +1,4 @@
-function onChangeAgentInfo(request_id){
+function onChangeAgentInfo(request_id, offer_id){
 	var agentId = $('#new_agent').val();
 	var agentText = $('#new_agent option:selected').text();
 	
@@ -10,6 +10,7 @@ function onChangeAgentInfo(request_id){
 	var data = new FormData();
 	data.append('request_id', request_id);
 	data.append('new_user_id', agentId);
+	data.append('offer_id', offer_id);
 	//make ajax request
 	$.ajax({
 		url: '/positive/ajax/change_policy_agent.php',

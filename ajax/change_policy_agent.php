@@ -16,10 +16,11 @@ if(!empty($_POST)){
 	}
 	
 	$request_id = Util::cleanInput($_POST['request_id']);
+	$offer_id = Util::cleanInput($_POST['offer_id']);
 	$new_user_id = Util::cleanInput($_POST['new_user_id']);
 	
 	$agentService = new AgentService();
-	$result = $agentService->changePolicyAgent($request_id, $new_user_id);
+	$result = $agentService->changePolicyAgent($request_id, $offer_id, $new_user_id);
 	
 	echo json_encode($result);
 }
