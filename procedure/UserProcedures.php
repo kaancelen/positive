@@ -55,6 +55,32 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
+	public function allTypeOfUsers($type){
+		$sql = "SELECT * FROM USER WHERE ROLE = ? ORDER BY NAME";
+		$this->_db->query($sql, array($type));
+		$result = $this->_db->all();
+		
+		if(is_null($result)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "no user recorded in DB");
+			return null;
+		}else{
+			$users = array();
+			foreach ($result as $object){
+				$user = array();
+				$user[User::ID] = $object->ID;
+				$user[User::NAME] = $object->NAME;
+				$user[User::CODE] = $object->CODE;
+				$user[User::ROLE] = $object->ROLE;
+				$user[User::DESCRIPTION] = $object->DESCRIPTION;
+				$user[User::FIRST_LOGIN] = $object->FIRST_LOGIN;
+				$user[User::CREATION_DATE] = $object->CREATION_DATE;
+				$user[User::KOMISYON_RATE] = $object->KOMISYON_RATE;
+				array_push($users, $user);
+			}
+			return $users;
+		}
+	}
+	
 	public function removeUser($user_id){
 		$this->_db->beginTransaction();
 		

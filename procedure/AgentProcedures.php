@@ -129,6 +129,19 @@ class AgentProcedures extends Procedures{
 		$error = $this->_db->error();
 		return $error;
 	}
+
+	public function changePolicyAgent($request_id, $new_user_id){
+		$this->_db->beginTransaction();
+		$sql = "UPDATE OFFER_REQUEST SET USER_ID = ? WHERE ID = ?";
+		$this->_db->query($sql, array($new_user_id, $request_id));
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return false;
+		}else{
+			$this->_db->commit();
+			return true;
+		}
+	}
 }
 
 ?>

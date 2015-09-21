@@ -19,6 +19,10 @@ class UserService implements Service{
 		return $this->_userProcedures->allUsers();
 	}
 	
+	public function allTypeOfUsers($type){
+		return $this->_userProcedures->allTypeOfUsers($type);
+	}
+	
 	public function removeUser($user_id){
 		return $this->_userProcedures->removeUser($user_id);
 	}

@@ -27,13 +27,17 @@
 	if(empty($policy)){
 		Util::redirect('/positive/error/404.php');
 	}
+	
+	$userService = new UserService();
+	$allAgents = $userService->allTypeOfUsers(User::BRANCH);
 ?>
+<script src="/positive/js/policyDetail.js"></script>
 <div class="container">
 	<table class="offer-request-info-table">
 		<thead>
 			<tr>
 				<td>Talep No</td>
-				<td>Acenta</td>
+				<td>Acenta&nbsp;<a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-edit"></span>Değiştir</a></td>
 				<td>İstek tarihi</td>
 				<?php if($policy[PolicyRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
 					<td>Plaka</td>
@@ -147,4 +151,27 @@
 <script type="text/javascript">
 	$('#personel_3').addClass("active");
 </script>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Acenta değiştir</h2>
+			</div>
+			<div class="modal-body">
+				<h4>Eski Acenta</h4>
+				<?php echo $policy[Policy::BRANCH_NAME];?>
+				<h4>Yeni Acenta</h4>
+				<select id="new_agent" name="new_agent" class="form-control">
+				<?php foreach ($allAgents as $agent){?>
+					<option value="<?php echo $agent[User::ID]?>"><?php echo $agent[User::NAME]?> - <?php echo $agent[User::CODE]?></option>
+				<?php }?>
+				</select>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+	        	<button type="button" class="btn btn-primary" onclick="onChangeAgentInfo(<?php echo $policy[Policy::REQUEST_ID];?>);">Kaydet</button>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
