@@ -49,6 +49,10 @@ class SearchService implements Service{
 	public function checkNewCancelResponse($user_id, $last_enter_policy_req){
 		return $this->_searchProcedures->checkNewCancelResponse($user_id, $last_enter_policy_req);
 	}
+
+	public function getPoliciesInMonth($month, $year){
+		return $this->_searchProcedures->getPoliciesInMonth($month, $year);
+	}
 }
 
 ?>

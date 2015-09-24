@@ -237,6 +237,68 @@ class SearchProcedures extends Procedures{
 		$cancel_req_count = $this->_db->count();
 		return $cancel_req_count;
 	}
+
+	public function getPoliciesInMonth($month, $year){
+		$sql = "SELECT 
+					ofr.ID REQUEST_ID, 
+					ofr.USER_ID BRANCH_ID, 
+					ofr.CREATION_DATE REQUEST_DATE, 
+					ofr.POLICY_TYPE POLICY_TYPE, 
+					po.POLICY_NUMBER POLICY_NUMBER, 
+					po.DESCRIPTION POLICE_EK_BILGI, 
+					ofr.PLAKA PLAKA, 
+					ofr.TCKN TCKN, 
+					ofr.VERGI VERGI, 
+					ofr.BELGE BELGE, 
+					ofr.ASBIS ASBIS, 
+					ofr.DESCRIPTION EK_BILGI, 
+					ofre.ID OFFER_ID, 
+					ofre.USER_ID PERSONEL_ID, 
+					ofre.PRIM PRIM, 
+					ofre.KOMISYON KOMISYON, 
+					ofre.PROD_KOMISYON PROD_KOMISYON, 
+					ofre.CREATION_DATE OFFER_DATE, 
+					(SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, 
+					(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, 
+					co.NAME COMPANY_NAME, 
+					cc.ID CARD_ID, 
+					cc.NAME CARD_NAME, 
+					cc.CARD_NO CARD_NO, 
+					cc.EXPIRE_DATE EXPIRE_DATE, 
+					cc.CVC_CODE CVC_CODE, 
+					cc.CREATION_DATE POLICY_REQ_DATE, 
+					po.ID POLICY_ID, 
+					po.CREATION_DATE POLICY_COMPLETE_DATE,
+					(SELECT NAME FROM USER WHERE ID = po.USER_ID) POLICY_COMPLETE_PERSONEL 
+				FROM 
+					OFFER_REQUEST ofr, 
+					OFFER_REQUEST_COMPANY orc, 
+					OFFER_RESPONSE ofre, 
+					COMPANY co, 
+					CREDIT_CARDS cc, 
+					POLICY po 
+				WHERE ofr.ID = orc.REQUEST_ID 
+				AND ofre.ID = orc.OFFER_ID 
+				AND co.ID = orc.COMPANY_ID 
+				AND cc.ID = orc.CARD_ID 
+				AND po.ID = orc.POLICY_ID 
+				AND MONTH(po.CREATION_DATE) = ?
+				AND YEAR(po.CREATION_DATE) = ?";
+		
+		$this->_db->query($sql, array($month, $year));
+		$result = $this->_db->all();
+		if(is_null($result)){
+			return null;
+		}else{
+			$allPolicies = array();
+			foreach ($result as $object){
+				$policy = json_decode(json_encode($object), true);
+				array_push($allPolicies, $policy);
+			}
+			
+			return $allPolicies;
+		}
+	}
 }
 
 ?>
