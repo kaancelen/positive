@@ -38,8 +38,9 @@
       		<li id="branch_2"><a href="/positive/branch/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Taleplerim</a></li>
       		<li id="branch_3"><a href="/positive/branch/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe isteklerim</a></li>
       		<li id="branch_4"><a href="/positive/branch/completedPolicies.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçelerim</a></li>
-          <script src="/positive/js/policyPolling.js"></script>
+          	<script src="/positive/js/policyPolling.js"></script>
         <?php }?>
+        <li id="recon_1"><a href="/positive/recons.php"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>Mutabakat</a></li>
       	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
       		<li id="finance_1"><a href="#">Finans</a></li>
       	<?php }?>

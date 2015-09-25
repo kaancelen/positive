@@ -61,6 +61,24 @@ class Util{
 		return self::xml2array($xml);
 	}
 	
+	public static function getMonthMap(){
+		$monthMap = array();
+		$monthMap[1] = "Ocak";
+		$monthMap[2] = "Şubat";
+		$monthMap[3] = "Mart";
+		$monthMap[4] = "Nisan";
+		$monthMap[5] = "Mayıs";
+		$monthMap[6] = "Haziran";
+		$monthMap[7] = "Temmuz";
+		$monthMap[8] = "Ağustos";
+		$monthMap[9] = "Eylül";
+		$monthMap[10] = "Ekim";
+		$monthMap[11] = "Kasım";
+		$monthMap[12] = "Aralık";
+
+		return $monthMap;
+	}
+	
 	/**
 	 * convert xml object to array
 	 * @param unknown $xmlObject

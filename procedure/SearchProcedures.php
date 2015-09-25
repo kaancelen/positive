@@ -75,18 +75,23 @@ class SearchProcedures extends Procedures{
 		}
 		$this->_db->query($sql, $params);
 		
-		$result = $this->_db->first();
+		$result = $this->_db->all();
 		if(is_null($result)){
 			return null;
 		}else{
-			$real_policy_id = $result->POLICY_ID;
-			$policyRequest = array(
-					Search::BRANCH_NAME => $result->BRANCH_NAME,
-					Search::PERSONEL_NAME => $result->PERSONEL_NAME,
-					Search::POLICY_COMPLETE_PERSONEL => $result->POLICY_COMPLETE_PERSONEL,
-					Search::LINK => '/positive/'.($requester == User::BRANCH ? "branch" : "personel" ).'/policyDetail.php?policy_id='.$real_policy_id
-			);
-			return $policyRequest;
+			$policyRequestList = array();
+			foreach ($result as $object){
+				$real_policy_id = $object->POLICY_ID;
+				$policyRequest = array(
+						Search::BRANCH_NAME => $object->BRANCH_NAME,
+						Search::PERSONEL_NAME => $object->PERSONEL_NAME,
+						Search::POLICY_COMPLETE_PERSONEL => $object->POLICY_COMPLETE_PERSONEL,
+						Search::LINK => '/positive/'.($requester == User::BRANCH ? "branch" : "personel" ).'/policyDetail.php?policy_id='.$real_policy_id
+				);
+				
+				array_push($policyRequestList, $policyRequest);
+			}
+			return $policyRequestList;
 		}
 	}
 	

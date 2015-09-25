@@ -1,0 +1,21 @@
+<?php
+
+class ReconPolicy{
+	const POLICY_ID = "POLICY_ID";
+	const POLICY_COMPLETE_DATE = "POLICY_COMPLETE_DATE";
+	const POLICY_NUMBER = "POLICY_NUMBER";
+	const TCKN = "TCKN";
+	const VERGI = "VERGI";
+	const BRANCH_NAME = "BRANCH_NAME";
+	const BRANCH_ID = "BRANCH_ID";
+	const PERSONEL_ID = "PERSONEL_ID";
+	const PERSONEL_ID_POLICY = "PERSONEL_ID_POLICY";
+	const COMPANY_NAME = "COMPANY_NAME";
+	const COMPANY_ID = "COMPANY_ID";
+	const POLICY_TYPE = "POLICY_TYPE";
+	const PRIM = "PRIM";
+	const KOMISYON = "KOMISYON";
+	const PROD_KOMISYON = "PROD_KOMISYON";
+}
+
+?>

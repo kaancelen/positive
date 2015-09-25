@@ -23,6 +23,7 @@ include_once (__DIR__.'/../service/CompanyService.php');
 include_once (__DIR__.'/../service/AgentService.php');
 include_once (__DIR__.'/../service/OfferService.php');
 include_once (__DIR__.'/../service/CancelService.php');
+include_once (__DIR__.'/../service/ReconService.php');
 include_once (__DIR__.'/../Logger/ALogger.php');
 
 $loggedIn = false;

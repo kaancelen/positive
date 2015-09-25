@@ -144,3 +144,8 @@ body{
 	width: 80%;
 	margin: auto;
 }
+.month-option{
+	width: 20%;
+	margin: auto;
+	display: inline-block;
+}

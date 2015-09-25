@@ -138,7 +138,8 @@ function putDatas(data){
 		$('#offer_part').html(text);
 	}
 	
-	var policy = data[3];
+	var policy = data[3][0];
+	console.log(policy);
 	if(policy){
 		var text = "";
 		for(var i=0; i < policy.length; i++){
