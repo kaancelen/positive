@@ -63,6 +63,18 @@ class ReconService implements Service{
 				$class = "row-offer-completed";
 			}
 		}
+		if($user_role == User::ADMIN){
+			if(!empty($recon[Recon::KAYNAK]) && !empty($recon[Recon::URETIM_KANALI]) &&
+				!empty($recon[Recon::MUSTERI_TIPI]) && !empty($recon[Recon::YENI_TECDIT]) &&
+				!empty($recon[Recon::PARA_BIRIMI]) && $recon[Recon::NET] != 0 &&
+				!empty($recon[Recon::MUSTERI_ADI]) && !empty($recon[Recon::BASLANGIC_TARIHI]) &&
+				!empty($recon[Recon::BITIS_TARIHI]) &&
+				!empty($recon[Recon::BOLGE]) && !empty($recon[Recon::BAGLI]) &&
+				!empty($recon[Recon::TAHSILAT_DURUMU]) && $recon[Recon::HERO_KOMISYON] != 0 && 
+				$recon[Recon::MERKEZ] != 0){
+				$class = "row-offer-completed";
+			}
+		}
 		
 		return $class;
 	}

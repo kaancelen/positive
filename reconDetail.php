@@ -87,7 +87,8 @@
 		</table>
 		<br/>
 		<?php if ($user[User::ROLE] == User::PERSONEL || $user[User::ROLE] == User::ADMIN){?>
-		<div class="panel panel-default">
+		<?php $class = $reconService->isReconCompleted(User::PERSONEL, $reconDetail); ?>
+		<div class="panel <?php if(empty($class)){echo "panel-danger";}else{echo "panel-success";}?>">
 			<div class="panel-heading">
 				<h3 class="panel-title">Teknikçi dolduracak</h3>
 			</div>
@@ -146,7 +147,8 @@
 		<?php } ?>
 		<br/>
 		<?php if ($user[User::ROLE] == User::BRANCH || $user[User::ROLE] == User::ADMIN) {?>
-		<div class="panel panel-default">
+		<?php $class = $reconService->isReconCompleted(User::BRANCH, $reconDetail); ?>
+		<div class="panel <?php if(empty($class)){echo "panel-danger";}else{echo "panel-success";}?>">
 			<div class="panel-heading">
 				<h3 class="panel-title">Acente dolduracak</h3>
 			</div>
@@ -179,7 +181,8 @@
 		<?php } ?>
 		<br/>
 		<?php if ($user[User::ROLE] == User::FINANCE || $user[User::ROLE] == User::ADMIN) {?>
-		<div class="panel panel-default">
+		<?php $class = $reconService->isReconCompleted(User::FINANCE, $reconDetail); ?>
+		<div class="panel <?php if(empty($class)){echo "panel-danger";}else{echo "panel-success";}?>">
 			<div class="panel-heading">
 				<h3 class="panel-title">Finans dolduracak</h3>
 			</div>
