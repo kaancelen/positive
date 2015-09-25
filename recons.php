@@ -62,7 +62,7 @@
 		<?php if($reconDifference < 0){ ?>
 		<div class="alert alert-danger" role="alert">Mutabakat kontrolünde bir hata ile karşılaşıldı.</div>
 		<?php }?>
-		<div id="user_table" class="table-responsive">
+		<div id="recon_table" class="table-responsive">
 			<table class="table">
 				<thead>
 					<tr>

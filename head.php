@@ -12,6 +12,8 @@
 <!-- jasny -->
 <!-- <link rel="stylesheet" href="/positive/css/jasny/css/jasny-bootstrap.min.css"> -->
 <!-- <script src="/positive/css/jasny/js/jasny-bootstrap.min.js"></script> -->
+<link rel="stylesheet" href="/positive/js/jquery-ui/jquery-ui.min.css">
+<script src="/positive/js/jquery-ui/jquery-ui.min.js"></script>
 
 <link rel="stylesheet" href="/positive/css/main.css">
 <script src="/positive/js/main.js"></script>

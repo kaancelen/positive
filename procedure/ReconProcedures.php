@@ -113,8 +113,8 @@ class ReconProcedures extends Procedures{
 
 	public function insertRecon($reconPolicy){
 		$sql = "INSERT INTO RECON(TAKIP_NO,TANZIM_TARIHI,POLICE_NO,TCKN,VERGI_NO,EK_BILGI,PRODUKTOR, ";
-		$sql .= "PRODUKTOR_ID,TEKNIKCI_ID,TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,BRUT,KOMISYON,PROD_KOMISYON) ";
-		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$sql .= "PRODUKTOR_ID,TEKNIKCI_ID,TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,BRUT,KOMISYON,PROD_KOMISYON,PARA_BIRIMI) ";
+		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		$params = array(
 				$reconPolicy[ReconPolicy::POLICY_ID],
@@ -132,7 +132,8 @@ class ReconProcedures extends Procedures{
 				$reconPolicy[ReconPolicy::POLICY_TYPE],
 				$reconPolicy[ReconPolicy::PRIM],
 				$reconPolicy[ReconPolicy::KOMISYON],
-				$reconPolicy[ReconPolicy::PROD_KOMISYON]
+				$reconPolicy[ReconPolicy::PROD_KOMISYON],
+				'TL'
 		);
 		
 		$this->_db->query($sql, $params);
@@ -203,6 +204,30 @@ class ReconProcedures extends Procedures{
 		}else{
 			$recon = json_decode(json_encode($result), true);
 			return $recon;
+		}
+	}
+
+	public function updateRecon($takip_no, $recon_update_params){
+		$this->_db->beginTransaction();
+		
+		$params = array();
+		$sql = "UPDATE RECON SET";
+		foreach ($recon_update_params as $column => $value){
+			$sql .= " ".$column." = ?,";
+			array_push($params, $value);
+		}
+		$sql = substr($sql, 0, -1);//remove last comma(,)
+		
+		$sql .= " WHERE TAKIP_NO = ?";
+		array_push($params, $takip_no);
+		
+		$this->_db->query($sql, $params);
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return false;
+		}else{
+			$this->_db->commit();
+			return true;
 		}
 	}
 }

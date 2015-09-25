@@ -25,3 +25,25 @@ function isInt(n){
 function isFloat(n){
     return n === Number(n) && n % 1 !== 0;
 }
+function isNumeric(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+jQuery(function($){
+	$.datepicker.regional['tr'] = {
+	closeText: 'kapat',
+	prevText: 'geri',
+	nextText: 'ileri',
+	currentText: 'bugün',
+	monthNames: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+	monthNamesShort: ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'],
+	dayNames: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+	dayNamesShort: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+	dayNamesMin: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+	weekHeader: 'Hf',
+	dateFormat: 'dd/mm/yy',
+	firstDay: 1,
+	isRTL: false,
+	showMonthAfterYear: false,
+	yearSuffix: ''};
+	$.datepicker.setDefaults($.datepicker.regional['tr']);
+});
