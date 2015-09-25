@@ -134,10 +134,10 @@ function validateBranchRecon(takipNo){
         	}
         },
         error: function(jqXHR, textStatus, errorThrown){
-            console.log('validatePersonelRecon ajax error : ' + textStatus);
+            console.log('validateBranchRecon ajax error : ' + textStatus);
         },
         complete: function(jqXHR, textStatus){
-            console.log("validatePersonelRecon ajax call complete : " + textStatus);
+            console.log("validateBranchRecon ajax call complete : " + textStatus);
         }
     });
 }
@@ -172,16 +172,16 @@ function validateFinanceRecon(takipNo){
 	}else if(tahsilatDurumu.length > 32){
 		message += "Tahsilat durumu bilgisi en fazla 32 karakter olabilir.<br>";
 	}
-	if(sirketTahsilatDurumu == null || sirketTahsilatDurumu.length == 0){
-		message += "Lütfen şirket tahsilat durumu bilgisini boş bırakmayınız.<br>";
-	}else if(sirketTahsilatDurumu.length > 32){
-		message += "Şirket tahsilat durumu bilgisi en fazla 32 karakter olabilir.<br>";
-	}
-	if(aciklama == null || aciklama.length == 0){
-		message += "Lütfen Açıklama bilgisini boş bırakmayınız.<br>";
-	}else if(aciklama.length > 256){
-		message += "Açıklama bilgisi en fazla 256 karakter olabilir.<br>";
-	}
+//	if(sirketTahsilatDurumu == null || sirketTahsilatDurumu.length == 0){
+//		message += "Lütfen şirket tahsilat durumu bilgisini boş bırakmayınız.<br>";
+//	}else if(sirketTahsilatDurumu.length > 32){
+//		message += "Şirket tahsilat durumu bilgisi en fazla 32 karakter olabilir.<br>";
+//	}
+//	if(aciklama == null || aciklama.length == 0){
+//		message += "Lütfen Açıklama bilgisini boş bırakmayınız.<br>";
+//	}else if(aciklama.length > 256){
+//		message += "Açıklama bilgisi en fazla 256 karakter olabilir.<br>";
+//	}
 	if(heroKomisyon == null || heroKomisyon.length == 0){
 		message += "Lütfen Hero Komisyon bilgisini boş bırakmayınız.<br>";
 	}
@@ -239,10 +239,10 @@ function validateFinanceRecon(takipNo){
         	}
         },
         error: function(jqXHR, textStatus, errorThrown){
-            console.log('validatePersonelRecon ajax error : ' + textStatus);
+            console.log('validateFinanceRecon ajax error : ' + textStatus);
         },
         complete: function(jqXHR, textStatus){
-            console.log("validatePersonelRecon ajax call complete : " + textStatus);
+            console.log("validateFinanceRecon ajax call complete : " + textStatus);
         }
     });
 }

@@ -3,6 +3,8 @@
 include_once (__DIR__.'/../procedure/ReconProcedures.php');
 include_once (__DIR__.'/Service.php');
 include_once (__DIR__.'/../classes/ReconPolicy.php');
+include_once (__DIR__.'/../classes/User.php');
+include_once (__DIR__.'/../classes/Recon.php');
 
 class ReconService implements Service{
 	
@@ -37,6 +39,32 @@ class ReconService implements Service{
 
 	public function updateRecon($takip_no, $recon_update_params){
 		return $this->_reconProcedures->updateRecon($takip_no, $recon_update_params);
+	}
+
+	public function isReconCompleted($user_role, $recon){
+		$class = "";
+		if($user_role == User::PERSONEL){
+			if(!empty($recon[Recon::KAYNAK]) && !empty($recon[Recon::URETIM_KANALI]) &&
+				!empty($recon[Recon::MUSTERI_TIPI]) && !empty($recon[Recon::YENI_TECDIT]) &&
+				!empty($recon[Recon::PARA_BIRIMI]) && $recon[Recon::NET] != 0){
+				$class = "row-offer-completed";
+			}
+		}
+		if($user_role == User::BRANCH){
+			if(!empty($recon[Recon::MUSTERI_ADI]) && !empty($recon[Recon::BASLANGIC_TARIHI]) &&
+				!empty($recon[Recon::BITIS_TARIHI])){
+				$class = "row-offer-completed";
+			}
+		}
+		if($user_role == User::FINANCE){
+			if(!empty($recon[Recon::BOLGE]) && !empty($recon[Recon::BAGLI]) &&
+				!empty($recon[Recon::TAHSILAT_DURUMU]) && $recon[Recon::HERO_KOMISYON] != 0 && 
+				$recon[Recon::MERKEZ] != 0){
+				$class = "row-offer-completed";
+			}
+		}
+		
+		return $class;
 	}
 }
 

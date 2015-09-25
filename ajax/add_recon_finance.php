@@ -8,7 +8,7 @@ if(!empty($_POST)){
 		return;
 	}else{
 		$user = Session::get(Session::USER);
-		if(!($user[User::ROLE] == User::PERSONEL || $user[User::ROLE] == User::ADMIN)){
+		if(!($user[User::ROLE] == User::FINANCE || $user[User::ROLE] == User::ADMIN)){
 			$logger->write(ALogger::INFO, __FILE__, "Request not from personel");
 			echo json_encode(false);
 			return;

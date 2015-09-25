@@ -48,7 +48,9 @@
 		</select>
 		<button type="button" class="btn btn-default" aria-label="Left Align" onclick="refreshReconTime();">
 		 	<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>Tarihe Git
-		 </button>
+		</button>
+		<a target="_blank" href="/positive/downloadReconXml.php?month=<?php echo $month;?>&year=<?php echo $year;?>">XML dosyası olarak indir.</a>
+		<a target="_blank" href="http://www.luxonsoftware.com/converter/xmltoexcel">Ama bana excel lazım!</a>
 	</div>
 	<div class="container">
 		<?php if($reconDifference > 0){ ?>
@@ -79,7 +81,10 @@
 				</thead>
 				<tbody>
 				<?php foreach ($allRecons as $recon){ ?>
-					<tr>
+					<?php 
+						$class = $reconService->isReconCompleted($user[User::ROLE], $recon);
+					?>
+					<tr class="<?php echo $class;?>">
 						<td><?php echo $recon[Recon::TAKIP_NO]; ?></td>
 						<td><?php echo DateUtil::format($recon[Recon::TANZIM_TARIHI]);?></td>
 						<td><?php echo $recon[Recon::SIRKET]; ?></td>

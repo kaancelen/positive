@@ -42,7 +42,7 @@
         <?php }?>
         <li id="recon_1"><a href="/positive/recons.php"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>Mutabakat</a></li>
       	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
-      		<li id="finance_1"><a href="#">Finans</a></li>
+      	
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL || $nav_user[User::ROLE] == User::BRANCH){ ?>
      	 	<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>
