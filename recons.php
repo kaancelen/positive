@@ -86,7 +86,12 @@
 						<td><?php echo $recon[Recon::POLICE_NO]; ?></td>
 						<td><?php echo $recon[Recon::POLICE_TURU]; ?></td>
 						<td><?php echo $recon[Recon::PRODUKTOR]; ?></td>
-						<td></td>
+						<td>
+							<button id="make_policies_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
+								onclick="location.href = '/positive/reconDetail.php?recon_id=<?php echo urldecode($recon[Recon::TAKIP_NO]);?>';">
+							  <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
+							</button>
+						</td>
 					</tr>
 				<?php } ?>
 				</tbody>

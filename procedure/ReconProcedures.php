@@ -61,6 +61,7 @@ class ReconProcedures extends Procedures{
 				  po.POLICY_NUMBER POLICY_NUMBER,
 				  ofr.TCKN TCKN, 
 				  ofr.VERGI VERGI,
+				  ofr.DESCRIPTION EK_BILGI,
 				  (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME,
 				  ofr.USER_ID BRANCH_ID,
 				  ofre.USER_ID PERSONEL_ID,
@@ -111,9 +112,9 @@ class ReconProcedures extends Procedures{
 	}
 
 	public function insertRecon($reconPolicy){
-		$sql = "INSERT INTO RECON(TAKIP_NO,TANZIM_TARIHI,POLICE_NO,TCKN,VERGI_NO,PRODUKTOR, ";
+		$sql = "INSERT INTO RECON(TAKIP_NO,TANZIM_TARIHI,POLICE_NO,TCKN,VERGI_NO,EK_BILGI,PRODUKTOR, ";
 		$sql .= "PRODUKTOR_ID,TEKNIKCI_ID,TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,BRUT,KOMISYON,PROD_KOMISYON) ";
-		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		$params = array(
 				$reconPolicy[ReconPolicy::POLICY_ID],
@@ -121,6 +122,7 @@ class ReconProcedures extends Procedures{
 				$reconPolicy[ReconPolicy::POLICY_NUMBER],
 				$reconPolicy[ReconPolicy::TCKN],
 				$reconPolicy[ReconPolicy::VERGI],
+				$reconPolicy[ReconPolicy::EK_BILGI],
 				$reconPolicy[ReconPolicy::BRANCH_NAME],
 				$reconPolicy[ReconPolicy::BRANCH_ID],
 				$reconPolicy[ReconPolicy::PERSONEL_ID],
@@ -177,6 +179,30 @@ class ReconProcedures extends Procedures{
 			}
 		
 			return $allRecons;
+		}
+	}
+
+	public function getRecon($takip_no, $user_id, $user_role){
+	$sql = "SELECT * FROM RECON WHERE TAKIP_NO = ?";
+		$params = array($takip_no);
+		
+		if($user_role == User::BRANCH){
+			$sql .= " AND PRODUKTOR_ID = ?";
+			array_push($params, $user_id);
+		}
+		if($user_role == User::PERSONEL){
+			$sql .= " AND (TEKNIKCI_ID = ? OR TEKNIKCI_ID_POLICY = ?)";
+			array_push($params, $user_id);
+			array_push($params, $user_id);
+		}
+		
+		$this->_db->query($sql, $params);
+		$result = $this->_db->first();
+		if(is_null($result)){
+			return null;
+		}else{
+			$recon = json_decode(json_encode($result), true);
+			return $recon;
 		}
 	}
 }

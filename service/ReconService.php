@@ -30,6 +30,10 @@ class ReconService implements Service{
 	public function getRecons($month, $year, $user_id, $user_role){
 		return $this->_reconProcedures->getRecons($month, $year, $user_id, $user_role);
 	}
+
+	public function getRecon($takip_no, $user_id, $user_role){
+		return $this->_reconProcedures->getRecon($takip_no, $user_id, $user_role);
+	}
 }
 
 ?>

@@ -11,6 +11,7 @@ class Recon{
 	const MUSTERI_ADI = "MUSTERI_ADI";
 	const TCKN = "TCKN";
 	const VERGI_NO = "VERGI_NO";
+	const EK_BILGI = "EK_BILGI";
 	const BOLGE = "BOLGE";
 	const BAGLI = "BAGLI";
 	const PRODUKTOR = "PRODUKTOR";

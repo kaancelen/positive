@@ -6,6 +6,7 @@ class ReconPolicy{
 	const POLICY_NUMBER = "POLICY_NUMBER";
 	const TCKN = "TCKN";
 	const VERGI = "VERGI";
+	const EK_BILGI = "EK_BILGI";
 	const BRANCH_NAME = "BRANCH_NAME";
 	const BRANCH_ID = "BRANCH_ID";
 	const PERSONEL_ID = "PERSONEL_ID";
