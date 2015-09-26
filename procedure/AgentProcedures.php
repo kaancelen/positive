@@ -145,8 +145,20 @@ class AgentProcedures extends Procedures{
 				$this->_db->rollback();
 				return false;
 			}else{
-				$this->_db->commit();
-				return true;
+				$sql = "UPDATE RECON SET 
+						PRODUKTOR = (SELECT NAME FROM USER WHERE ID = ?), 
+						PRODUKTOR_ID = ?, 
+						PROD_KOMISYON = (SELECT PROD_KOMISYON FROM OFFER_RESPONSE WHERE ID = ?)
+						WHERE TAKIP_NO = (SELECT POLICY_ID FROM OFFER_REQUEST_COMPANY 
+											WHERE REQUEST_ID = ? AND OFFER_ID = ?)";
+				$this->_db->query($sql, array($new_user_id, $new_user_id, $offer_id, $request_id, $offer_id));
+				if($this->_db->error()){
+					$this->_db->rollback();
+					return false;
+				}else{
+					$this->_db->commit();
+					return true;
+				}
 			}
 		}
 		
