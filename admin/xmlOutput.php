@@ -16,8 +16,11 @@
 	}
 	include_once (__DIR__.'/../navigationBar.php');
 	
+	$month = 8;
+	$year = 2015;
+	
 	$searchService = new SearchService();
-	$policies = $searchService->getPoliciesInMonth(8, 2015);
+	$policies = $searchService->getPoliciesInMonth($month, $year);
 	
 	$xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" '.'standalone="yes"?><policies/>');
 	
@@ -39,5 +42,6 @@
 	$filePath = __DIR__."/../files/test.xml";
 	$xml->asXML($filePath);
 ?>
-<a href="/positive/download2.php?file=<?php echo $filePath?>">XML dosyasını indir</a>
+<a href="/positive/download2.php?file=<?php echo $filePath?>">XML poliçe raporu indir</a>
+<a href="#">XML teklif raporu indir</a>
 </body>
