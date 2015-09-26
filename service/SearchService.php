@@ -53,6 +53,10 @@ class SearchService implements Service{
 	public function getPoliciesInMonth($month, $year){
 		return $this->_searchProcedures->getPoliciesInMonth($month, $year);
 	}
+
+	public function getOffersInMonth($month, $year){
+		return $this->_searchProcedures->getOffersInMonth($month, $year);
+	}
 }
 
 ?>

@@ -304,6 +304,51 @@ class SearchProcedures extends Procedures{
 			return $allPolicies;
 		}
 	}
+
+	public function getOffersInMonth($month, $year){
+		$sql = "SELECT
+				  ofr.ID REQUEST_ID,
+				  ofr.CREATION_DATE REQUEST_DATE,
+				  (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME,
+				  ofr.POLICY_TYPE,
+				  ofr.PLAKA,
+				  ofr.TCKN,
+				  ofr.VERGI,
+				  ofr.BELGE,
+				  ofr.ASBIS,
+				  ofr.STATUS,
+				  ofr.DESCRIPTION EK_BILGI,
+				  ofre.ID OFFER_ID,
+				  ofre.CREATION_DATE OFFER_DATE,
+				  (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME,
+				  ofre.PRIM,
+				  ofre.KOMISYON,
+				  ofre.PROD_KOMISYON,
+				  (SELECT NAME FROM COMPANY WHERE ID = orc.COMPANY_ID) COMPANY_NAME,
+				  orc.POLICY_ID,
+				  (SELECT GROUP_CONCAT(CONCAT(USER_NAME,'-',TEXT) SEPARATOR ', ') FROM CHAT WHERE REQUEST_ID = ofr.ID) CHAT
+				FROM 
+				  OFFER_REQUEST ofr,
+				  OFFER_REQUEST_COMPANY orc,
+				  OFFER_RESPONSE ofre
+				WHERE ofr.ID = orc.REQUEST_ID
+				  AND ofre.ID = orc.OFFER_ID
+				  AND MONTH(ofr.CREATION_DATE) = ?
+				  AND YEAR(ofr.CREATION_DATE) = ?";
+		$this->_db->query($sql, array($month, $year));
+		$result = $this->_db->all();
+		if(is_null($result)){
+			return null;
+		}else{
+			$allOffers = array();
+			foreach ($result as $object){
+				$offer = json_decode(json_encode($object), true);
+				array_push($allOffers, $offer);
+			}
+				
+			return $allOffers;
+		}
+	}
 }
 
 ?>
