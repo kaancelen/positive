@@ -50,13 +50,13 @@
 			if(isset($_POST['radio_trafik'])){
 				$policy_type = PolicyType::TRAFIK;
 				$policy_text = "Trafik poliçe";
-			}else if($_POST['radio_kasko']){
+			}else if(isset($_POST['radio_kasko'])){
 				$policy_type = PolicyType::KASKO;
 				$policy_text = "Kasko poliçe";
-			}else if($_POST['radio_kasko_trafik']){
+			}else if(isset($_POST['radio_kasko_trafik'])){
 				$policy_type = PolicyType::KASKO_TRAFIK;
 				$policy_text = "Kasko ve Trafik poliçe";
-			}else if($_POST['radio_other']){
+			}else if(isset($_POST['radio_other'])){
 				$policy_type = PolicyType::DIGER;
 				$policy_text = "Poliçe";
 			}
@@ -67,6 +67,8 @@
 			if($policy_type == PolicyType::KASKO_TRAFIK){
 				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::KASKO, $user_id, $companyIds);
 				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::TRAFIK, $user_id, $companyIds);
+			}else if($policy_type == PolicyType::DIGER){
+				$offerRequestId = $offerService->addOfferRequest("", "", "", "", "", $description, $policy_type, $user_id, $companyIds);
 			}else{
 				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companyIds);
 			}

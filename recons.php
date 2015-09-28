@@ -13,6 +13,10 @@
 	}
 	include_once (__DIR__.'/navigationBar.php');
 	
+	if($user[User::ROLE] == User::BRANCH && $user[User::FIRST_LOGIN] == User::FIRST_LOGIN_FLAG){
+		Util::redirect("/positive/profile.php");
+	}
+	
 	if(isset($_GET['month']) && isset($_GET['year'])){
 		$month = Util::cleanInput(urldecode($_GET['month']));
 		$year = Util::cleanInput(urldecode($_GET['year']));
