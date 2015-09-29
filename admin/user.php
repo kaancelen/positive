@@ -29,19 +29,26 @@
 		$selected_user = $userService->getUser($user_id);
 	}
 	
+	$allAgents = $userService->allTypeOfUsers(User::BRANCH);
+	
 	if(!empty($_POST)){
 		$username = Util::cleanInput($_POST['username']);
 		$name = Util::cleanInput($_POST['name']);
 		$role = Util::cleanInput($_POST['select_role']);
 		$desc = Util::cleanInput($_POST['description']);
 		$operation = Util::cleanInput($_POST['operation']);
-		$komisyon_rate = (isset($_POST['komisyon_rate']) ? Util::cleanInput($_POST['komisyon_rate']) : 0);
-		
+		if($role == User::BRANCH){
+			$komisyon_rate = Util::cleanInput($_POST['komisyon_rate']);
+			$master_agent = Util::cleanInput($_POST['master_agent']);
+		}else{
+			$komisyon_rate = 0;
+			$master_agent = 0;
+		}
 		
 		if($operation == 'add'){
 			$logger->write(ALogger::INFO, __FILE__, "user add operation to [".$username."] by [".$user[User::CODE]."]");
 			$password = $username;
-			$result = $userService->addUser($name, $username, $password, $role, $desc, $komisyon_rate);
+			$result = $userService->addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı ekleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -54,7 +61,7 @@
 			}
 		}else if($operation == 'edit'){
 			$logger->write(ALogger::INFO, __FILE__, "user edit to operation to [".$selected_user[User::CODE]."] by [".$user[User::CODE]."]");
-			$result = $userService->updateUser($user_id, $name, $role, $desc, $komisyon_rate);
+			$result = $userService->updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı düzenleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -110,6 +117,17 @@
 				<input class="form-control" id="komisyon_rate" name="komisyon_rate">
 			</div>
 		    <br>
+		    <div id="master_agent_div" class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
+				<select id="master_agent" name="master_agent" class="form-control">
+					<option value="0">Yok</option>
+					<?php foreach ($allAgents as $agent){?>
+						<?php if($agent[User::ID] == $selected_user[User::ID]){ continue; }?>
+						<option value="<?php echo $agent[User::ID]?>"><?php echo $agent[User::NAME]?> - <?php echo $agent[User::CODE]?></option>
+					<?php }?>
+				</select>
+			</div>
+		    <br>
 	        <input type="hidden" id="user_id" name="user_id">
 	        <input type="hidden" id="operation" name="operation">
 	        <button class="btn btn-lg btn-primary btn-block" type="button" id="update_button"
@@ -137,8 +155,10 @@
 <?php
 	if($selected_user[User::ROLE] == User::BRANCH){
 		echo 'document.getElementById("komisyon_div").style.visibility = "visible";';
+		echo 'document.getElementById("master_agent_div").style.visibility = "visible";';
 	}else{
 		echo 'document.getElementById("komisyon_div").style.visibility = "hidden";';
+		echo 'document.getElementById("master_agent_div").style.visibility = "hidden";';
 	}
 	echo '$("#operation").val("'.$operation.'");';
 	if(!is_null($selected_user)){
@@ -146,6 +166,7 @@
 		echo 'fillUserForm('.json_encode($selected_user).');';
 		if($selected_user[User::ROLE] == User::BRANCH){
 			echo "$('#komisyon_rate').val(".$selected_user[User::KOMISYON_RATE].");";
+			echo "$('#master_agent').val(".$selected_user[User::MASTER_ID].");";
 		}
 	}
 	

@@ -11,6 +11,7 @@ class User{
 	const FIRST_LOGIN = "FIRST_LOGIN";
 	const CREATION_DATE = "CREATION_DATE";
 	const KOMISYON_RATE = "KOMISYON_RATE";
+	const MASTER_ID = "MASTER_ID";
 	
 	const FIRST_LOGIN_FLAG = 1;
 	

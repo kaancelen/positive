@@ -49,6 +49,7 @@ class UserProcedures extends Procedures{
 				$user[User::FIRST_LOGIN] = $object->FIRST_LOGIN;
 				$user[User::CREATION_DATE] = $object->CREATION_DATE;
 				$user[User::KOMISYON_RATE] = $object->KOMISYON_RATE;
+				$user[User::MASTER_ID] = $object->MASTER_ID;
 				array_push($users, $user);
 			}
 			return $users;
@@ -75,6 +76,7 @@ class UserProcedures extends Procedures{
 				$user[User::FIRST_LOGIN] = $object->FIRST_LOGIN;
 				$user[User::CREATION_DATE] = $object->CREATION_DATE;
 				$user[User::KOMISYON_RATE] = $object->KOMISYON_RATE;
+				$user[User::MASTER_ID] = $object->MASTER_ID;
 				array_push($users, $user);
 			}
 			return $users;
@@ -101,11 +103,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function addUser($name, $username, $password, $role, $desc, $komisyon_rate){
-		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION, KOMISYON_RATE) VALUES(?, ?, ?, ?, ?, ?, ?)";
+	public function addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent){
+		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION, KOMISYON_RATE, MASTER_ID) VALUES(?,?,?,?,?,?,?,?)";
 		$salt = Hash::unique();
 		$hash = Hash::make($password, $salt);
-		$params = array($name, $username, $role, $hash, $salt, $desc, $komisyon_rate);
+		$params = array($name, $username, $role, $hash, $salt, $desc, $komisyon_rate, $master_agent);
 		
 		$this->_db->beginTransaction();
 		$this->_db->query($sql, $params);
@@ -120,11 +122,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function updateUser($user_id, $name, $role, $desc, $komisyon_rate){
-		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ?, KOMISYON_RATE = ? WHERE ID = ?";
+	public function updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent){
+		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ?, KOMISYON_RATE = ?, MASTER_ID = ? WHERE ID = ?";
 		
 		$this->_db->beginTransaction();
-		$this->_db->query($sql, array($name, $role, $desc, $komisyon_rate, $user_id));
+		$this->_db->query($sql, array($name, $role, $desc, $komisyon_rate, $master_agent, $user_id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -168,6 +170,7 @@ class UserProcedures extends Procedures{
 			$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
 			$user[User::CREATION_DATE] = $result->CREATION_DATE;
 			$user[User::KOMISYON_RATE] = $result->KOMISYON_RATE;
+			$user[User::MASTER_ID] = $result->MASTER_ID;
 			return $user;
 		}
 	}

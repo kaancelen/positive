@@ -105,7 +105,9 @@ function onChangeUserRole(){
 	var value = document.getElementById("select_role").value;
 	if(value == 3){
 		document.getElementById("komisyon_div").style.visibility = "visible";
+		document.getElementById("master_agent_div").style.visibility = "visible";
 	}else{
 		document.getElementById("komisyon_div").style.visibility = "hidden";
+		document.getElementById("master_agent_div").style.visibility = "hidden";
 	}
 }
