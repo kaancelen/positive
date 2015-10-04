@@ -40,16 +40,7 @@ class UserProcedures extends Procedures{
 		}else{
 			$users = array();
 			foreach ($result as $object){
-				$user = array();
-				$user[User::ID] = $object->ID;
-				$user[User::NAME] = $object->NAME;
-				$user[User::CODE] = $object->CODE;
-				$user[User::ROLE] = $object->ROLE;
-				$user[User::DESCRIPTION] = $object->DESCRIPTION;
-				$user[User::FIRST_LOGIN] = $object->FIRST_LOGIN;
-				$user[User::CREATION_DATE] = $object->CREATION_DATE;
-				$user[User::KOMISYON_RATE] = $object->KOMISYON_RATE;
-				$user[User::MASTER_ID] = $object->MASTER_ID;
+				$user = json_decode(json_encode($object), true);
 				array_push($users, $user);
 			}
 			return $users;
@@ -67,16 +58,7 @@ class UserProcedures extends Procedures{
 		}else{
 			$users = array();
 			foreach ($result as $object){
-				$user = array();
-				$user[User::ID] = $object->ID;
-				$user[User::NAME] = $object->NAME;
-				$user[User::CODE] = $object->CODE;
-				$user[User::ROLE] = $object->ROLE;
-				$user[User::DESCRIPTION] = $object->DESCRIPTION;
-				$user[User::FIRST_LOGIN] = $object->FIRST_LOGIN;
-				$user[User::CREATION_DATE] = $object->CREATION_DATE;
-				$user[User::KOMISYON_RATE] = $object->KOMISYON_RATE;
-				$user[User::MASTER_ID] = $object->MASTER_ID;
+				$user = json_decode(json_encode($object), true);
 				array_push($users, $user);
 			}
 			return $users;
@@ -103,11 +85,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent){
-		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION, KOMISYON_RATE, MASTER_ID) VALUES(?,?,?,?,?,?,?,?)";
+	public function addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent){
+		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION, KOMISYON_RATE, MASTER_ID, ALLOWED_COMP, CHANGE_AGENT) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		$salt = Hash::unique();
 		$hash = Hash::make($password, $salt);
-		$params = array($name, $username, $role, $hash, $salt, $desc, $komisyon_rate, $master_agent);
+		$params = array($name, $username, $role, $hash, $salt, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent);
 		
 		$this->_db->beginTransaction();
 		$this->_db->query($sql, $params);
@@ -122,11 +104,11 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent){
-		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ?, KOMISYON_RATE = ?, MASTER_ID = ? WHERE ID = ?";
+	public function updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent){
+		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ?, KOMISYON_RATE = ?, MASTER_ID = ?, ALLOWED_COMP = ?, CHANGE_AGENT = ? WHERE ID = ?";
 		
 		$this->_db->beginTransaction();
-		$this->_db->query($sql, array($name, $role, $desc, $komisyon_rate, $master_agent, $user_id));
+		$this->_db->query($sql, array($name, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent, $user_id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -162,15 +144,7 @@ class UserProcedures extends Procedures{
 			return null;
 		}else{
 			$user = array();
-			$user[User::ID] = $user_id;
-			$user[User::CODE] = $result->CODE;
-			$user[User::NAME] = $result->NAME;
-			$user[User::ROLE] = $result->ROLE;
-			$user[User::DESCRIPTION] = $result->DESCRIPTION;
-			$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
-			$user[User::CREATION_DATE] = $result->CREATION_DATE;
-			$user[User::KOMISYON_RATE] = $result->KOMISYON_RATE;
-			$user[User::MASTER_ID] = $result->MASTER_ID;
+			$user = json_decode(json_encode($result), true);
 			return $user;
 		}
 	}

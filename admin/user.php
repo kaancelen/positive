@@ -31,6 +31,9 @@
 	
 	$allAgents = $userService->allTypeOfUsers(User::BRANCH);
 	
+	$companyService = new CompanyService();
+	$companies = $companyService->getAll();
+	
 	if(!empty($_POST)){
 		$username = Util::cleanInput($_POST['username']);
 		$name = Util::cleanInput($_POST['name']);
@@ -44,11 +47,32 @@
 			$komisyon_rate = 0;
 			$master_agent = 0;
 		}
+		if($role == User::PERSONEL){
+			if(isset($_POST['comp_0'])){
+				$allowed_comp = "0";
+			}else{
+				$allowed_comp_array = array();
+				foreach ($companies as $company){
+					if(isset($_POST['comp_'.$company[Company::ID]])){
+						array_push($allowed_comp_array, $company[Company::ID]);
+					}
+				}
+				$allowed_comp = implode(",", $allowed_comp_array);
+			}
+			if(isset($_POST['change_agent'])){
+				$change_agent = 1;
+			}else{
+				$change_agent = 0;
+			}
+		}else{
+			$allowed_comp = "0";
+			$change_agent = 0;
+		}
 		
 		if($operation == 'add'){
 			$logger->write(ALogger::INFO, __FILE__, "user add operation to [".$username."] by [".$user[User::CODE]."]");
 			$password = $username;
-			$result = $userService->addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent);
+			$result = $userService->addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı ekleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -61,7 +85,7 @@
 			}
 		}else if($operation == 'edit'){
 			$logger->write(ALogger::INFO, __FILE__, "user edit to operation to [".$selected_user[User::CODE]."] by [".$user[User::CODE]."]");
-			$result = $userService->updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent);
+			$result = $userService->updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı düzenleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -111,13 +135,35 @@
 				<span class="input-group-addon" id="basic-addon1">Ek bilgi</span>
 				<textarea rows="4" cols="30" class="form-control" aria-describedby="basic-addon1" id="description" name="description"></textarea>
 			</div>
+			<br>
+	        <div id="companies_div" class="input-group" style="visibility: hidden">
+				<div class="btn-group">
+					<div class="button-group">
+			        	<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">&nbsp;Şirket seç<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><input type="checkbox" id="comp_0" name="comp_0">Hepsi</li>
+    						<li role="separator" class="divider"></li>
+							<?php foreach ($companies as $company){?>
+							<?php 	if($company[Company::ACTIVE] == Company::IS_ACTIVE){?>
+								<li><input id="comp_<?php echo $company[Company::ID]?>" name="comp_<?php echo $company[Company::ID]?>" type="checkbox"/><?php echo $company[Company::NAME];?></li>
+							<?php 	}?>
+							<?php } ?>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<br>
+	        <div id="change_agent_div" class="input-group" style="visibility: hidden">
+				<input type="checkbox" id="change_agent" name="change_agent">
+				Acenteleri değiştirebilsin
+			</div>
 	        <br>
-	        <div id="komisyon_div" class="input-group">
+	        <div id="komisyon_div" class="input-group" style="visibility: hidden">
 				<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
 				<input class="form-control" id="komisyon_rate" name="komisyon_rate">
 			</div>
 		    <br>
-		    <div id="master_agent_div" class="input-group">
+		    <div id="master_agent_div" class="input-group" style="visibility: hidden">
 				<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
 				<select id="master_agent" name="master_agent" class="form-control">
 					<option value="0">Yok</option>
@@ -153,12 +199,13 @@
 <script src="/positive/js/userPage.js"></script>
 <script type="text/javascript">
 <?php
+	if($selected_user[User::ROLE] == User::PERSONEL){
+		echo 'document.getElementById("companies_div").style.visibility = "visible";';
+		echo 'document.getElementById("change_agent_div").style.visibility = "visible";';
+	}
 	if($selected_user[User::ROLE] == User::BRANCH){
 		echo 'document.getElementById("komisyon_div").style.visibility = "visible";';
 		echo 'document.getElementById("master_agent_div").style.visibility = "visible";';
-	}else{
-		echo 'document.getElementById("komisyon_div").style.visibility = "hidden";';
-		echo 'document.getElementById("master_agent_div").style.visibility = "hidden";';
 	}
 	echo '$("#operation").val("'.$operation.'");';
 	if(!is_null($selected_user)){
@@ -167,6 +214,14 @@
 		if($selected_user[User::ROLE] == User::BRANCH){
 			echo "$('#komisyon_rate').val(".$selected_user[User::KOMISYON_RATE].");";
 			echo "$('#master_agent').val(".$selected_user[User::MASTER_ID].");";
+		}if($selected_user[User::ROLE] == User::PERSONEL){
+			if($selected_user[User::CHANGE_AGENT] == 1){
+				echo "$('#change_agent').prop('checked', true);";
+			}
+			$allowed_comps = explode(",", $selected_user[User::ALLOWED_COMP]);
+			foreach ($allowed_comps as $comp){
+				echo "$('#comp_".$comp."').prop('checked', true);";
+			}
 		}
 	}
 	
@@ -185,6 +240,9 @@
 ?>
 </script>
 <script type="text/javascript">
+	$('.dropdown-menu input, .dropdown-menu label').click(function(e) {
+	    e.stopPropagation();
+	});
 	$('#admin_1').addClass("active");
 </script>
 <body>

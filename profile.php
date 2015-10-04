@@ -28,6 +28,8 @@
 			case 4: $role_name="Finans"; break;
 		}
 		
+		$companyService = new CompanyService();
+		
 		if(!empty($_POST)){
 			$agentService = new AgentService();
 
@@ -102,12 +104,47 @@
 				<span class="input-group-addon" id="basic-addon1">Ek bilgi</span>
 				<textarea rows="4" class="form-control" readonly><?php echo $user[User::DESCRIPTION]; ?></textarea>
 			</div>
-			<br>
-			<?php if($loggedInUser[User::ROLE] == User::BRANCH || ($user[User::ROLE] == User::BRANCH && $loggedInUser[User::ROLE] == User::ADMIN)){ ?>
+			<?php if($user[User::ROLE] == User::PERSONEL){?>
+				<?php if($user[User::CHANGE_AGENT] == 1){?>
+					<br>
+					<div class="input-group">
+						<label class="form-control">Bu Kullanıcı poliçe üzerindeki acente bilgisini değiştirebilir.</label>
+					</div>
+				<?php } ?>
+				<?php 
+					$compText = "Hepsi";
+					if($user[User::ALLOWED_COMP] != 0){
+						$allowed_comp = explode(",", $user[User::ALLOWED_COMP]);
+						$allowed_comp_array = array();
+						foreach ($allowed_comp as $compId){
+							$company = $companyService->getCompany($compId);
+							if(!is_null($company)){
+								array_push($allowed_comp_array, $company[Company::NAME]);
+							}
+						}
+						$compText = implode(",", $allowed_comp_array);
+					}
+				?>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Şirketler</span>
+					<textarea rows="4" class="form-control" readonly><?php echo $compText; ?></textarea>
+				</div>
+			<?php }?>
+			<?php if($user[User::ROLE] == User::BRANCH){?>
+				<br>
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
 					<label class="form-control"><?php echo $user[User::KOMISYON_RATE]; ?></label>
 				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
+					<?php $masterUser = $userService->getUser($user[User::MASTER_ID]); ?>
+					<label class="form-control"><?php echo ($masterUser==null?"Yok":$masterUser[User::NAME]); ?></label>
+				</div>
+			<?php }?>
+			<?php if($loggedInUser[User::ROLE] == User::BRANCH || ($user[User::ROLE] == User::BRANCH && $loggedInUser[User::ROLE] == User::ADMIN)){ ?>
 				<br>
 				<form class="form-signin" id="agent_detail" action="" method="post" autocomplete="off">
 					<h2 class="form-signin-heading">Acente Bilgileri</h2>

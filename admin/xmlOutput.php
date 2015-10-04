@@ -1,6 +1,7 @@
 <!-- ADMIN -->
 <head>
 <?php 
+	set_time_limit(0);
 	include_once(__DIR__.'/../head.php'); 
 ?>
 </head>
@@ -16,7 +17,7 @@
 	}
 	include_once (__DIR__.'/../navigationBar.php');
 	
-	$month = 8;
+	$month = 9;
 	$year = 2015;
 	//ALL POLICIES
 	$searchService = new SearchService();
