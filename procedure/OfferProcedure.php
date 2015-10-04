@@ -385,7 +385,7 @@ class OfferProcedures extends Procedures{
 		return $policy_id;
 	}
 	
-	public function getCompletedPolicies($user_id, $time){
+	public function getCompletedPolicies($user_id, $month, $year){
 		$paramArray = array();
 		
 		$sql = "SELECT ofr.PLAKA PLAKA, po.POLICY_NUMBER POLICY_NUMBER,ofr.POLICY_TYPE POLICY_TYPE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
@@ -402,12 +402,12 @@ class OfferProcedures extends Procedures{
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 		}
-		if(!is_null($time)){
-			$sql .= "AND (SELECT CREATION_DATE FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) > ? ";
-			array_push($paramArray, $time);
-		}
+		$sql .= "AND MONTH(po.CREATION_DATE) = ? ";
+		$sql .= "AND YEAR(po.CREATION_DATE) = ? ";
+		array_push($paramArray, $month);
+		array_push($paramArray, $year);
 		
-		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC LIMIT 50";
+		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC";
 		
 		$this->_db->query($sql, $paramArray);
 		$result = $this->_db->all();

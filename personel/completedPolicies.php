@@ -14,11 +14,33 @@
 	}
 	include_once (__DIR__.'/../navigationBar.php');
 	
+	if(isset($_GET['month']) && isset($_GET['year'])){
+		$month = Util::cleanInput(urldecode($_GET['month']));
+		$year = Util::cleanInput(urldecode($_GET['year']));
+	}else{
+		$month = date('n');
+		$year = date('Y');
+	}
+	
 	$offerService = new OfferService();
-	$time = date(DateUtil::DB_DATE_FORMAT, time() - DateUtil::POLICY_TIMEOUT_MILLIS);//before 30 day
-	$allPolicies = $offerService->getCompletedPolicies(null, $time);
+	$allPolicies = $offerService->getCompletedPolicies(null, $month, $year);
 ?>
+<script src="/positive/js/comp_policy.js"></script>
 <div class="container">
+	<?php $monthMap = Util::getMonthMap();?>
+	<select id="month" name="month" class="form-control month-option">
+		<?php foreach ($monthMap as $key => $value) {?>
+		<option value="<?php echo $key;?>"><?php echo $value; ?></option>
+		<?php }?>
+	</select>
+	<select id="year" name="year" class="form-control month-option">
+		<?php for($i=2015; $i <= 2015; $i++){?>
+		<option value="<?php echo $i;?>"><?php echo $i; ?></option>
+		<?php }?>
+	</select>
+	<button type="button" class="btn btn-default" aria-label="Left Align" onclick="refreshTime(true);">
+	 	<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>Tarihe Git
+	</button>
 	<div id="policy_table" class="table-responsive">
 		<table class="table">
 			<thead>
@@ -60,6 +82,8 @@
 	</div>
 </div>
 <script type="text/javascript">
+	$('#month').val(<?php echo $month; ?>);
+	$('#year').val(<?php echo $year; ?>);
 	$('#personel_3').addClass("active");
 </script>
 </body>
