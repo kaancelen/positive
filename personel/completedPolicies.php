@@ -23,7 +23,11 @@
 	}
 	
 	$offerService = new OfferService();
-	$allPolicies = $offerService->getCompletedPolicies(null, $month, $year);
+	$allowed_comp = null;
+	if($user[User::ALLOWED_COMP] != 0){
+		$allowed_comp = $user[User::ALLOWED_COMP];
+	}
+	$allPolicies = $offerService->getCompletedPolicies(null, $month, $year, $allowed_comp);
 ?>
 <script src="/positive/js/comp_policy.js"></script>
 <div class="container">

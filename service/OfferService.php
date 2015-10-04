@@ -39,8 +39,8 @@ class OfferService implements Service{
 		return $this->_offerProcedures->addCardInfos($offer_id, $name, $card_no, $expire_date, $cvc);
 	}
 	
-	public function getAllPolicyRequest($user_id = null, $month, $year){
-		return $this->_offerProcedures->getAllPolicyRequest($user_id, $month, $year);
+	public function getAllPolicyRequest($user_id = null, $month, $year, $allowed_comp){
+		return $this->_offerProcedures->getAllPolicyRequest($user_id, $month, $year, $allowed_comp);
 	}
 	
 	public function getPolicyRequest($offer_id, $user_id = null){
@@ -51,8 +51,8 @@ class OfferService implements Service{
 		return $this->_offerProcedures->addPolicy($request_id, $offer_id, $card_id, $policyPath, $makbuzPath, $user_id, $policy_number, $policy_ek_bilgi);
 	}
 	
-	public function getCompletedPolicies($user_id = null, $month, $year){
-		return $this->_offerProcedures->getCompletedPolicies($user_id, $month, $year);
+	public function getCompletedPolicies($user_id = null, $month, $year, $allowed_comp){
+		return $this->_offerProcedures->getCompletedPolicies($user_id, $month, $year, $allowed_comp);
 	}
 	
 	public function getCompletedPolicy($policy_id, $user_id = null){

@@ -37,7 +37,11 @@
 		<thead>
 			<tr>
 				<td>Talep No</td>
-				<td>Acenta&nbsp;<a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-edit"></span>Değiştir</a></td>
+				<td>Acenta
+				<?php if($user[User::CHANGE_AGENT] == 1){?>
+					&nbsp;<a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-edit"></span>Değiştir</a>
+				<?php }?>
+				</td>
 				<td>İstek tarihi</td>
 				<?php if($policy[PolicyRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
 					<td>Plaka</td>

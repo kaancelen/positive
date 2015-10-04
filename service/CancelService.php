@@ -15,8 +15,8 @@ class CancelService implements Service{
 		return $this->_cancelProcedures->insert($user_id, $sozlesme, $policy_number, $company_id, $policy_type, $desc);
 	}
 	
-	public function getAllCancelRequests($user_id = null, $month, $year){
-		return $this->_cancelProcedures->getAllCancelRequests($user_id, $month, $year);
+	public function getAllCancelRequests($user_id = null, $month, $year, $allowed_comp){
+		return $this->_cancelProcedures->getAllCancelRequests($user_id, $month, $year, $allowed_comp);
 	}
 	
 	public function getCancelRequest($cancel_id, $user_id = null){

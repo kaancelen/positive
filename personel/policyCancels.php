@@ -24,7 +24,11 @@
 	}
 	
 	$cancelService = new CancelService();
-	$allCancelRequests = $cancelService->getAllCancelRequests(null, $month, $year);
+	$allowed_comp = null;
+	if($user[User::ALLOWED_COMP] != 0){
+		$allowed_comp = $user[User::ALLOWED_COMP];
+	}
+	$allCancelRequests = $cancelService->getAllCancelRequests(null, $month, $year, $allowed_comp);
 	//policy cancel polling job
 	Cookie::put(Cookie::LAST_ENTER_POLICY_CANCEL, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
 	Cookie::put(Cookie::LE_POLICY_CANCEL_FLAG, "off", Cookie::REMEMBER_EXPIRE);

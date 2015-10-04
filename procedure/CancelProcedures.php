@@ -28,7 +28,7 @@ class CancelProcedures extends Procedures{
 		return $request_id;
 	}
 	
-	public function getAllCancelRequests($user_id, $month, $year){
+	public function getAllCancelRequests($user_id, $month, $year, $allowed_comp){
 		$sql = "SELECT can.*, (SELECT NAME FROM USER WHERE ID = can.USER_ID) BRANCH_NAME, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = can.PERSONEL_ID) PERSONEL_NAME, ";
 		$sql .= "(SELECT NAME FROM COMPANY WHERE ID = can.COMPANY_ID) COMPANY_NAME FROM CANCEL_REQUEST can ";
@@ -40,6 +40,11 @@ class CancelProcedures extends Procedures{
 			$sql .= "AND (can.USER_ID = ? OR can.PERSONEL_ID = ?) ";
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
+		}
+		
+		if(!is_null($allowed_comp)){
+			$sql .= "AND can.COMPANY_ID IN (?) ";
+			array_push($paramArray, $allowed_comp);
 		}
 		
 		$sql .= "ORDER BY can.CREATION_DATE DESC";

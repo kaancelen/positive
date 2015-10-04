@@ -45,12 +45,8 @@
         <?php if($nav_user[User::ROLE] == User::ADMIN || $nav_user[User::ROLE] == User::FINANCE){?>
       		<li id="recon_1"><a href="/positive/recons.php"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>Mutabakat</a></li>
       	<?php }?>
-      	<?php if($nav_user[User::ROLE] == User::PERSONEL || $nav_user[User::ROLE] == User::BRANCH){ ?>
-     	 	<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>
-      	<?php } ?>
-      	<?php if($nav_user[User::ROLE] == User::PERSONEL || $nav_user[User::ROLE] == User::BRANCH || $nav_user[User::ROLE] == User::FINANCE){ ?>
-      		<li id="report_1"><a href="/positive/report.php"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Hata Bildir</a></li>
-      	<?php } ?>
+     	<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>
+      	<li id="report_1"><a href="/positive/report.php"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Hata Bildir</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">

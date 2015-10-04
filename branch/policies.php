@@ -29,7 +29,7 @@
 	
 	$offerService = new OfferService();
 	//bu kullanıcının poliçe isteği yapılmış ancak poliçeleşmemiş isteklerini getir
-	$allPolicyRequests = $offerService->getAllPolicyRequest($user[User::ID], $month, $year);
+	$allPolicyRequests = $offerService->getAllPolicyRequest($user[User::ID], $month, $year, null);
 
 	if(empty($allPolicyRequests)){
 	?>

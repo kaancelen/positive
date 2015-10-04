@@ -281,7 +281,7 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $user_id
 	 * @return NULL|multitype:
 	 */
-	public function getAllPolicyRequest($user_id, $month, $year){
+	public function getAllPolicyRequest($user_id, $month, $year, $allowed_comp){
 		$paramArray = array();
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofr.POLICY_TYPE, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
@@ -290,16 +290,21 @@ class OfferProcedures extends Procedures{
 		$sql .= "OFFER_REQUEST_COMPANY orc, OFFER_RESPONSE ofre,COMPANY co WHERE ofr.ID = orc.REQUEST_ID AND ";
 		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID ";
 		
+		$sql .= "AND (SELECT MONTH(CREATION_DATE) FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) = ? ";
+		$sql .= "AND (SELECT YEAR(CREATION_DATE) FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) = ? ";
+		array_push($paramArray, $month);
+		array_push($paramArray, $year);
+		
 		if(!is_null($user_id)){
 			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) ";
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 		}
-		
-		$sql .= "AND (SELECT MONTH(CREATION_DATE) FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) = ? ";
-		$sql .= "AND (SELECT YEAR(CREATION_DATE) FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) = ? ";
-		array_push($paramArray, $month);
-		array_push($paramArray, $year);
+
+		if(!is_null($allowed_comp)){
+			$sql .= "AND orc.COMPANY_ID IN (?) ";
+			array_push($paramArray, $allowed_comp);
+		}
 		
 		$sql .= "AND orc.CARD_ID <> 0 AND orc.POLICY_ID = 0 ORDER BY OFFER_DATE DESC";
 		
@@ -385,7 +390,7 @@ class OfferProcedures extends Procedures{
 		return $policy_id;
 	}
 	
-	public function getCompletedPolicies($user_id, $month, $year){
+	public function getCompletedPolicies($user_id, $month, $year, $allowed_comp){
 		$paramArray = array();
 		
 		$sql = "SELECT ofr.PLAKA PLAKA, po.POLICY_NUMBER POLICY_NUMBER,ofr.POLICY_TYPE POLICY_TYPE, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) PERSONEL_NAME, ";
@@ -396,16 +401,22 @@ class OfferProcedures extends Procedures{
 		$sql .= "POLICY po WHERE ofr.ID = orc.REQUEST_ID AND ofre.ID = orc.OFFER_ID AND ";
 		$sql .= "co.ID = orc.COMPANY_ID AND po.ID = orc.POLICY_ID ";
 
+		$sql .= "AND MONTH(po.CREATION_DATE) = ? ";
+		$sql .= "AND YEAR(po.CREATION_DATE) = ? ";
+		array_push($paramArray, $month);
+		array_push($paramArray, $year);
+		
 		if(!is_null($user_id)){
 			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ? OR po.USER_ID = ?) ";
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 		}
-		$sql .= "AND MONTH(po.CREATION_DATE) = ? ";
-		$sql .= "AND YEAR(po.CREATION_DATE) = ? ";
-		array_push($paramArray, $month);
-		array_push($paramArray, $year);
+		
+		if(!is_null($allowed_comp)){
+			$sql .= "AND orc.COMPANY_ID IN (?) ";
+			array_push($paramArray, $allowed_comp);
+		}
 		
 		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC";
 		
