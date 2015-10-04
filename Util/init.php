@@ -11,6 +11,7 @@ include_once (__DIR__.'/../classes/PolicyType.php');
 include_once (__DIR__.'/../classes/user.php');
 include_once (__DIR__.'/../classes/agent.php');
 include_once (__DIR__.'/../classes/offerRequest.php');
+include_once (__DIR__.'/../classes/offerList.php');
 include_once (__DIR__.'/../classes/cancelRequest.php');
 include_once (__DIR__.'/../classes/offerResponse.php');
 include_once (__DIR__.'/../classes/company.php');

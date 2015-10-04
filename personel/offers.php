@@ -15,9 +15,14 @@
 	}
 	include_once (__DIR__.'/../navigationBar.php');
 	
+	if(Cookie::exists('companies')){
+		$cookieCompanies = array_filter(json_decode(Cookie::get('companies')));//remove null elements
+	}else{
+		$cookieCompanies = array();
+	}
+	
 	$offerService = new OfferService();
-	$time = date(DateUtil::DB_DATE_FORMAT, time() - DateUtil::OFFER_REQUEST_TIMEOUT_MILLIS);//before 48 hour
-	$allOfferRequest = $offerService->getAllRequests($time, null, 1);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+	$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	//offer polling job
 	Cookie::put(Cookie::LAST_ENTER_OFFER_REQ, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
 	Cookie::put(Cookie::LE_OFFER_FLAG, "off", Cookie::REMEMBER_EXPIRE);
@@ -33,10 +38,14 @@
 	$companyService = new CompanyService();
 	$companies = $companyService->getAll();
 	
-	if(Cookie::exists('companies')){
-		$cookieCompanies = array_filter(json_decode(Cookie::get('companies')));//remove null elements
-	}else{
-		$cookieCompanies = array();
+	if($user[User::ALLOWED_COMP] != 0){
+		$temp_companies = array();
+		foreach ($companies as $company){
+			if(strpos($user[User::ALLOWED_COMP], $company[Company::ID]) !== false){
+				array_push($temp_companies, $company);
+			}
+		}
+		$companies = $temp_companies;
 	}
 ?>
 <script src="/positive/js/pullNewChat.js"></script>
@@ -63,7 +72,7 @@
 				<tr>
 					<td><b>Talep No</b></td>
 					<td><b>Teklif Sayısı</b></td>
-					<td><b>Kullanıcı Adı</b></td>
+					<td><b>Acente</b></td>
 					<td><b>Poliçe</b></td>
 					<td><b>İstek Tarihi</b></td>
 					<td><b>Plaka</b></td>
@@ -76,45 +85,20 @@
 			<?php $userService = new UserService(); ?>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
 				<?php 
-					//Check if this contains requested companies
-					if(isset($cookieCompanies)){
-						$showFlag = false;
-						foreach ($offerRequest[OfferRequest::COMPANIES] as $company){
-							if(in_array($company[Company::ID], $cookieCompanies)){
-								$showFlag = true;
-							}
-						}
-						if(!$showFlag){
-							continue;
-						}
-						$rowOfferCompleted = true;
-						foreach ($offerRequest[OfferRequest::COMPANIES] as $company){
-							foreach ($cookieCompanies as $companyId){
-								if($company[Company::ID] == $companyId){
-									if($company[OfferRequest::OFFER_ID] == 0){
-										$rowOfferCompleted = false;
-									}
-								}
-							}
-						}
-					}
-				?>
-				<?php $tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);?>
-				<?php 
 					$class = "";
-					if($offerRequest[OfferRequest::STATUS] == 2){
+					if($offerRequest[OfferList::STATUS] == 2){
 						$class = "row-offer-cancelled";
-					}else if($rowOfferCompleted){
+					}else if($offerRequest[OfferList::WAITING_OFFER_NUM] == 0){
 						$class = "row-offer-completed";
 					}
 				?>
 				<tr <?php echo "class=".$class;?>>
-					<td id="request_<?php echo $offerRequest[OfferRequest::ID]; ?>"><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
-					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
-					<td><?php echo $tempUser[User::NAME]; ?></td>
-					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
-					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
-					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>
+					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>"><b><?php echo $offerRequest[OfferList::ID]; ?></b></td>
+					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferList::ID]); ?></td>
+					<td><?php echo $offerRequest[OfferList::BRANCH_NAME]; ?></td>
+					<td><?php echo $offerRequest[OfferList::POLICY_TYPE]; ?></td>
+					<td><?php echo DateUtil::format($offerRequest[OfferList::CREATION_DATE]); ?></td>
+					<td><?php echo $offerRequest[OfferList::PLAKA]; ?></td>
 					<td>
 						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
 							onclick="location.href = '/positive/personel/offer.php?request_id=<?php echo urldecode($offerRequest[OfferRequest::ID]);?>';">

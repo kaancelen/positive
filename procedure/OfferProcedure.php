@@ -99,24 +99,43 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $all
 	 * @return NULL|multitype:
 	 */
-	public function getAllRequests($time, $user_id, $all){
-		$user_id_array = array();
-		$user_id_part = " ";
-		$status_part = " ";
-		if(!is_null($user_id)){
-			$user_id_part = " WHERE USER_ID = ? ";
-			$user_id_array = array($user_id);
-			if(!is_null($all)){
-				$status_part = " AND (STATUS = 0 OR STATUS = 2) ";
-			}
-		}else{
-			if(!is_null($all)){
-				$status_part = " WHERE (STATUS = 0 OR STATUS = 2) ";
-			}
+	public function getAllRequests($user_id, $companies){
+		$params = array();
+		$company_part = " ";
+		$company_part_two = " ";
+		if(!is_null($companies)){
+			$company_part = "AND orc.COMPANY_ID IN (?) ";
+			$company_part_two = "AND COMPANY_ID IN(?)";
+			array_push($params, implode(",", $companies));
+			array_push($params, implode(",", $companies));
 		}
-		array_push($user_id_array, $time);
-		$sql = "SELECT * FROM OFFER_REQUEST".$user_id_part.$status_part."AND CREATION_DATE > ? ORDER BY CREATION_DATE DESC";
-		$this->_db->query($sql, $user_id_array);
+		$user_id_part = " ";
+		if(!is_null($user_id)){
+			$user_id_part = "AND ofr.USER_ID = ? ";
+			array_push($params, $user_id);
+		}
+		
+		$sql = "SELECT DISTINCT 
+				ofr.ID, 
+				(SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME,
+				ofr.POLICY_TYPE, 
+				ofr.CREATION_DATE, 
+				ofr.PLAKA, 
+				ofr.STATUS,
+				(SELECT COUNT(OFFER_ID)
+				 FROM OFFER_REQUEST_COMPANY
+				 WHERE REQUEST_ID = ofr.ID
+				 ".$company_part_two."
+				 AND OFFER_ID = 0) WAITING_OFFER_NUM
+				FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc
+				WHERE ofr.ID = orc.REQUEST_ID
+				AND (ofr.STATUS = 0 OR ofr.STATUS = 2)
+				AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 2 day)
+				".$company_part."
+				".$user_id_part."
+				ORDER BY ofr.CREATION_DATE DESC";
+		
+		$this->_db->query($sql, $params);
 		$result = $this->_db->all();
 		
 		if(is_null($result)){
@@ -124,37 +143,9 @@ class OfferProcedures extends Procedures{
 			return null;
 		}else{
 			$allOffers = array();
-			foreach ($result as $offerObject){
-				$sql = "SELECT * FROM OFFER_REQUEST_COMPANY of, COMPANY c WHERE of.COMPANY_ID = c.ID and of.REQUEST_ID = ?";
-				$this->_db->query($sql, array($offerObject->ID));
-				$result2 = $this->_db->all();
-				
-				$companies = array();
-				foreach ($result2 as $object){
-					$company = array();
-					$company[Company::ID] = $object->ID;
-					$company[Company::NAME] = $object->NAME;
-					$company[OfferRequest::OFFER_ID] = $object->OFFER_ID;
-					array_push($companies, $company);
-				}
-				
-				$offerRequest = array();
-				$offerRequest[OfferRequest::ID] = $offerObject->ID;
-				$offerRequest[OfferRequest::USER_ID] = $offerObject->USER_ID;
-				$offerRequest[OfferRequest::CREATION_DATE] = $offerObject->CREATION_DATE;
-				$offerRequest[OfferRequest::PLAKA] = $offerObject->PLAKA;
-				$offerRequest[OfferRequest::TCKN] = $offerObject->TCKN;
-				$offerRequest[OfferRequest::VERGI] = $offerObject->VERGI;
-				$offerRequest[OfferRequest::BELGE] = $offerObject->BELGE;
-				$offerRequest[OfferRequest::ASBIS] = $offerObject->ASBIS;
-				$offerRequest[OfferRequest::STATUS] = $offerObject->STATUS;
-				$offerRequest[OfferRequest::POLICY_TYPE] = $offerObject->POLICY_TYPE;
-				$offerRequest[OfferRequest::DESCRIPTION] = $offerObject->DESCRIPTION;
-				$offerRequest[OfferRequest::COMPANIES] = $companies;
-				
-				array_push($allOffers, $offerRequest);
+			foreach ($result as $object){
+				array_push($allOffers, json_decode(json_encode($object), true));
 			}
-				
 			return $allOffers;
 		}
 	}

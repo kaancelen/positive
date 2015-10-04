@@ -27,15 +27,7 @@ class LoginProcedures extends Procedures{
 		//Check password
 		$hash = Hash::make($password, $result->SALT);
 		if($hash == $result->HASH){//matched
-			$user = array();
-			$user[User::ID] = $result->ID;
-			$user[User::ROLE] = $result->ROLE;
-			$user[User::NAME] = $result->NAME;
-			$user[User::CODE] = $result->CODE;
-			$user[User::DESCRIPTION] = $result->DESCRIPTION;
-			$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
-			$user[User::CREATION_DATE] = $result->CREATION_DATE;
-			$user[User::KOMISYON_RATE] = $result->KOMISYON_RATE;
+			$user = json_decode(json_encode($result), true);
 			return $user;
 		}else{
 			//password is wrong
@@ -79,15 +71,7 @@ class LoginProcedures extends Procedures{
 			return array(User::ROLE => -1);
 		}
 		
-		$user = array();
-		$user[User::ID] = $result->ID;
-		$user[User::ROLE] = $result->ROLE;
-		$user[User::NAME] = $result->NAME;
-		$user[User::CODE] = $result->CODE;
-		$user[User::DESCRIPTION] = $result->DESCRIPTION;
-		$user[User::FIRST_LOGIN] = $result->FIRST_LOGIN;
-		$user[User::CREATION_DATE] = $result->CREATION_DATE;
-		$user[User::KOMISYON_RATE] = $result->KOMISYON_RATE;
+		$user = json_decode(json_encode($result), true);
 		$this->_logger->write(ALogger::DEBUG, self::TAG, "Login with hash succeed [".$user[User::CODE]."]");
 		
 		return $user;

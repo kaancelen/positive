@@ -19,8 +19,7 @@
 	}
 	
 	$offerService = new OfferService();
-	$time = date(DateUtil::DB_DATE_FORMAT, time() - DateUtil::OFFER_REQUEST_TIMEOUT_MILLIS);//before 48 hour
-	$allOfferRequest = $offerService->getAllRequests($time, $user[User::ID], 1);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
+	$allOfferRequest = $offerService->getAllRequests($user[User::ID], null);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
 	
 	if(empty($allOfferRequest)){
 		?>
@@ -51,15 +50,15 @@
 			</thead>
 			<tbody>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
-				<tr <?php if($offerRequest[OfferRequest::STATUS] == 2) echo "class='row-offer-cancelled'";?>>
-					<td id="request_<?php echo $offerRequest[OfferRequest::ID]; ?>"><b><?php echo $offerRequest[OfferRequest::ID]; ?></b></td>
-					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferRequest::ID]); ?></td>
-					<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE]; ?></td>
-					<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]); ?></td>
-					<td><?php echo $offerRequest[OfferRequest::PLAKA]; ?></td>
+				<tr <?php if($offerRequest[OfferList::STATUS] == 2) echo "class='row-offer-cancelled'";?>>
+					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>"><b><?php echo $offerRequest[OfferList::ID]; ?></b></td>
+					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferList::ID]); ?></td>
+					<td><?php echo $offerRequest[OfferList::POLICY_TYPE]; ?></td>
+					<td><?php echo DateUtil::format($offerRequest[OfferList::CREATION_DATE]); ?></td>
+					<td><?php echo $offerRequest[OfferList::PLAKA]; ?></td>
 					<td>
 						<button id="make_policies_button" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="location.href = '/positive/branch/offer.php?request_id=<?php echo urldecode($offerRequest[OfferRequest::ID]);?>';">
+							onclick="location.href = '/positive/branch/offer.php?request_id=<?php echo urldecode($offerRequest[OfferList::ID]);?>';">
 						  <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
 						</button>
 					</td>
