@@ -28,12 +28,12 @@ function pullNewChatEntries(){
 	        }
 	    });
 	},
-	3000);//TODO 10000
+	5000);
 }
 
 function notifyEntry(request_id){
 	var row = $('#request_'+request_id);
 	if(row){
-		row.addClass('new-message');
+		row.find('#mail_gif').attr('src', '/positive/images/mail.gif');
 	}
 }

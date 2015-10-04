@@ -64,6 +64,7 @@
 			<table class="table">
 				<thead>
 					<tr>
+						<td><b>Durum</b></td>
 						<td><b>Talep No</b></td>
 						<td><b>Teklif No</b></td>
 						<td><b>Talep eden</b></td>
@@ -79,7 +80,8 @@
 				<tbody>
 				<?php foreach ($allPolicyRequests as $policyRequest){ ?>
 					<tr <?php if($policyRequest[PolicyRequest::STATUS] == 3) echo 'class="row-offer-cancelled"'; ?>>
-						<td id="request_<?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?>"><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
+						<td id="request_<?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?>"></td>
+						<td><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
 						<td><b><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></b></td>
 						<td><?php echo $policyRequest[PolicyRequest::BRANCH_NAME]; ?></td>
 						<td><?php echo $policyRequest[PolicyRequest::POLICY_TYPE]; ?></td>

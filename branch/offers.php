@@ -38,6 +38,7 @@
 		<table class="table">
 			<thead>
 				<tr>
+					<td><b>Durum</b></td>
 					<td><b>Talep No</b></td>
 					<td><b>Teklif Sayısı</b></td>
 					<td><b>Poliçe</b></td>
@@ -51,7 +52,8 @@
 			<tbody>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
 				<tr <?php if($offerRequest[OfferList::STATUS] == 2) echo "class='row-offer-cancelled'";?>>
-					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>"><b><?php echo $offerRequest[OfferList::ID]; ?></b></td>
+					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>"></td>
+					<td><b><?php echo $offerRequest[OfferList::ID]; ?></b></td>
 					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferList::ID]); ?></td>
 					<td><?php echo $offerRequest[OfferList::POLICY_TYPE]; ?></td>
 					<td><?php echo DateUtil::format($offerRequest[OfferList::CREATION_DATE]); ?></td>

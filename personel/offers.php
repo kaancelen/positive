@@ -66,10 +66,11 @@
 		</div>
 	</div>
 	<script src="/positive/js/dropdown.js"></script>
-	<div id="user_table" class="table-responsive">
-		<table class="table">
+	<div class="table-responsive">
+		<table id="request_table" class="table">
 			<thead>
 				<tr>
+					<td><b>Durum</b></td>
 					<td><b>Talep No</b></td>
 					<td><b>Teklif Sayısı</b></td>
 					<td><b>Acente</b></td>
@@ -90,14 +91,20 @@
 						$class = "row-offer-cancelled";
 					}else if($offerRequest[OfferList::WAITING_OFFER_NUM] == 0){
 						$class = "row-offer-completed";
+					}else{
+						$class = "row-offer-nothing";
 					}
 				?>
 				<tr <?php echo "class=".$class;?>>
-					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>"><b><?php echo $offerRequest[OfferList::ID]; ?></b></td>
-					<td><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferList::ID]); ?></td>
+					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>">
+						<img id='mail_gif' width='24'>
+						<img id='look_gif' width='24'>
+					</td>
+					<td><b id="req_id"><?php echo $offerRequest[OfferList::ID]; ?></b></td>
+					<td id="ratio"><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferList::ID]); ?></td>
 					<td><?php echo $offerRequest[OfferList::BRANCH_NAME]; ?></td>
 					<td><?php echo $offerRequest[OfferList::POLICY_TYPE]; ?></td>
-					<td><?php echo DateUtil::format($offerRequest[OfferList::CREATION_DATE]); ?></td>
+					<td id="date"><?php echo DateUtil::format($offerRequest[OfferList::CREATION_DATE]); ?></td>
 					<td><?php echo $offerRequest[OfferList::PLAKA]; ?></td>
 					<td>
 						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
@@ -111,7 +118,9 @@
 		</table>
 	</div>
 </div>
+<script src="/positive/js/periodicRequestFilter.js"></script>
 <script type="text/javascript">
+	lookForRequests();
 	pullNewChatEntries();
 	$('#personel_1').addClass("active");
 </script>

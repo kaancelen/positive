@@ -59,6 +59,7 @@
 			<table class="table">
 				<thead>
 					<tr>
+						<td><b>Durum</b></td>
 						<td><b>Talep No</b></td>
 						<td><b>Acente</b></td>
 						<td><b>Poliçe</b></td>
@@ -81,7 +82,8 @@
 						}
 					?>
 					<tr <?php echo "class=".$class;?>>
-						<td id="request_-<?php echo $cancelRequest[CancelRequest::ID]; ?>"><b><?php echo $cancelRequest[CancelRequest::ID]; ?></b></td>
+						<td id="request_-<?php echo $cancelRequest[CancelRequest::ID]; ?>"></td>
+						<td><b><?php echo $cancelRequest[CancelRequest::ID]; ?></b></td>
 						<td><b><?php echo $cancelRequest[CancelRequest::BRANCH_NAME]; ?></b></td>
 						<td><?php echo $cancelRequest[CancelRequest::POLICY_TYPE]; ?></td>
 						<td><?php echo DateUtil::format($cancelRequest[CancelRequest::CREATION_DATE]); ?></td>
