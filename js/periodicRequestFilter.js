@@ -1,5 +1,22 @@
 var minutePerCompany = 3;
 
+function sortTable(){
+    var tbl = document.getElementById("request_table").tBodies[0];
+    var store = [];
+    for(var i=0, len=tbl.rows.length; i<len; i++){
+        var row = tbl.rows[i];
+        var sortnr = parseFloat(row.cells[0].textContent || row.cells[0].innerText);
+        if(!isNaN(sortnr)) store.push([sortnr, row]);
+    }
+    store.sort(function(x,y){
+        return x[0] - y[0];
+    });
+    for(var i=0, len=store.length; i<len; i++){
+        tbl.appendChild(store[i][1]);
+    }
+    store = null;
+}
+
 function lookAtMe(request_id){
 	var row = $('#request_'+request_id);
 	if(row){
@@ -8,6 +25,7 @@ function lookAtMe(request_id){
 }
 
 function lookForRequests(){
+	sortTable();
 	table = $('#request_table');
 	$("#request_table tr.row-offer-nothing").each(function(){
 		var $this = $(this);
