@@ -29,20 +29,21 @@
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
       		<li id="personel_1"><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>
-      		<li id="personel_2"><a href="/positive/personel/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istekleri</a></li>
+      		<li id="personel_2"><a href="/positive/personel/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istek</a></li>
+      		<li id="personel_4"><a href="/positive/personel/policyCancels.php"><span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>Poliçe iptal</a></li>
       		<li id="personel_3"><a href="/positive/personel/completedPolicies.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçeler</a></li>
       		<script src="/positive/js/offerPolicyPolling.js"></script>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::BRANCH){?>
       		<li id="branch_1"><a href="/positive/branch/offerRequest.php"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>Yeni Talep</a></li>
       		<li id="branch_2"><a href="/positive/branch/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Taleplerim</a></li>
-      		<li id="branch_3"><a href="/positive/branch/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe isteklerim</a></li>
-      		<li id="branch_4"><a href="/positive/branch/completedPolicies.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçelerim</a></li>
+      		<li id="branch_3"><a href="/positive/branch/policies.php"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Poliçe istek</a></li>
+      		<li id="branch_5"><a href="/positive/branch/policyCancels.php"><span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>Poliçe iptal</a></li>
+      		<li id="branch_4"><a href="/positive/branch/completedPolicies.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçeler</a></li>
           	<script src="/positive/js/policyPolling.js"></script>
         <?php }?>
-        <li id="recon_1"><a href="/positive/recons.php"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>Mutabakat</a></li>
-      	<?php if($nav_user[User::ROLE] == User::FINANCE){?>
-      	
+        <?php if($nav_user[User::ROLE] == User::ADMIN || $nav_user[User::ROLE] == User::FINANCE){?>
+      		<li id="recon_1"><a href="/positive/recons.php"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>Mutabakat</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL || $nav_user[User::ROLE] == User::BRANCH){ ?>
      	 	<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>

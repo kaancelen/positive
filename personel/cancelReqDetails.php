@@ -118,6 +118,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-	$('#personel_2').addClass("active");
+	$('#personel_4').addClass("active");
 </script>
 </body>

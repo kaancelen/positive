@@ -229,9 +229,9 @@ class SearchProcedures extends Procedures{
 		return array($offer_resp_count, $policy_count);
 	}
 
-	public function checkNewCancelRequest($last_enter_policy_req){
+	public function checkNewCancelRequest($last_enter_policy_cancel){
 		$sql = "SELECT * FROM CANCEL_REQUEST WHERE CREATION_DATE > ?";
-		$this->_db->query($sql, array($last_enter_policy_req));
+		$this->_db->query($sql, array($last_enter_policy_cancel));
 		$cancel_req_count = $this->_db->count();
 		return $cancel_req_count;
 	}

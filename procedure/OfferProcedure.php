@@ -281,7 +281,7 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $user_id
 	 * @return NULL|multitype:
 	 */
-	public function getAllPolicyRequest($user_id, $time){
+	public function getAllPolicyRequest($user_id, $month, $year){
 		$paramArray = array();
 		
 		$sql = "SELECT ofr.ID REQUEST_ID, ofr.POLICY_TYPE, ofre.ID OFFER_ID, (SELECT NAME FROM USER WHERE ID = ofre.USER_ID) ";
@@ -295,10 +295,11 @@ class OfferProcedures extends Procedures{
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 		}
-		if(!is_null($time)){
-			$sql .= "AND (SELECT CREATION_DATE FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) > ? ";
-			array_push($paramArray, $time);
-		}
+		
+		$sql .= "AND (SELECT MONTH(CREATION_DATE) FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) = ? ";
+		$sql .= "AND (SELECT YEAR(CREATION_DATE) FROM CREDIT_CARDS WHERE ID = orc.CARD_ID) = ? ";
+		array_push($paramArray, $month);
+		array_push($paramArray, $year);
 		
 		$sql .= "AND orc.CARD_ID <> 0 AND orc.POLICY_ID = 0 ORDER BY OFFER_DATE DESC";
 		

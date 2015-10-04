@@ -1,9 +1,11 @@
 var companies = getCookie("companies");
 var last_enter_offer_req = getCookie("last_enter_offer_req");
 var last_enter_policy_req = getCookie("last_enter_policy_req");
+var last_enter_policy_cancel = getCookie("last_enter_policy_cancel");
 
 var le_offer_flag = getCookie("le_offer_flag");
 var le_policy_flag = getCookie("le_policy_flag");
+var le_policy_cancel_flag = getCookie("le_policy_cancel_flag");
 
 //Re paint not checked tabs
 if(le_offer_flag == 'on'){
@@ -13,6 +15,10 @@ if(le_offer_flag == 'on'){
 if(le_policy_flag == 'on'){
 	$('#personel_2').removeClass('active');
 	$('#personel_2').addClass('poll-alert-2');
+}
+if(le_policy_cancel_flag == 'on'){
+	$('#personel_4').removeClass('active');
+	$('#personel_4').addClass('poll-alert-2');
 }
 
 var data = new FormData();
@@ -24,6 +30,7 @@ if(companies != null && companies.length > 0){
 data.append('companies', companiesString);
 data.append('last_enter_offer_req', last_enter_offer_req);
 data.append('last_enter_policy_req', last_enter_policy_req);
+data.append('last_enter_policy_cancel', last_enter_policy_cancel);
 
 setInterval(function(){
 	//make ajax request
@@ -41,9 +48,13 @@ setInterval(function(){
         			$('#personel_1').removeClass('active');
                 	$('#personel_1').addClass('poll-alert-1');
         		}
-        		if(data[1] > 0 || data[2] > 0){
+        		if(data[1] > 0){
         			$('#personel_2').removeClass('active');
                 	$('#personel_2').addClass('poll-alert-2');
+        		}
+        		if(data[2] > 0){
+        			$('#personel_4').removeClass('active');
+        			$('#personel_4').addClass('poll-alert-2');
         		}
         	}
         },

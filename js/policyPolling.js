@@ -17,8 +17,8 @@ if(le_policy_page_flag == 'on'){
 	$('#branch_4').addClass('poll-alert-2');
 }
 if(le_policy_req_page_flag == 'on'){
-	$('#branch_3').removeClass('active');
-	$('#branch_3').addClass('poll-alert-2');
+	$('#branch_5').removeClass('active');
+	$('#branch_5').addClass('poll-alert-2');
 }
 
 var data = new FormData();
@@ -47,8 +47,8 @@ setInterval(function(){
                     $('#branch_4').addClass('poll-alert-2');
                 }
                 if(data[2] > 0){
-                	$('#branch_3').removeClass('active');
-                    $('#branch_3').addClass('poll-alert-2');
+                	$('#branch_5').removeClass('active');
+                    $('#branch_5').addClass('poll-alert-2');
                 }
 
                 console.log(data);

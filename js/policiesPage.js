@@ -1,38 +1,3 @@
-$( document ).ready(function() {
-	var policy_tab = getCookie('policy_tab');
-	if(policy_tab == 0){
-		$('#policy_tabs_iptal').removeClass("active");
-		$('#policy_tabs_uretim').addClass("active");
-		
-		$('#cancel_req_table').css('display', 'none');
-		$('#policy_req_table').css('display', '');
-	}else if(policy_tab == 1){
-		$('#policy_tabs_uretim').removeClass("active");
-		$('#policy_tabs_iptal').addClass("active");
-		
-		$('#policy_req_table').css('display', 'none');
-		$('#cancel_req_table').css('display', '');
-	}
-});
-
-function policyTabChange(type){
-	if(type == 0){
-		$('#policy_tabs_iptal').removeClass("active");
-		$('#policy_tabs_uretim').addClass("active");
-		
-		$('#cancel_req_table').css('display', 'none');
-		$('#policy_req_table').css('display', '');
-	}else if(type == 1){
-		$('#policy_tabs_uretim').removeClass("active");
-		$('#policy_tabs_iptal').addClass("active");
-		
-		$('#policy_req_table').css('display', 'none');
-		$('#cancel_req_table').css('display', '');
-	}
-	
-	setCookie('policy_tab', type, 1);
-}
-
 function cancelRequestOperation(cancel_id, status){
 	var confirmText = "";
 	if(status == 1){
@@ -72,4 +37,26 @@ function cancelRequestOperation(cancel_id, status){
 			console.log("close request ajax call complete : " + textStatus);
 		}
 	});
+}
+
+function refreshTime(personel){
+	var month = $('#month').val();
+	var year = $('#year').val();
+	
+	if(personel){
+		location.href = "/positive/personel/policyCancels.php?month="+month+"&year="+year;
+	}else{
+		location.href = "/positive/branch/policyCancels.php?month="+month+"&year="+year;
+	}
+}
+
+function refreshTimePolicy(personel){
+	var month = $('#month').val();
+	var year = $('#year').val();
+	
+	if(personel){
+		location.href = "/positive/personel/policies.php?month="+month+"&year="+year;
+	}else{
+		location.href = "/positive/branch/policies.php?month="+month+"&year="+year;
+	}
 }

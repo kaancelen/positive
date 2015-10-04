@@ -39,8 +39,8 @@ class OfferService implements Service{
 		return $this->_offerProcedures->addCardInfos($offer_id, $name, $card_no, $expire_date, $cvc);
 	}
 	
-	public function getAllPolicyRequest($user_id = null, $time = null){
-		return $this->_offerProcedures->getAllPolicyRequest($user_id, $time);
+	public function getAllPolicyRequest($user_id = null, $month, $year){
+		return $this->_offerProcedures->getAllPolicyRequest($user_id, $month, $year);
 	}
 	
 	public function getPolicyRequest($offer_id, $user_id = null){

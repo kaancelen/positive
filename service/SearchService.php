@@ -42,8 +42,8 @@ class SearchService implements Service{
 		return $this->_searchProcedures->checkNewPolicy($user_id, $last_enter_policy_page, $last_enter_offer_resp);
 	}
 
-	public function checkNewCancelRequest($last_enter_policy_req){
-		return $this->_searchProcedures->checkNewCancelRequest($last_enter_policy_req);
+	public function checkNewCancelRequest($last_enter_policy_cancel){
+		return $this->_searchProcedures->checkNewCancelRequest($last_enter_policy_cancel);
 	}
 
 	public function checkNewCancelResponse($user_id, $last_enter_policy_req){

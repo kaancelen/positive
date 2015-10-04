@@ -100,7 +100,7 @@
 			}else{
 				$cancelService = new CancelService();
 				$cancelService->insert($user[User::ID], $filepath, $policy, $companyId, $typeOfContract, $desc);
-				Util::redirect('/positive/branch/policies.php');
+				Util::redirect('/positive/branch/policyCancels.php');
 			}
 		}
 	}

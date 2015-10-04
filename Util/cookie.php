@@ -19,6 +19,9 @@ class Cookie{
 	const LAST_ENTER_POLICY_REQ_PAGE = "last_enter_policy_req_page";
 	const LE_POLICY_REQ_PAGE_FLAG = "le_policy_req_page_flag";
 	
+	const LAST_ENTER_POLICY_CANCEL = "last_enter_policy_cancel";
+	const LE_POLICY_CANCEL_FLAG = "le_policy_cancel_flag";
+	
 	const HASH = "HASH";
 	const REMEMBER_EXPIRE = 604800;
 	

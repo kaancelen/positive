@@ -28,21 +28,18 @@ class CancelProcedures extends Procedures{
 		return $request_id;
 	}
 	
-	public function getAllCancelRequests($user_id, $time){
-		$paramArray = array();
-		
+	public function getAllCancelRequests($user_id, $month, $year){
 		$sql = "SELECT can.*, (SELECT NAME FROM USER WHERE ID = can.USER_ID) BRANCH_NAME, ";
 		$sql .= "(SELECT NAME FROM USER WHERE ID = can.PERSONEL_ID) PERSONEL_NAME, ";
-		$sql .= "(SELECT NAME FROM COMPANY WHERE ID = can.COMPANY_ID) COMPANY_NAME FROM CANCEL_REQUEST can WHERE 1=1 ";
+		$sql .= "(SELECT NAME FROM COMPANY WHERE ID = can.COMPANY_ID) COMPANY_NAME FROM CANCEL_REQUEST can ";
+		$sql .= "WHERE MONTH(can.CREATION_DATE) = ? AND YEAR(can.CREATION_DATE) = ? ";
+		
+		$paramArray = array($month, $year);
 		
 		if(!is_null($user_id)){
 			$sql .= "AND (can.USER_ID = ? OR can.PERSONEL_ID = ?) ";
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
-		}
-		if(!is_null($time)){
-			$sql .= "AND can.CREATION_DATE > ? ";
-			array_push($paramArray, $time);
 		}
 		
 		$sql .= "ORDER BY can.CREATION_DATE DESC";
