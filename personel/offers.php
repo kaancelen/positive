@@ -39,9 +39,10 @@
 	$companies = $companyService->getAll();
 	
 	if($user[User::ALLOWED_COMP] != 0){
+		$allowed_comp = explode(",", $user[User::ALLOWED_COMP]);
 		$temp_companies = array();
 		foreach ($companies as $company){
-			if(strpos($user[User::ALLOWED_COMP], $company[Company::ID]) !== false){
+			if(in_array($company[Company::ID], $allowed_comp)){
 				array_push($temp_companies, $company);
 			}
 		}
