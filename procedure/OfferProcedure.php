@@ -296,8 +296,13 @@ class OfferProcedures extends Procedures{
 		}
 
 		if(!is_null($allowed_comp)){
-			$sql .= "AND orc.COMPANY_ID IN (?) ";
-			array_push($paramArray, $allowed_comp);
+			$companies = explode(',', $allowed_comp);
+			$question_marks = array();
+			foreach ($companies as $company_id){
+				array_push($question_marks, "?");
+				array_push($paramArray, $company_id);
+			}
+			$sql .= "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") ";
 		}
 		
 		$sql .= "AND orc.CARD_ID <> 0 AND orc.POLICY_ID = 0 ORDER BY OFFER_DATE DESC";
@@ -408,8 +413,13 @@ class OfferProcedures extends Procedures{
 		}
 		
 		if(!is_null($allowed_comp)){
-			$sql .= "AND orc.COMPANY_ID IN (?) ";
-			array_push($paramArray, $allowed_comp);
+			$companies = explode(',', $allowed_comp);
+			$question_marks = array();
+			foreach ($companies as $company_id){
+				array_push($question_marks, "?");
+				array_push($paramArray, $company_id);
+			}
+			$sql .= "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") ";
 		}
 		
 		$sql .= "ORDER BY POLICY_COMPLETE_DATE DESC";
@@ -513,6 +523,19 @@ class OfferProcedures extends Procedures{
 				$this->_db->commit();
 				return true;
 			}
+		}else{
+			$this->_db->rollback();
+			return false;
+		}
+	}
+	
+	public function openRequest($request_id){
+		$this->_db->beginTransaction();
+		$sql = "UPDATE OFFER_REQUEST SET STATUS = 0, CREATION_DATE = NOW() WHERE ID = ?";
+		$this->_db->query($sql, array($request_id));
+		if($this->_db->count() > 0){
+			$this->_db->commit();
+			return true;
 		}else{
 			$this->_db->rollback();
 			return false;

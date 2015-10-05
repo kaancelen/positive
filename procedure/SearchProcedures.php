@@ -103,8 +103,8 @@ class SearchProcedures extends Procedures{
 		$params = array();
 		$sql = "SELECT ID FROM OFFER_REQUEST WHERE 1=1 ";
 		if(!empty($plaka_no)){
-			$sql .= " AND PLAKA LIKE ?";
-			array_push($params, "%".$plaka_no."%");
+			$sql .= " AND LOWER(REPLACE(PLAKA, ' ', '')) = LOWER(REPLACE(?, ' ', ''))";
+			array_push($params, $plaka_no);
 		}
 		if(!empty($tckn)){
 			$sql .= " AND TCKN = ?";

@@ -64,10 +64,18 @@ include_once(__DIR__.'/../head.php');
 		<?php
 	}
 	
+	$reopen_request = false;
+	$two_days_ago = strtotime("-2 days", time());
+	$offer_timestamp = strtotime($offerRequest[OfferRequest::CREATION_DATE]);
+	if($two_days_ago > $offer_timestamp){
+		$reopen_request = true;
+	}
+	
 	$genericService = new GenericService();
 	$genericService->updateUserEnter($user[User::ID], $offerRequestId, 0);
 ?>
 <script src="/positive/js/branch.js"></script>
+<script src="/positive/js/open_request.js"></script>
 <div class="well offer-request-label">
 	<table class="offer-request-info-table">
 		<thead>
@@ -83,6 +91,9 @@ include_once(__DIR__.'/../head.php');
 					<td>ASBİS No</td>
 				<?php } ?>
 				<td>Ek Bilgi</td>
+				<?php if($reopen_request){?>
+					<td>Yeniden aç</td>
+				<?php } ?>
 			</tr>
 		</thead>
 		<tbody>
@@ -98,6 +109,15 @@ include_once(__DIR__.'/../head.php');
 					<td><?php echo $offerRequest[OfferRequest::ASBIS];?></td>
 				<?php } ?>
 				<td><?php echo $offerRequest[OfferRequest::DESCRIPTION];?></td>
+				<?php if($reopen_request){?>
+					<td>
+						<div style="text-align: center">
+							<button type="button" class="btn btn-default btn-lg" onclick="openRequest(<?php echo $offerRequest[OfferRequest::ID];?>);">
+								<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+							</button>
+						</div>
+					</td>
+				<?php } ?>
 			</tr>
 		</tbody>
 	</table>

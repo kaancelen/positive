@@ -12,11 +12,11 @@
 			$user_id = null;
 		}
 		
+		$userService = new UserService();
 		$loggedInUser = Session::get(Session::USER);
 		if(is_null($user_id)){
 			$user = $loggedInUser;
 		}else{
-			$userService = new UserService();
 			$user = $userService->getUser($user_id);
 		}
 		

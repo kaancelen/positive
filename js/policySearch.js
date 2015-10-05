@@ -83,6 +83,7 @@ function search(formData){
         processData: false,
         contentType: false,
         success: function(data, textStatus, jqXHR){
+        	console.log(data);
         	if(data){//|| data.length > 0
         		putDatas(data);
         	}else{

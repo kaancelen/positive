@@ -123,12 +123,12 @@
 			<div class="container offer-screen">
 				<div class="companies-column well">
 					<label class="login-error" id="offer-request-company-error"></label>
-				    <div class="input-group">
-				      <span class="input-group-addon">
-				        <input type="checkbox" id="company_all" onchange='onCompanyAllChange(<?php echo json_encode($companies);?>)'>
-				      </span>
-				      <label class="form-control" readonly>Hepsini Seç</label>
-				    </div>
+<!-- 				    <div class="input-group"> -->
+<!-- 				      <span class="input-group-addon"> -->
+				       <!-- <input type="checkbox" id="company_all" onchange='onCompanyAllChange(<?php echo json_encode($companies);?>)'> -->
+<!-- 				      </span> -->
+<!-- 				      <label class="form-control" readonly>Hepsini Seç</label> -->
+<!-- 				    </div> -->
 				    <?php foreach ($companies as $company){?>
 				    <div class="input-group">
 				    	<?php if($company[Company::ACTIVE] == Company::IS_ACTIVE){ ?>

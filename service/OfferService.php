@@ -70,6 +70,10 @@ class OfferService implements Service{
 	public function removeOffer($talep_no, $company_id, $offer_id){
 		return $this->_offerProcedures->removeOffer($talep_no, $company_id, $offer_id);
 	}
+
+	public function openRequest($request_id){
+		return $this->_offerProcedures->openRequest($request_id);
+	}
 }
 
 ?>

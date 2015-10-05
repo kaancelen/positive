@@ -43,8 +43,13 @@ class CancelProcedures extends Procedures{
 		}
 		
 		if(!is_null($allowed_comp)){
-			$sql .= "AND can.COMPANY_ID IN (?) ";
-			array_push($paramArray, $allowed_comp);
+			$companies = explode(',', $allowed_comp);
+			$question_marks = array();
+			foreach ($companies as $company_id){
+				array_push($question_marks, "?");
+				array_push($paramArray, $company_id);
+			}
+			$sql .= "AND can.COMPANY_ID IN (".implode(",", $question_marks).") ";
 		}
 		
 		$sql .= "ORDER BY can.CREATION_DATE DESC";
