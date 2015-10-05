@@ -102,19 +102,14 @@ class OfferProcedures extends Procedures{
 	public function getAllRequests($user_id, $companies){
 		$params = array();
 		$company_part = " ";
-		$company_part_two = " ";
 		if(!is_null($companies)){
 			$question_marks = array();
 			foreach ($companies as $company_id){
 				array_push($question_marks, "?");
 				array_push($params, $company_id);
 			}
-			foreach ($companies as $company_id){
-				array_push($params, $company_id);
-			}
 			
 			$company_part = "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") ";
-			$company_part_two = "AND COMPANY_ID IN (".implode(",", $question_marks).") ";
 		}
 		$user_id_part = " ";
 		if(!is_null($user_id)){
@@ -123,8 +118,7 @@ class OfferProcedures extends Procedures{
 		}
 		
 		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
-		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS, (SELECT COUNT(OFFER_ID) FROM OFFER_REQUEST_COMPANY ";
-		$sql .= "WHERE REQUEST_ID = ofr.ID AND OFFER_ID = 0 ".$company_part_two.") WAITING_OFFER_NUM ";
+		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
 		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
 		$sql .= "AND (ofr.STATUS = 0 OR ofr.STATUS = 2) AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
 		$sql .= $company_part." ".$user_id_part." ORDER BY ofr.CREATION_DATE DESC";
@@ -137,8 +131,32 @@ class OfferProcedures extends Procedures{
 			return null;
 		}else{
 			$allOffers = array();
+			$i = 0;
 			foreach ($result as $object){
-				array_push($allOffers, json_decode(json_encode($object), true));
+				$params_inner = array();
+				array_push($params_inner, $object->ID);//request id
+				$company_part_two = " ";
+				if(!is_null($companies)){
+					$question_marks = array();
+					foreach ($companies as $company_id){
+						array_push($question_marks, "?");
+						array_push($params_inner, $company_id);
+					}
+					$company_part_two = "AND COMPANY_ID IN (".implode(",", $question_marks).") ";
+				}
+				
+				$sql = "SELECT COUNT(OFFER_ID) WAITING_OFFER_NUM FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? ";
+				$sql .= "AND OFFER_ID = 0 ".$company_part_two;
+				$this->_db->query($sql, $params_inner);
+				$result = $this->_db->first();
+				if(is_null($result)){
+					$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request waiting offer num[".$request_id."] not found in DB");
+					return null;
+				}else{
+					array_push($allOffers, json_decode(json_encode($object), true));
+					$allOffers[$i]['WAITING_OFFER_NUM'] = $result->WAITING_OFFER_NUM;
+					$i++;
+				}
 			}
 			return $allOffers;
 		}
