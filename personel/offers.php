@@ -121,7 +121,7 @@
 </div>
 <script src="/positive/js/periodicRequestFilter.js"></script>
 <script type="text/javascript">
-	lookForRequests();
+// 	lookForRequests();
 	pullNewChatEntries();
 	$('#personel_1').addClass("active");
 </script>
