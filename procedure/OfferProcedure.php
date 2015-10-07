@@ -124,15 +124,15 @@ class OfferProcedures extends Procedures{
 		$sql .= $company_part." ".$user_id_part." ORDER BY ofr.CREATION_DATE DESC";
 		
 		$this->_db->query($sql, $params);
-		$result = $this->_db->all();
+		$resultAll = $this->_db->all();
 		
-		if(is_null($result)){
+		if(is_null($resultAll)){
 			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request[".$request_id."] not found in DB");
 			return null;
 		}else{
 			$allOffers = array();
 			$i = 0;
-			foreach ($result as $object){
+			foreach ($resultAll as $object){
 				$params_inner = array();
 				array_push($params_inner, $object->ID);//request id
 				$company_part_two = " ";
@@ -148,13 +148,13 @@ class OfferProcedures extends Procedures{
 				$sql = "SELECT COUNT(OFFER_ID) WAITING_OFFER_NUM FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? ";
 				$sql .= "AND OFFER_ID = 0 ".$company_part_two;
 				$this->_db->query($sql, $params_inner);
-				$result = $this->_db->first();
-				if(is_null($result)){
+				$resultFirst = $this->_db->first();
+				if(is_null($resultFirst)){
 					$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request waiting offer num[".$request_id."] not found in DB");
 					return null;
 				}else{
 					array_push($allOffers, json_decode(json_encode($object), true));
-					$allOffers[$i]['WAITING_OFFER_NUM'] = $result->WAITING_OFFER_NUM;
+					$allOffers[$i]['WAITING_OFFER_NUM'] = $resultFirst->WAITING_OFFER_NUM;
 					$i++;
 				}
 			}
