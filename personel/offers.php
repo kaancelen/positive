@@ -52,8 +52,8 @@
 		$companies = $temp_companies;
 	}
 ?>
-<script src="/positive/js/dropdown.js"></script>
 <script src="/positive/js/pullNewChat.js"></script>
+<script src="/positive/js/dropdown.js"></script>
 <div class="container">
 	<div class="row">
     	<div class="col-lg-4">
@@ -134,9 +134,7 @@
 		</table>
 	</div>
 </div>
-<!-- <script src="/positive/js/periodicRequestFilter.js"></script> -->
 <script type="text/javascript">
-// 	lookForRequests();
 	pullNewChatEntries();
 	$('#personel_1').addClass("active");
 </script>
