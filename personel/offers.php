@@ -119,7 +119,7 @@
 		</table>
 	</div>
 </div>
-<script src="/positive/js/periodicRequestFilter.js"></script>
+<!-- <script src="/positive/js/periodicRequestFilter.js"></script> -->
 <script type="text/javascript">
 // 	lookForRequests();
 	pullNewChatEntries();
