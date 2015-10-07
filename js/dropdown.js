@@ -29,3 +29,20 @@ $( '.dropdown-menu a' ).on( 'click', function( event ) {
    
    return false;
 });
+
+function onSelectedAgentChange(){
+	agent_name = $('#selected_agent').val();
+	$("table tr").each(function(index) {
+        if (index > 1) {
+            $row = $(this);
+            var id = $row.find("td:nth-child(4)").text();
+            if(agent_name === 'NULL'){
+            	$row.show();
+            }else if (id.indexOf(agent_name) !== 0) {
+                $row.hide();
+            }else {
+                $row.show();
+            }
+        }
+    });
+}
