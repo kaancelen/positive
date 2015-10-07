@@ -53,13 +53,12 @@
 	}
 ?>
 <script src="/positive/js/pullNewChat.js"></script>
-<script src="/positive/js/dropdown.js"></script>
 <div class="container">
 	<div class="row">
     	<div class="col-lg-4">
 	    	<div class="button-group">
 	        	<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="badge" id="num_of_selected"><?php if(isset($cookieCompanies)){echo count($cookieCompanies);}else{echo 0;}?></span>&nbsp;Şirket seç<span class="caret"></span></button>
-				<ul class="dropdown-menu company-dropdown">
+				<ul class="dropdown-menu dropdown">
 					<?php foreach ($companies as $company){?>
 					<?php 	if($company[Company::ACTIVE] == Company::IS_ACTIVE){?>
 						<li><a href="#" class="small" data-value="<?php echo $company[Company::ID]?>" tabIndex="-1"><input id="comp_<?php echo $company[Company::ID]?>" type="checkbox"/><?php echo $company[Company::NAME];?></a></li>
@@ -69,6 +68,7 @@
 				<button type="button" class="btn btn-default btn-sm" onclick="location.reload();">Yenile</button>
 			</div>
 		</div>
+		<script src="/positive/js/dropdown.js"></script>
 		<div class="col-lg-2">
 			<select id="selected_agent" name="selected_agent" class="form-control" onchange="onSelectedAgentChange();">
 				<option value="NULL">Tüm Acenteler</option>
