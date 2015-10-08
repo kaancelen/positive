@@ -23,9 +23,12 @@
 	
 	$userService = new UserService();
 	$agents = $userService->allTypeOfUsers(User::BRANCH);
-	
 	$offerService = new OfferService();
-	$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+	if(!empty($cookieCompanies)){
+		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+	}else{
+		$allOfferRequest = array();
+	}
 	//offer polling job
 	Cookie::put(Cookie::LAST_ENTER_OFFER_REQ, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
 	Cookie::put(Cookie::LE_OFFER_FLAG, "off", Cookie::REMEMBER_EXPIRE);
@@ -68,7 +71,6 @@
 				<button type="button" class="btn btn-default btn-sm" onclick="location.reload();">Yenile</button>
 			</div>
 		</div>
-		<script src="/positive/js/dropdown.js"></script>
 		<div class="col-lg-2">
 			<select id="selected_agent" name="selected_agent" class="form-control" onchange="onSelectedAgentChange();">
 				<option value="NULL">Tüm Acenteler</option>
@@ -82,6 +84,7 @@
 		<div class="col-lg-6">
 		</div>
 	</div>
+	<script src="/positive/js/dropdown.js"></script>
 	<div class="table-responsive">
 		<table id="request_table" class="table">
 			<thead>

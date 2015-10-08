@@ -99,7 +99,7 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $all
 	 * @return NULL|multitype:
 	 */
-	public function getAllRequests($user_id, $companies){
+	public function getAllRequests($user_id, $companies, $limit){
 		$params = array();
 		$company_part = " ";
 		if(!is_null($companies)){
