@@ -31,7 +31,7 @@ class ReconProcedures extends Procedures{
 		array_push($params, $month);
 		array_push($params, $year);
 		if($user_role == User::BRANCH){
-			$policy_sql .= " AND can.USER_ID = ?";
+			$policy_cancel_sql .= " AND can.USER_ID = ?";
 			array_push($params, $user_id);
 		}
 		//Recon part
@@ -42,13 +42,9 @@ class ReconProcedures extends Procedures{
 			$recon_sql .= " AND PRODUKTOR_ID = ?";
 			array_push($params, $user_id);
 		}
-		if($user_role == User::PERSONEL){
-			$recon_sql .= " AND (TEKNIKCI_ID = ? OR TEKNIKCI_ID_POLICY = ?)";
-			array_push($params, $user_id);
-			array_push($params, $user_id);
-		}
 		
 		$sql = "SELECT (".$policy_sql.") + (".$policy_cancel_sql.") - (".$recon_sql.") RECON_DIFF";
+		
 		$this->_db->query($sql, $params);
 		if($this->_db->error()){
 			return -1;
