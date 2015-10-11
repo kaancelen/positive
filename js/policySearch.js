@@ -84,7 +84,7 @@ function search(formData){
         contentType: false,
         success: function(data, textStatus, jqXHR){
         	console.log(data);
-        	if(data){//|| data.length > 0
+        	if(data){
         		putDatas(data);
         	}else{
         		errorDatas();
@@ -140,7 +140,6 @@ function putDatas(data){
 	}
 	
 	var policy = data[3][0];
-	console.log(policy);
 	if(policy){
 		var text = "";
 		for(var i=0; i < policy.length; i++){

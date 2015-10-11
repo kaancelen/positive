@@ -162,6 +162,10 @@ class SearchProcedures extends Procedures{
 				}
 			}
 			
+			if(empty($request_list) && empty($offer_list) && empty($policy_list)){
+				return null;
+			}
+			
 			$response = array(
 					1 => $request_list,
 					2 => $offer_list,

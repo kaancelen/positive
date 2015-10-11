@@ -13,21 +13,34 @@ class SearchService implements Service{
 	
 	public function searchRequest($request_id, $requester, $user_id){
 		$response = $this->_searchProcedures->searchRequest($request_id, $requester, $user_id);
+		if(is_null($response)){
+			return null;
+		}
 		return array(1 => array($response));
 	}
 	
 	public function searchOffer($offer_id, $requester, $user_id){
 		$response = $this->_searchProcedures->searchOffer($offer_id, $requester, $user_id);
+		if(is_null($response)){
+			return null;
+		}
 		return array(2 => array($response));
 	}
 	
 	public function searchPolicy($policy_id, $requester, $user_id){
 		$response = $this->_searchProcedures->searchPolicy($policy_id, $requester, $user_id);
+		if(is_null($response)){
+			return null;
+		}
 		return array(3 => array($response));
 	}
 	
 	public function searchExtend($plaka_no, $tckn, $vergi_no, $belge_no, $asbis, $requester, $user_id){
-		return $this->_searchProcedures->searchExtend($plaka_no, $tckn, $vergi_no, $belge_no, $asbis, $requester, $user_id);
+		$response = $this->_searchProcedures->searchExtend($plaka_no, $tckn, $vergi_no, $belge_no, $asbis, $requester, $user_id);
+		if(is_null($response)){
+			return null;
+		}
+		return $response;
 	}
 	
 	public function checkNewOfferPolicy($companies, $last_enter_offer_req, $last_enter_policy_req){
