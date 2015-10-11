@@ -23,11 +23,7 @@ class CompanyProcedures extends Procedures{
 		}else{
 			$companies = array();
 			foreach ($result as $object){
-				$company = array();
-				$company[Company::ID] = $object->ID;
-				$company[Company::NAME] = $object->NAME;
-				$company[Company::ACTIVE] = $object->ACTIVE;
-				array_push($companies, $company);
+				array_push($companies, json_decode(json_encode($object), true));
 			}
 			return $companies;
 		}
@@ -42,12 +38,7 @@ class CompanyProcedures extends Procedures{
 			$this->_logger->write(ALogger::DEBUG, self::TAG, "no company recorded in DB id = [".$company_id."]");
 			return null;
 		}else{
-			$company = array();
-			$company[Company::ID] = $result->ID;
-			$company[Company::NAME] = $result->NAME;
-			$company[Company::ACTIVE] = $result->ACTIVE;
-			
-			return $company;
+			return json_decode(json_encode($result), true);
 		}
 	}
 }
