@@ -128,7 +128,7 @@ class OfferProcedures extends Procedures{
 		$sql .= "AND (ofr.STATUS = 0 OR ofr.STATUS = 2) AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
 		$sql .= $company_part." ".$user_id_part." ORDER BY ofr.CREATION_DATE DESC ".$limit_part;
 		
-		$this->_db->query($sql, $params);
+		$this->_db->query($sql, $params, true);
 		$resultAll = $this->_db->all();
 		
 		if($this->_db->error()){
@@ -152,7 +152,7 @@ class OfferProcedures extends Procedures{
 				
 				$sql = "SELECT COUNT(OFFER_ID) WAITING_OFFER_NUM FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? ";
 				$sql .= "AND OFFER_ID = 0 ".$company_part_two;
-				$this->_db->query($sql, $params_inner);
+				$this->_db->query($sql, $params_inner, true);
 				$resultFirst = $this->_db->first();
 				if(is_null($resultFirst)){
 					$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request waiting offer num[".$request_id."] not found in DB");

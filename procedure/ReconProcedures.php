@@ -25,9 +25,13 @@ class ReconProcedures extends Procedures{
 			$policy_sql .= " AND ofr.USER_ID = ?";
 			array_push($params, $user_id);
 		}
-		if($user_role == User::PERSONEL){
-			$policy_sql .= " AND (ofre.USER_ID = ? OR po.USER_ID = ?)";
-			array_push($params, $user_id);
+		//canceled policy part
+		$policy_cancel_sql = "SELECT COUNT(*) FROM CANCEL_REQUEST can WHERE can.STATUS = 1 AND MONTH(can.CREATION_DATE) = ?";
+		$policy_cancel_sql .= " AND YEAR(can.CREATION_DATE) = ?";
+		array_push($params, $month);
+		array_push($params, $year);
+		if($user_role == User::BRANCH){
+			$policy_sql .= " AND can.USER_ID = ?";
 			array_push($params, $user_id);
 		}
 		//Recon part
@@ -44,7 +48,7 @@ class ReconProcedures extends Procedures{
 			array_push($params, $user_id);
 		}
 		
-		$sql = "SELECT (".$policy_sql.") - (".$recon_sql.") RECON_DIFF";
+		$sql = "SELECT (".$policy_sql.") + (".$policy_cancel_sql.") - (".$recon_sql.") RECON_DIFF";
 		$this->_db->query($sql, $params);
 		if($this->_db->error()){
 			return -1;
