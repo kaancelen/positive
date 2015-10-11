@@ -23,9 +23,10 @@
 	
 	$userService = new UserService();
 	$agents = $userService->allTypeOfUsers(User::BRANCH);
+	
 	$offerService = new OfferService();
 	if(!empty($cookieCompanies)){
-		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies, 0);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	}else{
 		$allOfferRequest = array();
 	}
@@ -135,6 +136,14 @@
 			<?php }?>
 			</tbody>
 		</table>
+		<?php if(count($allOfferRequest) > 0){?>
+			<script src="/positive/js/lazy_loading.js"></script>
+			<div class="alert alert-info" style="width: 100%;text-align: center" role="alert">
+				<a id="get_others_link" onclick="getOtherRequests();">Devamını getir</a>
+				<img id="loading_gif" src="/positive/images/loader.gif" style="visibility: hidden;">
+				<label id="request_finished" style="visibility: hidden;">Tüm talepler görüntüleniyor.</label>
+			</div>
+		<?php }?>
 	</div>
 </div>
 <script type="text/javascript">

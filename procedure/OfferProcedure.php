@@ -116,18 +116,23 @@ class OfferProcedures extends Procedures{
 			$user_id_part = "AND ofr.USER_ID = ? ";
 			array_push($params, $user_id);
 		}
+		$limit_part = " ";
+		if(!is_null($limit)){
+			$limit_part = "LIMIT 30 OFFSET ?";
+			array_push($params, $limit);
+		}
 		
 		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
 		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
 		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
 		$sql .= "AND (ofr.STATUS = 0 OR ofr.STATUS = 2) AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
-		$sql .= $company_part." ".$user_id_part." ORDER BY ofr.CREATION_DATE DESC";
+		$sql .= $company_part." ".$user_id_part." ORDER BY ofr.CREATION_DATE DESC ".$limit_part;
 		
 		$this->_db->query($sql, $params);
 		$resultAll = $this->_db->all();
 		
-		if(is_null($resultAll)){
-			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request[".$request_id."] not found in DB");
+		if($this->_db->error()){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request not found in DB");
 			return null;
 		}else{
 			$allOffers = array();

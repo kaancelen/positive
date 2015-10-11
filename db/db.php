@@ -56,6 +56,7 @@ class DB{
 	#query("SELECT * FROM users WHERE username = ? AND groups = ?", array('kaan', 2))
 	public function query($sql, $params = array()){
 		$this->_error = false;	#maybe previous error stay
+		$this->_pdo->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );//int bind value error
 		if($this->_query = $this->_pdo->prepare($sql)){
 			$x = 1;
 			if(count($params)){
