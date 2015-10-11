@@ -18,9 +18,13 @@ if(!empty($_POST)){
 
 	$reconService = new ReconService();
 	$reconPolicies = $reconService->getPoliciesInMonth($month, $year, $user_id, $user_role);
+	$reconCancelPolicies = $reconService->getPolicyCancelsInMonth($month, $year, $user_id, $user_role);
 	
 	foreach ($reconPolicies as $reconPolicy){
 		$reconService->insertRecon($reconPolicy);
+	}
+	foreach ($reconCancelPolicies as $reconCancel){
+		$reconService->insertReconCancel($reconCancel);
 	}
 	
 	echo json_encode(true);

@@ -86,67 +86,6 @@
 			</tbody>
 		</table>
 		<br/>
-		<?php if ($user[User::ROLE] == User::PERSONEL || $user[User::ROLE] == User::ADMIN){?>
-		<?php $class = $reconService->isReconCompleted(User::PERSONEL, $reconDetail); ?>
-		<div class="panel <?php if(empty($class)){echo "panel-danger";}else{echo "panel-success";}?>">
-			<div class="panel-heading">
-				<h3 class="panel-title">Teknikçi dolduracak</h3>
-			</div>
-			<label class="login-error" id="personel-error"></label>
-			<div class="panel-body">
-				<div class="search-column">
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Kaynak</span>
-						<select id="KAYNAK" name="KAYNAK" class="form-control">
-							<option value="">Seçiniz</option>
-							<option value="İÇ" <?php if($reconDetail[Recon::KAYNAK] == "İÇ") echo 'selected="selected"';?>>İÇ</option>
-							<option value="DIŞ" <?php if($reconDetail[Recon::KAYNAK] == "DIŞ") echo 'selected="selected"';?>>DIŞ</option>
-						</select>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Üretim Kanalı</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="URETIM_KANALI" name="URETIM_KANALI"
-						value="<?php echo $reconDetail[Recon::URETIM_KANALI];?>">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Müşteri Tipi</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="MUSTERI_TIPI" name="MUSTERI_TIPI"
-						value="<?php echo $reconDetail[Recon::MUSTERI_TIPI]?>">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Yeni/Tecdit</span>
-						<select id="YENI_TECDIT" name="YENI_TECDIT" class="form-control">
-							<option value="">Seçiniz</option>
-							<option value="YENİ" <?php if($reconDetail[Recon::YENI_TECDIT] == "YENİ") echo 'selected="selected"';?>>YENİ</option>
-							<option value="TECDİT" <?php if($reconDetail[Recon::YENI_TECDIT] == "TECDİT") echo 'selected="selected"';?>>TECDİT</option>
-						</select>
-					</div>
-				</div>
-				<div class="result-column">
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Zeyil No</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="ZEYIL_NO" name="ZEYIL_NO"
-						value="<?php echo $reconDetail[Recon::ZEYIL_NO];?>">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Para Birimi</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="PARA_BIRIMI" name="PARA_BIRIMI"
-						value="<?php echo $reconDetail[Recon::PARA_BIRIMI];?>">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Net</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="NET" name="NET"
-						value="<?php echo $reconDetail[Recon::NET];?>">
-					</div>
-				</div>
-			</div>
-			<button id="recon_personel" type="button" class="btn btn-default" onclick="validatePersonelRecon(<?php echo $reconDetail[Recon::TAKIP_NO]; ?>);">
-				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Tamamla
-			</button>
-		</div>
-		<?php } ?>
-		<br/>
-		<?php if ($user[User::ROLE] == User::BRANCH || $user[User::ROLE] == User::ADMIN) {?>
 		<?php $class = $reconService->isReconCompleted(User::BRANCH, $reconDetail); ?>
 		<div class="panel <?php if(empty($class)){echo "panel-danger";}else{echo "panel-success";}?>">
 			<div class="panel-heading">
@@ -155,6 +94,24 @@
 			<label class="login-error" id="branch-error"></label>
 			<div class="panel-body">
 				<div class="search-column">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Yeni/Tecdit</span>
+						<select id="YENI_TECDIT" name="YENI_TECDIT" class="form-control">
+							<option value="">Seçiniz</option>
+							<option value="YENİ" <?php if($reconDetail[Recon::YENI_TECDIT] == "YENİ") echo 'selected="selected"';?>>YENİ</option>
+							<option value="TECDİT" <?php if($reconDetail[Recon::YENI_TECDIT] == "TECDİT") echo 'selected="selected"';?>>TECDİT</option>
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Zeyil No</span>
+						<input type="text" class="form-control" aria-describedby="basic-addon1" id="ZEYIL_NO" name="ZEYIL_NO"
+						value="<?php echo $reconDetail[Recon::ZEYIL_NO];?>">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Müşteri Tipi</span>
+						<input type="text" class="form-control" aria-describedby="basic-addon1" id="MUSTERI_TIPI" name="MUSTERI_TIPI"
+						value="<?php echo $reconDetail[Recon::MUSTERI_TIPI]?>">
+					</div>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Müşteri Adı</span>
 						<input type="text" class="form-control" aria-describedby="basic-addon1" id="MUSTERI_ADI" name="MUSTERI_ADI"
@@ -172,13 +129,22 @@
 						<input type="text" class="form-control" aria-describedby="basic-addon1" id="BITIS_TARIHI" name="BITIS_TARIHI"
 						value="<?php echo $reconDetail[Recon::BITIS_TARIHI];?>">
 					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Para Birimi</span>
+						<input type="text" class="form-control" aria-describedby="basic-addon1" id="PARA_BIRIMI" name="PARA_BIRIMI"
+						value="<?php echo $reconDetail[Recon::PARA_BIRIMI];?>">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Net</span>
+						<input type="text" class="form-control" aria-describedby="basic-addon1" id="NET" name="NET"
+						value="<?php echo $reconDetail[Recon::NET];?>">
+					</div>
 				</div>
 			</div>
 			<button id="recon_branch" type="button" class="btn btn-default" onclick="validateBranchRecon(<?php echo $reconDetail[Recon::TAKIP_NO]; ?>);">
 				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Tamamla
 			</button>
 		</div>
-		<?php } ?>
 		<br/>
 		<?php if ($user[User::ROLE] == User::FINANCE || $user[User::ROLE] == User::ADMIN) {?>
 		<?php $class = $reconService->isReconCompleted(User::FINANCE, $reconDetail); ?>

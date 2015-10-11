@@ -17,6 +17,8 @@ class ReconPolicy{
 	const PRIM = "PRIM";
 	const KOMISYON = "KOMISYON";
 	const PROD_KOMISYON = "PROD_KOMISYON";
+	const KAYNAK = "KAYNAK";
+	const URETIM_KANALI = "URETIM_KANALI";
 }
 
 ?>

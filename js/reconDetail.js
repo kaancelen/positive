@@ -1,27 +1,15 @@
-function validatePersonelRecon(takipNo){
-	var kaynak = $('#KAYNAK').val();
-	var uretimKanali = $('#URETIM_KANALI').val();
-	var musteriTipi = $('#MUSTERI_TIPI').val();
+function validateBranchRecon(takipNo){
 	var yeniTecdit = $('#YENI_TECDIT').val();
 	var zeyilNo = $('#ZEYIL_NO').val();
+	var musteriTipi = $('#MUSTERI_TIPI').val();
+	var musteriAdi = $('#MUSTERI_ADI').val();
+	var baslangicTarihi = $('#BASLANGIC_TARIHI').val();
+	var bitisTarihi = $('#BITIS_TARIHI').val();
 	var paraBirimi = $('#PARA_BIRIMI').val();
 	var net = $('#NET').val();
 	
 	var message = "";
 	
-	if(kaynak == null || kaynak.length == 0){
-		message += "Lütfen Kaynak bilgisini boş bırakmayınız.<br>";
-	}
-	if(uretimKanali == null || uretimKanali.length == 0){
-		message += "Lütfen Üretim kanalı bilgisini boş bırakmayınız.<br>";
-	}else if(uretimKanali.length > 32){
-		message += "Üretim kanalı bilgisi en fazla 32 karakter olabilir.<br>";
-	}
-	if(musteriTipi == null || musteriTipi.length == 0){
-		message += "Lütfen Müşteri tipi bilgisini boş bırakmayınız.<br>";
-	}else if(musteriTipi.length > 32){
-		message += "Müşteri tipi bilgisi en fazla 32 karakter olabilir.<br>";
-	}
 	if(yeniTecdit == null || yeniTecdit.length == 0){
 		message += "Lütfen Yeni/Tecdit bilgisini boş bırakmayınız.<br>";
 	}
@@ -30,64 +18,11 @@ function validatePersonelRecon(takipNo){
 	}else if(!isNumeric(zeyilNo)){
 		message += "Zeyil no bilgisi tam sayı olmalıdır.<br>";
 	}
-	if(paraBirimi == null || paraBirimi.length == 0){
-		message += "Lütfen Para birimi bilgisini boş bırakmayınız.<br>";
-	}else if(paraBirimi.length > 4){
-		message += "Para birimi bilgisi en fazla 4 karakter olabilir.<br>";
+	if(musteriTipi == null || musteriTipi.length == 0){
+		message += "Lütfen Müşteri tipi bilgisini boş bırakmayınız.<br>";
+	}else if(musteriTipi.length > 32){
+		message += "Müşteri tipi bilgisi en fazla 32 karakter olabilir.<br>";
 	}
-	if(net == null || net.length == 0){
-		message += "Lütfen Net bilgisini boş bırakmayınız.<br>";
-	}
-	
-	if(message != ""){
-		$('#personel-error').html(message);
-		return;
-	}else{
-		$('#personel-error').html('');
-	}
-	
-	var data = new FormData();
-	data.append('TAKIP_NO', takipNo);
-	data.append('KAYNAK', kaynak);
-	data.append('URETIM_KANALI', uretimKanali);
-	data.append('MUSTERI_TIPI', musteriTipi);
-	data.append('YENI_TECDIT', yeniTecdit);
-	data.append('ZEYIL_NO', zeyilNo);
-	data.append('PARA_BIRIMI', paraBirimi);
-	data.append('NET', net);
-	
-	//make ajax request
-    $.ajax({
-        url: '/positive/ajax/add_recon_personel.php',
-        type: 'POST',
-        data: data,
-        cache: false,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        success: function(data, textStatus, jqXHR){
-        	if(data){
-        		location.reload();
-        	}else{
-        		alert('Mutabakat bilgileri güncellenemedi, bir hata ile karşılaşıldı!');
-        	}
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log('validatePersonelRecon ajax error : ' + textStatus);
-        },
-        complete: function(jqXHR, textStatus){
-            console.log("validatePersonelRecon ajax call complete : " + textStatus);
-        }
-    });
-}
-
-function validateBranchRecon(takipNo){
-	var musteriAdi = $('#MUSTERI_ADI').val();
-	var baslangicTarihi = $('#BASLANGIC_TARIHI').val();
-	var bitisTarihi = $('#BITIS_TARIHI').val();
-	
-	var message = "";
-	
 	if(musteriAdi == null || musteriAdi.length == 0){
 		message += "Lütfen Müşteri adı bilgisini boş bırakmayınız.<br>";
 	}else if(musteriAdi.length > 128){
@@ -103,6 +38,14 @@ function validateBranchRecon(takipNo){
 	}else if(bitisTarihi.length > 32){
 		message += "Bitiş tarihi bilgisi en fazla 32 karakter olabilir.<br>";
 	}
+	if(paraBirimi == null || paraBirimi.length == 0){
+		message += "Lütfen Para birimi bilgisini boş bırakmayınız.<br>";
+	}else if(paraBirimi.length > 4){
+		message += "Para birimi bilgisi en fazla 4 karakter olabilir.<br>";
+	}
+	if(net == null || net.length == 0){
+		message += "Lütfen Net bilgisini boş bırakmayınız.<br>";
+	}
 	
 	if(message != ""){
 		$('#branch-error').html(message);
@@ -113,9 +56,14 @@ function validateBranchRecon(takipNo){
 	
 	var data = new FormData();
 	data.append('TAKIP_NO', takipNo);
+	data.append('YENI_TECDIT', yeniTecdit);
+	data.append('ZEYIL_NO', zeyilNo);
+	data.append('MUSTERI_TIPI', musteriTipi);
 	data.append('MUSTERI_ADI', musteriAdi);
 	data.append('BASLANGIC_TARIHI', baslangicTarihi);
 	data.append('BITIS_TARIHI', bitisTarihi);
+	data.append('PARA_BIRIMI', paraBirimi);
+	data.append('NET', net);
 	
 	//make ajax request
     $.ajax({

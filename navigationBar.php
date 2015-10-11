@@ -42,7 +42,7 @@
       		<li id="branch_4"><a href="/positive/branch/completedPolicies.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Poliçeler</a></li>
           	<script src="/positive/js/policyPolling.js"></script>
         <?php }?>
-        <?php if($nav_user[User::ROLE] == User::ADMIN || $nav_user[User::ROLE] == User::FINANCE){?>
+        <?php if($nav_user[User::ROLE] == User::BRANCH || $nav_user[User::ROLE] == User::ADMIN || $nav_user[User::ROLE] == User::FINANCE){?>
       		<li id="recon_1"><a href="/positive/recons.php"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>Mutabakat</a></li>
       	<?php }?>
      	<li id="search_1"><a href="/positive/search.php"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Arama</a></li>

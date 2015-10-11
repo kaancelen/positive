@@ -26,8 +26,8 @@ class ReconProcedures extends Procedures{
 			array_push($params, $user_id);
 		}
 		//canceled policy part
-		$policy_cancel_sql = "SELECT COUNT(*) FROM CANCEL_REQUEST can WHERE can.STATUS = 1 AND MONTH(can.CREATION_DATE) = ?";
-		$policy_cancel_sql .= " AND YEAR(can.CREATION_DATE) = ?";
+		$policy_cancel_sql = "SELECT COUNT(*) FROM CANCEL_REQUEST can WHERE can.STATUS = 1 AND MONTH(can.COMPLETE_DATE) = ?";
+		$policy_cancel_sql .= " AND YEAR(can.COMPLETE_DATE) = ?";
 		array_push($params, $month);
 		array_push($params, $year);
 		if($user_role == User::BRANCH){
@@ -75,7 +75,9 @@ class ReconProcedures extends Procedures{
 				  ofr.POLICY_TYPE POLICY_TYPE,
 				  ofre.PRIM PRIM, 
 				  ofre.KOMISYON KOMISYON, 
-				  ofre.PROD_KOMISYON PROD_KOMISYON
+				  ofre.PROD_KOMISYON PROD_KOMISYON,
+				  co.IC_DIS KAYNAK,
+				  co.URETIM_KANALI
 				FROM 
 				  OFFER_REQUEST ofr, 
 				  OFFER_REQUEST_COMPANY orc, 
@@ -115,12 +117,70 @@ class ReconProcedures extends Procedures{
 		}
 	}
 
+	public function getPolicyCancelsInMonth($month, $year, $user_id, $user_role){
+		$sql = "SELECT
+					((-1)*can.ID) POLICY_ID,
+					can.COMPLETE_DATE POLICY_COMPLETE_DATE,
+					can.POLICY_NUMBER POLICY_NUMBER,
+					can.EK_BILGI EK_BILGI,
+					(SELECT NAME FROM USER WHERE ID = can.USER_ID) BRANCH_NAME,
+					can.USER_ID BRANCH_ID,
+					can.PERSONEL_ID PERSONEL_ID,
+					co.NAME COMPANY_NAME,
+					co.ID COMPANY_ID,
+					can.POLICY_TYPE POLICY_TYPE,
+					co.IC_DIS KAYNAK,
+					co.URETIM_KANALI
+				FROM 
+					CANCEL_REQUEST can,
+					COMPANY co
+				WHERE can.COMPANY_ID = co.ID
+					AND STATUS = 1
+					AND MONTH(COMPLETE_DATE) = ?
+					AND YEAR(COMPLETE_DATE) = ?";
+		$params = array($month, $year);
+		
+		if($user_role == User::BRANCH){
+			$sql .= " AND can.USER_ID = ?";
+			array_push($params, $user_id);
+		}
+		if($user_role == User::PERSONEL){
+			$sql .= " AND can.PERSONEL_ID = ?";
+			array_push($params, $user_id);
+		}
+		
+		$this->_db->query($sql, $params);
+		$result = $this->_db->all();
+		if(is_null($result)){
+			return null;
+		}else{
+			$allPolicyCancels = array();
+			foreach ($result as $object){
+				$policyCancel = json_decode(json_encode($object), true);
+				array_push($allPolicyCancels, $policyCancel);
+			}
+		
+			return $allPolicyCancels;
+		}
+	}
+	
 	public function insertRecon($reconPolicy){
-		$sql = "INSERT INTO RECON(TAKIP_NO,TANZIM_TARIHI,POLICE_NO,TCKN,VERGI_NO,EK_BILGI,PRODUKTOR, ";
-		$sql .= "PRODUKTOR_ID,TEKNIKCI_ID,TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,BRUT,KOMISYON,PROD_KOMISYON,PARA_BIRIMI) ";
-		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$sql = "INSERT INTO RECON(URETIM_IPTAL,TAKIP_NO,TANZIM_TARIHI,POLICE_NO,TCKN,VERGI_NO,EK_BILGI,PRODUKTOR, ";
+		$sql .= "PRODUKTOR_ID,TEKNIKCI_ID,TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,BRUT,KOMISYON,PROD_KOMISYON,PARA_BIRIMI, ";
+		$sql .= "URETIM_KANALI,MUSTERI_TIPI,KAYNAK,TAHSILAT_DURUMU)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		$uretim = "ÜRETİM";
+		$kapali = "KAPALI";
+		if(!empty($reconPolicy[ReconPolicy::TCKN])){
+			$musteriTipi = "Bireysel";
+		}else if(!empty($reconPolicy[ReconPolicy::VERGI])){
+			$musteriTipi = "Kurumsal";
+		}else{
+			$musteriTipi = "";
+		}
 		
 		$params = array(
+				$uretim,
 				$reconPolicy[ReconPolicy::POLICY_ID],
 				$reconPolicy[ReconPolicy::POLICY_COMPLETE_DATE],
 				$reconPolicy[ReconPolicy::POLICY_NUMBER],
@@ -137,7 +197,44 @@ class ReconProcedures extends Procedures{
 				$reconPolicy[ReconPolicy::PRIM],
 				$reconPolicy[ReconPolicy::KOMISYON],
 				$reconPolicy[ReconPolicy::PROD_KOMISYON],
-				'TL'
+				'TL',
+				$reconPolicy[ReconPolicy::URETIM_KANALI],
+				$musteriTipi,
+				$reconPolicy[ReconPolicy::KAYNAK],
+				$kapali
+		);
+		
+		$this->_db->query($sql, $params);
+		if($this->_db->error()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public function insertReconCancel($reconCancel){
+	$sql = "INSERT INTO RECON(URETIM_IPTAL,TAKIP_NO,TANZIM_TARIHI,POLICE_NO,EK_BILGI,PRODUKTOR, ";
+		$sql .= "PRODUKTOR_ID,TEKNIKCI_ID,SIRKET,SIRKET_ID,POLICE_TURU,PARA_BIRIMI, ";
+		$sql .= "URETIM_KANALI,KAYNAK,TAHSILAT_DURUMU)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		$iptal = "İPTAL";
+		$kapali = "KAPALI";
+		$params = array(
+				$iptal,
+				$reconCancel[ReconPolicy::POLICY_ID],
+				$reconCancel[ReconPolicy::POLICY_COMPLETE_DATE],
+				$reconCancel[ReconPolicy::POLICY_NUMBER],
+				$reconCancel[ReconPolicy::EK_BILGI],
+				$reconCancel[ReconPolicy::BRANCH_NAME],
+				$reconCancel[ReconPolicy::BRANCH_ID],
+				$reconCancel[ReconPolicy::PERSONEL_ID],
+				$reconCancel[ReconPolicy::COMPANY_NAME],
+				$reconCancel[ReconPolicy::COMPANY_ID],
+				$reconCancel[ReconPolicy::POLICY_TYPE],
+				'TL',
+				$reconCancel[ReconPolicy::URETIM_KANALI],
+				$reconCancel[ReconPolicy::KAYNAK],
+				$kapali
 		);
 		
 		$this->_db->query($sql, $params);

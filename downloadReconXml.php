@@ -21,7 +21,8 @@
 	
 	foreach ($allRecons as $recon){
 		$track = $xml->addChild('recon');
-		$track->addChild('TAKİP_NO', $recon[Recon::TAKIP_NO]);
+		$track->addChild('TAKİP_NO', $year.'-'.$month.'-'.$recon[Recon::TAKIP_NO]);
+		$track->addChild('ÜRETİM_İPTAL', $recon[Recon::URETIM_IPTAL]);
 		$track->addChild('KAYNAK', $recon[Recon::KAYNAK]);
 		$track->addChild('ÜRETİM_KANALI', $recon[Recon::URETIM_KANALI]);
 		$track->addChild('MÜŞTERİ_TİPİ', $recon[Recon::MUSTERI_TIPI]);
