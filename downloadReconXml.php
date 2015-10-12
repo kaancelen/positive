@@ -32,8 +32,6 @@
 		$track->addChild('MÜŞTERİ_ADI', $recon[Recon::MUSTERI_ADI]);
 		$track->addChild('TC_VKN', $recon[Recon::TCKN]." ".$recon[Recon::VERGI_NO]);
 		$track->addChild('TANZİM_TARİHİ', $recon[Recon::TANZIM_TARIHI]);
-		$track->addChild('BÖLGE', $recon[Recon::BOLGE]);
-		$track->addChild('BAĞLI', $recon[Recon::BAGLI]);
 		$track->addChild('PRODÜKTÖR', $recon[Recon::PRODUKTOR]);
 		$track->addChild('BAŞLANGIÇ_TARİHİ', $recon[Recon::BASLANGIC_TARIHI]);
 		$track->addChild('BİTİŞ_TARİHİ', $recon[Recon::BITIS_TARIHI]);
@@ -43,16 +41,21 @@
 		$track->addChild('BRÜT', $recon[Recon::BRUT]);
 		$track->addChild('NET', $recon[Recon::NET]);
 		$track->addChild('KOMİSYON', $recon[Recon::KOMISYON]);
-		$track->addChild('TAHSİLAT_DURUMU', $recon[Recon::TAHSILAT_DURUMU]);
-		$track->addChild('ŞİRKET_TAHSİLAT_DURUMU', $recon[Recon::SIRKET_TAHSILAT_DURUMU]);
-		$track->addChild('AÇIKLAMA', $recon[Recon::ACIKLAMA]);
-		$track->addChild('HERO_KOMİSYON', $recon[Recon::HERO_KOMISYON]);
-		$track->addChild('BÖLGE_KOMİSYON', $recon[Recon::BOLGE_KOMISYON]);
-		$track->addChild('ŞUBE_KOMİSYON', $recon[Recon::SUBE_KOMISYON]);
-		$track->addChild('BAĞLI_KOMİSYON', $recon[Recon::BAGLI_KOMISYON]);
-		$track->addChild('MÜŞTERİYE_İADE', $recon[Recon::MUSTERIYE_IADE]);
 		$track->addChild('PRODÜKTÖR_KOMİSYONU', $recon[Recon::PROD_KOMISYON]);
-		$track->addChild('MERKEZ', $recon[Recon::MERKEZ]);
+		//BRANCH shouldnt see this infos
+		if($user[User::ROLE] != User::BRANCH){
+			$track->addChild('BÖLGE', $recon[Recon::BOLGE]);
+			$track->addChild('BAĞLI', $recon[Recon::BAGLI]);
+			$track->addChild('TAHSİLAT_DURUMU', $recon[Recon::TAHSILAT_DURUMU]);
+			$track->addChild('ŞİRKET_TAHSİLAT_DURUMU', $recon[Recon::SIRKET_TAHSILAT_DURUMU]);
+			$track->addChild('AÇIKLAMA', $recon[Recon::ACIKLAMA]);
+			$track->addChild('HERO_KOMİSYON', $recon[Recon::HERO_KOMISYON]);
+			$track->addChild('BÖLGE_KOMİSYON', $recon[Recon::BOLGE_KOMISYON]);
+			$track->addChild('ŞUBE_KOMİSYON', $recon[Recon::SUBE_KOMISYON]);
+			$track->addChild('BAĞLI_KOMİSYON', $recon[Recon::BAGLI_KOMISYON]);
+			$track->addChild('MÜŞTERİYE_İADE', $recon[Recon::MUSTERIYE_IADE]);
+			$track->addChild('MERKEZ', $recon[Recon::MERKEZ]);
+		}
 	}
 	$filePath = __DIR__."/files/recon.xml";
 	$xml->asXML($filePath);
