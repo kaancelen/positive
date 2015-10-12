@@ -93,6 +93,7 @@
 			</div>
 			<label class="login-error" id="branch-error"></label>
 			<div class="panel-body">
+				<h6><i>Tarihleri takvim kullanmak yerine klavyeyi kullanarak da doldurabilirsiniz.</i></h6>
 				<div class="search-column">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Yeni/Tecdit</span>

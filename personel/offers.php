@@ -83,7 +83,7 @@
 			</select>
 		</div>
 		<div class="col-lg-6">
-			<h6>Acente filtresi sadece tabloya yüklenmiş talepler için çalışmaktadır.</h6>
+			<h6><i>Acente filtresi sadece tabloya yüklenmiş talepler için çalışmaktadır.</i></h6>
 		</div>
 	</div>
 	<script src="/positive/js/dropdown.js"></script>
