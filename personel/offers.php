@@ -26,7 +26,7 @@
 	
 	$offerService = new OfferService();
 	if(!empty($cookieCompanies)){
-		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies, 0);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies, null, false);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	}else{
 		$allOfferRequest = array();
 	}
@@ -83,7 +83,7 @@
 			</select>
 		</div>
 		<div class="col-lg-6">
-			<h6><i>Acente filtresi sadece tabloya yüklenmiş talepler için çalışmaktadır.</i></h6>
+<!-- 			<h6><i>Acente filtresi sadece tabloya yüklenmiş talepler için çalışmaktadır.</i></h6> -->
 		</div>
 	</div>
 	<script src="/positive/js/dropdown.js"></script>
@@ -137,7 +137,7 @@
 			<?php }?>
 			</tbody>
 		</table>
-		<?php if(count($allOfferRequest) > 0){?>
+		<?php if(false){//if(count($allOfferRequest) > 0){?>
 			<script src="/positive/js/lazy_loading.js"></script>
 			<div class="alert alert-info" style="width: 100%;text-align: center" role="alert">
 				<a id="get_others_link" onclick="getOtherRequests();">Devamını getir</a>

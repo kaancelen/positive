@@ -1,7 +1,7 @@
 <div class="changelog">
-	<h3>Positive yeni sürüm 12 Ekim 2015</h3>
+	<h3>Positive yeni sürüm 13 Ekim 2015</h3>
 	<ul>
-		<li>Talep ekranına kademeli yükleme özelliği getirildi.(Teknikçi)</li>
+		<li>Kademeli yükleme kaldırıldı, iptal ve tamamlanmış talepler artık gösterilmiyor.(Teknikçi)</li>
 		<li>Mutabakat ekranları gözden geçirildi ve düzenlendi(Acente, Finans)</li>
 	</ul>
 	<br><br><br>

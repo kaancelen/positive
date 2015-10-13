@@ -19,7 +19,7 @@
 	}
 	
 	$offerService = new OfferService();
-	$allOfferRequest = $offerService->getAllRequests($user[User::ID], null);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
+	$allOfferRequest = $offerService->getAllRequests($user[User::ID]);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
 	
 	if(empty($allOfferRequest)){
 		?>
