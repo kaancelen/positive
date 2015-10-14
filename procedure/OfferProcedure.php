@@ -121,11 +121,15 @@ class OfferProcedures extends Procedures{
 			$limit_part = "LIMIT 30 OFFSET ?";
 			array_push($params, $limit);
 		}
+		$status_part = "(ofr.STATUS = 0 OR ofr.STATUS = 2)";
+		if(!$showCompleted){
+			$status_part = "ofr.STATUS = 0";
+		}
 		
 		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
 		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
 		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
-		$sql .= "AND ofr.STATUS = 0 AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
+		$sql .= "AND ".$status_part." AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
 		$sql .= $company_part." ".$user_id_part." ORDER BY ofr.CREATION_DATE DESC ".$limit_part;
 		
 		$this->_db->query($sql, $params, true);
