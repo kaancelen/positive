@@ -46,3 +46,31 @@ function onSelectedAgentChange(){
         }
     });
 }
+
+function getOfferRatio(request_id){
+	var data = new FormData();
+	data.append('request_id', request_id);
+	
+	//make ajax request
+    $.ajax({
+        url: '/positive/ajax/get_offer_ratio.php',
+        type: 'POST',
+        data: data,
+        cache: false,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR){
+        	if(data){
+        		$('#ratio_'+request_id).find('img').css('visibility', 'hidden');
+        		$('#ratio_'+request_id).html(data);
+        	}
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log('get_offer_ratio ajax error : ' + textStatus);
+        },
+        complete: function(jqXHR, textStatus){
+            console.log("get_offer_ratio ajax call complete : " + textStatus);
+        }
+    });
+}

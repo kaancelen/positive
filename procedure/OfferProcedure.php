@@ -118,7 +118,7 @@ class OfferProcedures extends Procedures{
 		}
 		$limit_part = " ";
 		if(!is_null($limit)){
-			$limit_part = "LIMIT 30 OFFSET ?";
+			$limit_part = "LIMIT 20 OFFSET ?";
 			array_push($params, $limit);
 		}
 		$status_part = "(ofr.STATUS = 0 OR ofr.STATUS = 2)";

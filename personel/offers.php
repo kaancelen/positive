@@ -26,7 +26,7 @@
 	
 	$offerService = new OfferService();
 	if(!empty($cookieCompanies)){
-		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies, null, false);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies, 0, true);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	}else{
 		$allOfferRequest = array();
 	}
@@ -122,7 +122,7 @@
 						<img id='look_gif' width='24'>
 					</td>
 					<td><b id="req_id"><?php echo $offerRequest[OfferList::ID]; ?></b></td>
-					<td id="ratio"><?php echo $offerService->getGivenOfferRatio($offerRequest[OfferList::ID]); ?></td>
+					<td id="ratio_<?php echo $offerRequest[OfferList::ID]; ?>"><img src="/positive/images/loader.gif"></td>
 					<td><?php echo $offerRequest[OfferList::BRANCH_NAME]; ?></td>
 					<td><?php echo $offerRequest[OfferList::POLICY_TYPE]; ?></td>
 					<td id="date"><?php echo DateUtil::format($offerRequest[OfferList::CREATION_DATE]); ?></td>
@@ -137,7 +137,7 @@
 			<?php }?>
 			</tbody>
 		</table>
-		<?php if(false){//if(count($allOfferRequest) > 0){?>
+		<?php if(count($allOfferRequest) > 0){?>
 			<script src="/positive/js/lazy_loading.js"></script>
 			<div class="alert alert-info" style="width: 100%;text-align: center" role="alert">
 				<a id="get_others_link" onclick="getOtherRequests();">Devamını getir</a>
@@ -148,6 +148,9 @@
 	</div>
 </div>
 <script type="text/javascript">
+	<?php foreach ($allOfferRequest as $offerRequest){?>
+		getOfferRatio(<?php echo $offerRequest[OfferList::ID];?>);
+	<?php }?>
 	pullNewChatEntries();
 	$('#personel_1').addClass("active");
 </script>
