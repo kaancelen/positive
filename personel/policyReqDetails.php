@@ -184,7 +184,11 @@
 				<div align="center">
 					<div class="alert alert-danger" role="alert">Poliçe isteği kapatıldı!</div>
 				</div>
-			<?php }else{ ?>
+			<?php }else if($policyReqDetail[PolicyRequest::POLICY_ID] != 0){ ?>
+				<div align="center">
+					<div class="alert alert-info" role="alert">Bu istek zaten poliçeleştirildi.</div>
+				</div>
+			<?php }else{?>
 				<button class="btn btn-lg btn-primary btn-block" type="button" onclick='validatePolicy()' id="offer-request-button">Poliçeyi onayla</button>
 			<?php } ?>
 		</form>

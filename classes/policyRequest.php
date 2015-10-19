@@ -27,6 +27,7 @@ class PolicyRequest{
 	const CVC_CODE = "CVC_CODE";
 	const POLICY_REQ_DATE = "POLICY_REQ_DATE";
 	const STATUS = "STATUS";
+	const POLICY_ID = "POLICY_ID";
 }
 
 ?>
