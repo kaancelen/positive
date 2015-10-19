@@ -15,6 +15,10 @@
 	}
 	include_once (__DIR__.'/../navigationBar.php');
 	
+	//offer polling job
+	Cookie::put(Cookie::LAST_ENTER_OFFER_REQ, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_OFFER_FLAG, "off", Cookie::REMEMBER_EXPIRE);
+	
 	if(Cookie::exists('companies')){
 		$cookieCompanies = array_filter(json_decode(Cookie::get('companies')));//remove null elements
 	}else{
@@ -26,13 +30,10 @@
 	
 	$offerService = new OfferService();
 	if(!empty($cookieCompanies)){
-		$allOfferRequest = $offerService->getAllRequests(null, $cookieCompanies, 0, true);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+		$allOfferRequest = $offerService->getPersonelRequests($cookieCompanies);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	}else{
 		$allOfferRequest = array();
 	}
-	//offer polling job
-	Cookie::put(Cookie::LAST_ENTER_OFFER_REQ, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
-	Cookie::put(Cookie::LE_OFFER_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 	
 	if(empty($allOfferRequest)){
 		?>
@@ -106,17 +107,7 @@
 			<tbody>
 			<?php $userService = new UserService(); ?>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
-				<?php 
-					$class = "";
-					if($offerRequest[OfferList::STATUS] == 2){
-						$class = "row-offer-cancelled";
-					}else if($offerRequest[OfferList::WAITING_OFFER_NUM] == 0){
-						$class = "row-offer-completed";
-					}else{
-						$class = "row-offer-nothing";
-					}
-				?>
-				<tr <?php echo "class=".$class;?>>
+				<tr class="row-offer-nothing">
 					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>">
 						<img id='mail_gif' width='24'>
 						<img id='look_gif' width='24'>
@@ -137,7 +128,7 @@
 			<?php }?>
 			</tbody>
 		</table>
-		<?php if(count($allOfferRequest) > 0){?>
+		<?php if(false){//if(count($allOfferRequest) > 0){?>
 			<script src="/positive/js/lazy_loading.js"></script>
 			<div class="alert alert-info" style="width: 100%;text-align: center" role="alert">
 				<a id="get_others_link" onclick="getOtherRequests();">Devamını getir</a>

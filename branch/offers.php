@@ -18,8 +18,12 @@
 		Util::redirect("/positive/profile.php");
 	}
 	
+	//policy polling job
+	Cookie::put(Cookie::LAST_ENTER_OFFER_RESP, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_OFFER_RESP_FLAG, "off", Cookie::REMEMBER_EXPIRE);
+	
 	$offerService = new OfferService();
-	$allOfferRequest = $offerService->getAllRequests($user[User::ID]);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
+	$allOfferRequest = $offerService->getBranchRequests($user[User::ID]);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
 	
 	if(empty($allOfferRequest)){
 		?>
@@ -28,9 +32,6 @@
 			</div>
 		<?php
 	}
-	//policy polling job
-	Cookie::put(Cookie::LAST_ENTER_OFFER_RESP, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
-	Cookie::put(Cookie::LE_OFFER_RESP_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 ?>
 <script src="/positive/js/pullNewChat.js"></script>
 <div class="container">

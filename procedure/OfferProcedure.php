@@ -12,6 +12,82 @@ class OfferProcedures extends Procedures{
 	public function __construct(){
 		parent::__construct();
 	}
+	
+	public function getPersonelRequests($companies){
+		$params = array();
+		
+		//Company part
+		$question_marks = array();
+		foreach ($companies as $company_id){
+			array_push($question_marks, "?");
+			array_push($params, $company_id);
+		}
+		$company_part = "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") ";
+		
+		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
+		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
+		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
+		$sql .= "AND STATUS = 0 AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
+		$sql .= $company_part." ORDER BY ofr.CREATION_DATE DESC ";
+		
+		$this->_db->query($sql, $params, true);
+		$resultAll = $this->_db->all();
+		
+		if($this->_db->error()){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request not found in DB");
+			return null;
+		}else{
+			$responseArray = array();
+			foreach ($resultAll as $object){
+				$params_two = array($object->ID);
+				
+				//Waiting offer part
+				$question_marks = array();
+				foreach ($companies as $company_id){
+					array_push($question_marks, "?");
+					array_push($params_two, $company_id);
+				}
+				$company_part_two = "AND COMPANY_ID IN (".implode(",", $question_marks).")";
+				
+				$sql = "SELECT COUNT(OFFER_ID) WAITING_OFFER_NUM FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? AND OFFER_ID = 0 ";
+				$sql .= $company_part_two;
+				
+				$this->_db->query($sql, $params_two, true);
+				$waiting_offer_num = $this->_db->first();
+				
+				if($waiting_offer_num->WAITING_OFFER_NUM > 0){
+					$responseObject = json_decode(json_encode($object), true);
+					$responseObject['WAITING_OFFER_NUM'] = $waiting_offer_num->WAITING_OFFER_NUM;
+					
+					array_push($responseArray, $responseObject);
+				}
+			}
+			
+			return $responseArray;
+		}
+	}
+	
+	/**
+	 * @param unknown $user_id
+	 */
+	public function getBranchRequests($user_id){
+		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
+		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
+		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
+		$sql .= "AND (ofr.STATUS = 0 OR ofr.STATUS = 2) AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 10 day) ";
+		$sql .= "AND ofr.USER_ID = ? ORDER BY ofr.CREATION_DATE DESC";
+		
+		$this->_db->query($sql, array($user_id), true);
+		$resultAll = $this->_db->all();
+		
+		if(is_null($resultAll)){
+			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer branch request not found in DB");
+			return null;
+		}else{
+			return json_decode(json_encode($resultAll), true);
+		}
+	}
+	
 	/**
 	 * @param unknown $plaka
 	 * @param unknown $tckn
@@ -92,85 +168,6 @@ class OfferProcedures extends Procedures{
 			$offerRequest[OfferRequest::IS_OFFER_ACCEPTED] = $isOfferAccepted;
 			
 			return $offerRequest;
-		}
-	}
-	/**
-	 * @param unknown $user_id
-	 * @param unknown $all
-	 * @return NULL|multitype:
-	 */
-	public function getAllRequests($user_id, $companies, $limit, $showCompleted){
-		$params = array();
-		$company_part = " ";
-		if(!is_null($companies)){
-			$question_marks = array();
-			foreach ($companies as $company_id){
-				array_push($question_marks, "?");
-				array_push($params, $company_id);
-			}
-			
-			$company_part = "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") ";
-		}
-		$user_id_part = " ";
-		if(!is_null($user_id)){
-			$user_id_part = "AND ofr.USER_ID = ? ";
-			array_push($params, $user_id);
-		}
-		$limit_part = " ";
-		if(!is_null($limit)){
-			$limit_part = "LIMIT 20 OFFSET ?";
-			array_push($params, $limit);
-		}
-		$status_part = "(ofr.STATUS = 0 OR ofr.STATUS = 2)";
-		if(!$showCompleted){
-			$status_part = "ofr.STATUS = 0";
-		}
-		
-		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
-		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
-		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
-		$sql .= "AND ".$status_part." AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
-		$sql .= $company_part." ".$user_id_part." ORDER BY ofr.CREATION_DATE DESC ".$limit_part;
-		
-		$this->_db->query($sql, $params, true);
-		$resultAll = $this->_db->all();
-		
-		if($this->_db->error()){
-			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request not found in DB");
-			return null;
-		}else{
-			$allOffers = array();
-			$i = 0;
-			foreach ($resultAll as $object){
-				$params_inner = array();
-				array_push($params_inner, $object->ID);//request id
-				$company_part_two = " ";
-				if(!is_null($companies)){
-					$question_marks = array();
-					foreach ($companies as $company_id){
-						array_push($question_marks, "?");
-						array_push($params_inner, $company_id);
-					}
-					$company_part_two = "AND COMPANY_ID IN (".implode(",", $question_marks).") ";
-				}
-				
-				$sql = "SELECT COUNT(OFFER_ID) WAITING_OFFER_NUM FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? ";
-				$sql .= "AND OFFER_ID = 0 ".$company_part_two;
-				$this->_db->query($sql, $params_inner, true);
-				$resultFirst = $this->_db->first();
-				if(is_null($resultFirst)){
-					$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request waiting offer num[".$request_id."] not found in DB");
-					return null;
-				}else{
-					if(!$showCompleted && $resultFirst->WAITING_OFFER_NUM == 0){
-						continue;
-					}
-					array_push($allOffers, json_decode(json_encode($object), true));
-					$allOffers[$i]['WAITING_OFFER_NUM'] = $resultFirst->WAITING_OFFER_NUM;
-					$i++;
-				}
-			}
-			return $allOffers;
 		}
 	}
 	/**
