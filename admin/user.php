@@ -40,14 +40,29 @@
 		$role = Util::cleanInput($_POST['select_role']);
 		$desc = Util::cleanInput($_POST['description']);
 		$operation = Util::cleanInput($_POST['operation']);
+		
+		$komisyon_rate = 0;
+		$master_agent = 0;
+		$allowed_comp = "0";
+		$change_agent = 0;
+		
 		if($role == User::BRANCH){
 			$komisyon_rate = Util::cleanInput($_POST['komisyon_rate']);
 			$master_agent = Util::cleanInput($_POST['master_agent']);
-		}else{
-			$komisyon_rate = 0;
-			$master_agent = 0;
-		}
-		if($role == User::PERSONEL){
+			
+			if(isset($_POST['comp_0'])){
+				$allowed_comp = "0";
+			}else{
+				$allowed_comp_array = array();
+				foreach ($companies as $company){
+					if(isset($_POST['comp_'.$company[Company::ID]])){
+						array_push($allowed_comp_array, $company[Company::ID]);
+					}
+				}
+				$allowed_comp = implode(",", $allowed_comp_array);
+			}
+		}else if($role == User::PERSONEL){
+			
 			if(isset($_POST['comp_0'])){
 				$allowed_comp = "0";
 			}else{
@@ -64,9 +79,6 @@
 			}else{
 				$change_agent = 0;
 			}
-		}else{
-			$allowed_comp = "0";
-			$change_agent = 0;
 		}
 		
 		if($operation == 'add'){
@@ -204,6 +216,7 @@
 		echo 'document.getElementById("change_agent_div").style.visibility = "visible";';
 	}
 	if($selected_user[User::ROLE] == User::BRANCH){
+		echo 'document.getElementById("companies_div").style.visibility = "visible";';
 		echo 'document.getElementById("komisyon_div").style.visibility = "visible";';
 		echo 'document.getElementById("master_agent_div").style.visibility = "visible";';
 	}
@@ -214,7 +227,12 @@
 		if($selected_user[User::ROLE] == User::BRANCH){
 			echo "$('#komisyon_rate').val(".$selected_user[User::KOMISYON_RATE].");";
 			echo "$('#master_agent').val(".$selected_user[User::MASTER_ID].");";
-		}if($selected_user[User::ROLE] == User::PERSONEL){
+			
+			$allowed_comps = explode(",", $selected_user[User::ALLOWED_COMP]);
+			foreach ($allowed_comps as $comp){
+				echo "$('#comp_".$comp."').prop('checked', true);";
+			}
+		}else if($selected_user[User::ROLE] == User::PERSONEL){
 			if($selected_user[User::CHANGE_AGENT] == 1){
 				echo "$('#change_agent').prop('checked', true);";
 			}

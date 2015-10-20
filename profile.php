@@ -104,6 +104,25 @@
 				<span class="input-group-addon" id="basic-addon1">Ek bilgi</span>
 				<textarea rows="4" class="form-control" readonly><?php echo $user[User::DESCRIPTION]; ?></textarea>
 			</div>
+			<?php 
+				$compText = "Hepsi";
+				if($user[User::ALLOWED_COMP] != 0){
+					$allowed_comp = explode(",", $user[User::ALLOWED_COMP]);
+					$allowed_comp_array = array();
+					foreach ($allowed_comp as $compId){
+						$company = $companyService->getCompany($compId);
+						if(!is_null($company)){
+							array_push($allowed_comp_array, $company[Company::NAME]);
+						}
+					}
+					$compText = implode(",", $allowed_comp_array);
+				}
+			?>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">Şirketler</span>
+				<textarea rows="4" class="form-control" readonly><?php echo $compText; ?></textarea>
+			</div>
 			<?php if($user[User::ROLE] == User::PERSONEL){?>
 				<?php if($user[User::CHANGE_AGENT] == 1){?>
 					<br>
@@ -111,25 +130,6 @@
 						<label class="form-control">Bu Kullanıcı poliçe üzerindeki acente bilgisini değiştirebilir.</label>
 					</div>
 				<?php } ?>
-				<?php 
-					$compText = "Hepsi";
-					if($user[User::ALLOWED_COMP] != 0){
-						$allowed_comp = explode(",", $user[User::ALLOWED_COMP]);
-						$allowed_comp_array = array();
-						foreach ($allowed_comp as $compId){
-							$company = $companyService->getCompany($compId);
-							if(!is_null($company)){
-								array_push($allowed_comp_array, $company[Company::NAME]);
-							}
-						}
-						$compText = implode(",", $allowed_comp_array);
-					}
-				?>
-				<br>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Şirketler</span>
-					<textarea rows="4" class="form-control" readonly><?php echo $compText; ?></textarea>
-				</div>
 			<?php }?>
 			<?php if($user[User::ROLE] == User::BRANCH){?>
 				<br>

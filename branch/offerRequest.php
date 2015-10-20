@@ -25,6 +25,17 @@
 	$companyService = new CompanyService();
 	$companies = $companyService->getAll();
 	
+	if($user[User::ALLOWED_COMP] != 0){
+		$allowed_comp = explode(",", $user[User::ALLOWED_COMP]);
+		$temp_companies = array();
+		foreach ($companies as $company){
+			if(in_array($company[Company::ID], $allowed_comp)){
+				array_push($temp_companies, $company);
+			}
+		}
+		$companies = $temp_companies;
+	}
+	
 	if(!empty($_POST)){
 		$hiddenType = Util::cleanInput($_POST['hiddenType']);
 		if($hiddenType == 'uretim'){
