@@ -28,6 +28,9 @@
 		$allowed_comp = $user[User::ALLOWED_COMP];
 	}
 	$allPolicies = $offerService->getCompletedPolicies(null, $month, $year, $allowed_comp);
+	
+	$userService = new UserService();
+	$agents = $userService->allTypeOfUsers(User::BRANCH);
 ?>
 <script src="/positive/js/comp_policy.js"></script>
 <div class="container">
@@ -45,6 +48,14 @@
 	<button type="button" class="btn btn-default" aria-label="Left Align" onclick="refreshTime(true);">
 	 	<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>Tarihe Git
 	</button>
+	<select id="selected_agent" name="selected_agent" class="form-control month-option" onchange="onSelectedAgentChange()">
+		<option value="NULL">Tüm Acenteler</option>
+		<?php foreach ($agents as $agent){?>
+			<?php if($agent[User::FIRST_LOGIN] != User::FIRST_LOGIN_FLAG){?>
+				<option value="<?php echo $agent[User::NAME];?>"><?php echo $agent[User::NAME];?></option>
+			<?php }?>
+		<?php }?>
+	</select>
 	<div id="policy_table" class="table-responsive">
 		<table class="table">
 			<thead>
