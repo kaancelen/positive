@@ -13,7 +13,7 @@ class OfferProcedures extends Procedures{
 		parent::__construct();
 	}
 	
-	public function getPersonelRequests($companies){
+	public function getPersonelRequests($companies, $limit, $show_completed){
 		$params = array();
 		
 		//Company part
@@ -24,11 +24,18 @@ class OfferProcedures extends Procedures{
 		}
 		$company_part = "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") ";
 		
+		//Limit part
+		$limit_part = " ";
+		if(!is_null($limit)){
+			$limit_part = "LIMIT 15 OFFSET ?";
+			array_push($params, $limit);
+		}
+		
 		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
 		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
 		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
-		$sql .= "AND STATUS = 0 AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
-		$sql .= $company_part." ORDER BY ofr.CREATION_DATE DESC ";
+		$sql .= "AND STATUS = 0 AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 10 day) ";
+		$sql .= $company_part." ORDER BY ofr.CREATION_DATE DESC ".$limit_part;
 		
 		$this->_db->query($sql, $params, true);
 		$resultAll = $this->_db->all();
@@ -55,12 +62,21 @@ class OfferProcedures extends Procedures{
 				$this->_db->query($sql, $params_two, true);
 				$waiting_offer_num = $this->_db->first();
 				
-				if($waiting_offer_num->WAITING_OFFER_NUM > 0){
+				if(!$show_completed){
+					if($waiting_offer_num->WAITING_OFFER_NUM > 0){
+						$responseObject = json_decode(json_encode($object), true);
+						$responseObject['WAITING_OFFER_NUM'] = $waiting_offer_num->WAITING_OFFER_NUM;
+							
+						array_push($responseArray, $responseObject);
+					}
+				}else{
 					$responseObject = json_decode(json_encode($object), true);
 					$responseObject['WAITING_OFFER_NUM'] = $waiting_offer_num->WAITING_OFFER_NUM;
-					
+						
 					array_push($responseArray, $responseObject);
 				}
+				
+				
 			}
 			
 			return $responseArray;

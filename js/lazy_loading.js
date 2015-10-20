@@ -1,4 +1,4 @@
-var request_number = 20;
+var request_number = 15;
 
 function getOtherRequests(){
 	$('#loading_gif').css('visibility', 'visible');
@@ -22,11 +22,11 @@ function getOtherRequests(){
         	$('#loading_gif').css('visibility', 'hidden');
         	$('#get_others_link').css('visibility', 'visible');
         	if(data){
-        		if(data.length < 20){
+        		if(data.length < 15){
         			$('#get_others_link').css('visibility', 'hidden');
         			$('#request_finished').css('visibility', 'visible');
         		}
-        		request_number += 20;
+        		request_number += 15;
         		console.log(data);
         		addOtherRequestsToTable(data);
         	}else{

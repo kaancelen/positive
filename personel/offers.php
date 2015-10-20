@@ -30,7 +30,7 @@
 	
 	$offerService = new OfferService();
 	if(!empty($cookieCompanies)){
-		$allOfferRequest = $offerService->getPersonelRequests($cookieCompanies);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+		$allOfferRequest = $offerService->getPersonelRequests($cookieCompanies, 0, true);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	}else{
 		$allOfferRequest = array();
 	}
@@ -107,7 +107,15 @@
 			<tbody>
 			<?php $userService = new UserService(); ?>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
-				<tr class="row-offer-nothing">
+				<?php 
+					$class_data = "row-offer-nothing";
+					if($offerRequest[OfferList::STATUS] == 2){
+						$class_data = "row-offer-cancelled";
+					}else if($offerRequest[OfferList::WAITING_OFFER_NUM] == 0){
+						$class_data = "row-offer-completed";
+					}
+				?>
+				<tr class="<?php echo $class_data; ?>">
 					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>">
 						<img id='mail_gif' width='24'>
 						<img id='look_gif' width='24'>
@@ -128,7 +136,7 @@
 			<?php }?>
 			</tbody>
 		</table>
-		<?php if(false){//if(count($allOfferRequest) > 0){?>
+		<?php if(count($allOfferRequest) > 0){?>
 			<script src="/positive/js/lazy_loading.js"></script>
 			<div class="alert alert-info" style="width: 100%;text-align: center" role="alert">
 				<a id="get_others_link" onclick="getOtherRequests();">Devamını getir</a>

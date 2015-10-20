@@ -15,7 +15,19 @@ if(!empty($_POST)){
 		}
 	}
 	
-	echo json_encode(true);
+	$request_number = Util::cleanInput($_POST['request_number']);
+    $cookieString = Util::cleanInput($_POST['cookie_companies']);
+    
+    $cookieString = str_replace(array("[", "]", "\""), "", $cookieString);
+    $cookieCompanies = explode(",", $cookieString);
+    
+    $offerService = new OfferService();
+    $result = $offerService->getPersonelRequests($cookieCompanies, $request_number, true);
+    for ($i = 0; $i < count($result); $i++){
+        $result[$i]['CREATION_DATE'] = DateUtil::format($result[$i]['CREATION_DATE']);
+    }
+    
+    echo json_encode($result);
 }
 
 ?>
