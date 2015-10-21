@@ -11,7 +11,7 @@ class OfferService implements Service{
 		$this->_offerProcedures = new OfferProcedures();
 	}
 	
-	public function getPersonelRequests($companies, $limit, $show_completed = false){
+	public function getPersonelRequests($companies, $limit = null, $show_completed = false){
 		return $this->_offerProcedures->getPersonelRequests($companies, $limit, $show_completed);
 	}
 	

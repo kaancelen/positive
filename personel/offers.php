@@ -30,7 +30,7 @@
 	
 	$offerService = new OfferService();
 	if(!empty($cookieCompanies)){
-		$allOfferRequest = $offerService->getPersonelRequests($cookieCompanies, 0, true);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
+		$allOfferRequest = $offerService->getPersonelRequests($cookieCompanies);//Tüm kullanıcıların poliçe isteği yapılmamış taleplerini getir.
 	}else{
 		$allOfferRequest = array();
 	}
@@ -136,7 +136,7 @@
 			<?php }?>
 			</tbody>
 		</table>
-		<?php if(count($allOfferRequest) > 0){?>
+		<?php if(false){//if(count($allOfferRequest) > 0){?>
 			<script src="/positive/js/lazy_loading.js"></script>
 			<div class="alert alert-info" style="width: 100%;text-align: center" role="alert">
 				<a id="get_others_link" onclick="getOtherRequests();">Devamını getir</a>
