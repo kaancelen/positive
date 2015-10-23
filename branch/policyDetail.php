@@ -128,8 +128,8 @@
 				<td><?php echo $policy[Policy::POLICY_TYPE];?></td>
 				<td><?php echo $policy[Policy::POLICY_COMPLETE_DATE];?></td>
 				<td><?php echo $policy[Policy::POLICY_COMPLETE_PERSONEL];?></td>
-				<td><a target="_blank" href="/positive/download.php?file=<?php echo $policy[Policy::POLICY_PATH];?>"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>İndir</a></td>
-				<td><a target="_blank" href="/positive/download.php?file=<?php echo $policy[Policy::MAKBUZ_PATH];?>"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>İndir</a></td>
+				<td><a target="_blank" href="/positive/download.php?id=<?php echo $policy[Policy::POLICY_ID];?>&type=policy"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>İndir</a></td>
+				<td><a target="_blank" href="/positive/download.php?id=<?php echo $policy[Policy::POLICY_ID];?>&type=makbuz"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>İndir</a></td>
 			</tr>
 		</tbody>
 	</table>

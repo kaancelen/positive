@@ -74,7 +74,7 @@
 					<td><?php echo $cancelReqDetail[CancelRequest::PERSONEL_NAME];?></td>
 					<td><?php echo DateUtil::format($cancelReqDetail[CancelRequest::COMPLETE_DATE]);?></td>
 					<td><?php echo $cancelReqDetail[CancelRequest::EK_BILGI];?></td>
-					<td><a target="_blank" href="/positive/download.php?file=<?php echo $cancelReqDetail[CancelRequest::SOZLESME];?>"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>İndir</a></td>
+					<td><a target="_blank" href="/positive/download.php?id=<?php echo $cancelReqDetail[CancelRequest::ID];?>&type=cancel"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>İndir</a></td>
 				</tr>
 			</tbody>
 		</table>
