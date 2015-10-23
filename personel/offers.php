@@ -121,7 +121,7 @@
 						<img id='look_gif' width='24'>
 					</td>
 					<td><b id="req_id"><?php echo $offerRequest[OfferList::ID]; ?></b></td>
-					<td id="ratio_<?php echo $offerRequest[OfferList::ID]; ?>"><img src="/positive/images/loader.gif"></td>
+					<td><?php echo $offerRequest[OfferList::OFFER_RATE];?></td>
 					<td><?php echo $offerRequest[OfferList::BRANCH_NAME]; ?></td>
 					<td><?php echo $offerRequest[OfferList::POLICY_TYPE]; ?></td>
 					<td id="date"><?php echo DateUtil::format($offerRequest[OfferList::CREATION_DATE]); ?></td>
@@ -147,9 +147,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-	<?php foreach ($allOfferRequest as $offerRequest){?>
-		getOfferRatio(<?php echo $offerRequest[OfferList::ID];?>);
-	<?php }?>
 	pullNewChatEntries();
 	$('#personel_1').addClass("active");
 </script>

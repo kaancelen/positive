@@ -8,6 +8,7 @@ class OfferList{
 	const PLAKA = "PLAKA";
 	const STATUS = "STATUS";
 	const WAITING_OFFER_NUM = "WAITING_OFFER_NUM";
+	const OFFER_RATE = "OFFER_RATE";
 }
 
 ?>

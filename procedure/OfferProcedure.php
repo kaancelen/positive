@@ -16,6 +16,12 @@ class OfferProcedures extends Procedures{
 	public function getPersonelRequests($companies, $limit, $show_completed){
 		$params = array();
 		
+		//show completed part
+		$show_completed_part = " ";
+		if(!$show_completed){
+			$show_completed_part = "AND ofr.TOTAL_OFFER_NUM > ofr.GIVEN_OFFER_NUM ";
+		}
+		
 		//Company part
 		$question_marks = array();
 		foreach ($companies as $company_id){
@@ -32,9 +38,10 @@ class OfferProcedures extends Procedures{
 		}
 		
 		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
-		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
+		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS, (ofr.TOTAL_OFFER_NUM - ofr.GIVEN_OFFER_NUM) WAITING_OFFER_NUM, ";
+		$sql .= "CONCAT(ofr.GIVEN_OFFER_NUM, '/', ofr.TOTAL_OFFER_NUM) OFFER_RATE ";
 		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
-		$sql .= "AND STATUS = 0 AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ";
+		$sql .= "AND STATUS = 0 AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 1 day) ".$show_completed_part;
 		$sql .= $company_part." ORDER BY ofr.CREATION_DATE DESC ".$limit_part;
 		
 		$this->_db->query($sql, $params, true);
@@ -44,42 +51,7 @@ class OfferProcedures extends Procedures{
 			$this->_logger->write(ALogger::DEBUG, self::TAG, "offer request not found in DB");
 			return null;
 		}else{
-			$responseArray = array();
-			foreach ($resultAll as $object){
-				$params_two = array($object->ID);
-				
-				//Waiting offer part
-				$question_marks = array();
-				foreach ($companies as $company_id){
-					array_push($question_marks, "?");
-					array_push($params_two, $company_id);
-				}
-				$company_part_two = "AND COMPANY_ID IN (".implode(",", $question_marks).")";
-				
-				$sql = "SELECT COUNT(OFFER_ID) WAITING_OFFER_NUM FROM OFFER_REQUEST_COMPANY WHERE REQUEST_ID = ? AND OFFER_ID = 0 ";
-				$sql .= $company_part_two;
-				
-				$this->_db->query($sql, $params_two, true);
-				$waiting_offer_num = $this->_db->first();
-				
-				if(!$show_completed){
-					if($waiting_offer_num->WAITING_OFFER_NUM > 0){
-						$responseObject = json_decode(json_encode($object), true);
-						$responseObject['WAITING_OFFER_NUM'] = $waiting_offer_num->WAITING_OFFER_NUM;
-							
-						array_push($responseArray, $responseObject);
-					}
-				}else{
-					$responseObject = json_decode(json_encode($object), true);
-					$responseObject['WAITING_OFFER_NUM'] = $waiting_offer_num->WAITING_OFFER_NUM;
-						
-					array_push($responseArray, $responseObject);
-				}
-				
-				
-			}
-			
-			return $responseArray;
+			return json_decode(json_encode($resultAll), true);
 		}
 	}
 	
@@ -88,7 +60,8 @@ class OfferProcedures extends Procedures{
 	 */
 	public function getBranchRequests($user_id){
 		$sql = "SELECT DISTINCT ofr.ID, (SELECT NAME FROM USER WHERE ID = ofr.USER_ID) BRANCH_NAME, ofr.POLICY_TYPE, ";
-		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS ";
+		$sql .= "ofr.CREATION_DATE, ofr.PLAKA, ofr.STATUS, (ofr.TOTAL_OFFER_NUM - ofr.GIVEN_OFFER_NUM) WAITING_OFFER_NUM, ";
+		$sql .= "CONCAT(ofr.GIVEN_OFFER_NUM, '/', ofr.TOTAL_OFFER_NUM) OFFER_RATE ";
 		$sql .= "FROM OFFER_REQUEST ofr, OFFER_REQUEST_COMPANY orc WHERE ofr.ID = orc.REQUEST_ID ";
 		$sql .= "AND (ofr.STATUS = 0 OR ofr.STATUS = 2) AND ofr.CREATION_DATE >= DATE_SUB(CURDATE(),INTERVAL 10 day) ";
 		$sql .= "AND ofr.USER_ID = ? ORDER BY ofr.CREATION_DATE DESC";
@@ -118,8 +91,8 @@ class OfferProcedures extends Procedures{
 	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companies){
 		$this->_db->beginTransaction();
 		
-		$sql = "INSERT INTO OFFER_REQUEST(PLAKA, TCKN, VERGI, BELGE, ASBIS, USER_ID, DESCRIPTION, POLICY_TYPE) VALUES(?,?,?,?,?,?,?,?)";
-		$this->_db->query($sql, array($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $description, $policy_type));
+		$sql = "INSERT INTO OFFER_REQUEST(PLAKA, TCKN, VERGI, BELGE, ASBIS, USER_ID, DESCRIPTION, POLICY_TYPE, TOTAL_OFFER_NUM) VALUES(?,?,?,?,?,?,?,?,?)";
+		$this->_db->query($sql, array($plaka, $tckn, $vergi, $belge, $asbis, $user_id, $description, $policy_type, count($companies)));
 		
 		if($this->_db->error()){
 			$this->_db->rollback();
@@ -209,10 +182,17 @@ class OfferProcedures extends Procedures{
 			if($this->_db->error()){
 				$this->_db->rollback();
 				return null;
+			}else{
+				$sql = "UPDATE OFFER_REQUEST SET GIVEN_OFFER_NUM = GIVEN_OFFER_NUM + 1 WHERE ID = ?";
+				$this->_db->query($sql, array($request_id));
+				if($this->_db->error()){
+					$this->_db->rollback();
+					return null;
+				}else{
+					$this->_db->commit();
+					return $offer_id;
+				}
 			}
-			
-			$this->_db->commit();
-			return $offer_id;
 		}
 	}
 	/**
@@ -557,14 +537,21 @@ class OfferProcedures extends Procedures{
 		$sql = "UPDATE OFFER_REQUEST_COMPANY SET OFFER_ID = 0 WHERE REQUEST_ID = ? AND COMPANY_ID = ?";
 		$this->_db->query($sql, array($talep_no, $company_id));
 		if($this->_db->count() > 0){
-			$sql = "DELETE FROM OFFER_REQUEST WHERE ID = ?";
+			$sql = "DELETE FROM OFFER_RESPONSE WHERE ID = ?";
 			$this->_db->query($sql, array($offer_id));
 			if($this->_db->error()){
 				$this->_db->rollback();
 				return false;
 			}else{
-				$this->_db->commit();
-				return true;
+				$sql = "UPDATE OFFER_REQUEST SET GIVEN_OFFER_NUM = GIVEN_OFFER_NUM - 1 WHERE ID = ?";
+				$this->_db->query($sql, array($talep_no));
+				if($this->_db->error()){
+					$this->_db->rollback();
+					return false;
+				}else{
+					$this->_db->commit();
+					return true;
+				}
 			}
 		}else{
 			$this->_db->rollback();
