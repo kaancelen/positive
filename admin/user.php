@@ -18,15 +18,18 @@
 	$operation = null;
 	$user_id = null;
 	$selected_user = null;
+	$agent_relation = null;
 	$post_message = null;
 	$post_flag = null;
 	$userService = new UserService();
+	$agentService = new AgentService();
 	if(isset($_GET['operation'])){
 		$operation = Util::cleanInput(urlencode($_GET['operation']));
 	}
 	if(isset($_GET['user_id'])){
 		$user_id = Util::cleanInput(urlencode($_GET['user_id']));
 		$selected_user = $userService->getUser($user_id);
+		$agent_relation = $agentService->getAgentRelation($user_id);
 	}
 	
 	$allAgents = $userService->allTypeOfUsers(User::BRANCH);
@@ -41,14 +44,15 @@
 		$desc = Util::cleanInput($_POST['description']);
 		$operation = Util::cleanInput($_POST['operation']);
 		
-		$komisyon_rate = 0;
-		$master_agent = 0;
 		$allowed_comp = "0";
 		$change_agent = 0;
 		
 		if($role == User::BRANCH){
-			$komisyon_rate = Util::cleanInput($_POST['komisyon_rate']);
-			$master_agent = Util::cleanInput($_POST['master_agent']);
+			$komisyon = Util::cleanInput($_POST['komisyon']);
+			$ust_acente = Util::cleanInput($_POST['ust_acente']);
+			$ust_komisyon = Util::cleanInput($_POST['ust_komisyon']);
+			$bagli_acente = Util::cleanInput($_POST['bagli_acente']);
+			$bagli_komisyon = Util::cleanInput($_POST['bagli_komisyon']);
 			
 			if(isset($_POST['comp_0'])){
 				$allowed_comp = "0";
@@ -84,20 +88,23 @@
 		if($operation == 'add'){
 			$logger->write(ALogger::INFO, __FILE__, "user add operation to [".$username."] by [".$user[User::CODE]."]");
 			$password = $username;
-			$result = $userService->addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent);
+			$result = $userService->addUser($name, $username, $password, $role, $desc, $allowed_comp, $change_agent);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı ekleme işlemi başarısız, kullanıcı adı mevcut!";
-			}else if(!$result){
+			}else if($result == 0){
 				$post_flag = 0;
 				$post_message = "Kullanıcı ekleme işlemi başarısız";
 			}else{
+				if($role == User::BRANCH){
+					$agentService->upsertRelation($result, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon);
+				}
 				Session::flash(Session::FLASH, $username." kullanıcısı başarı ile eklendi.");
 				Util::redirect("/positive/admin/users.php");
 			}
 		}else if($operation == 'edit'){
 			$logger->write(ALogger::INFO, __FILE__, "user edit to operation to [".$selected_user[User::CODE]."] by [".$user[User::CODE]."]");
-			$result = $userService->updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent);
+			$result = $userService->updateUser($user_id, $name, $role, $desc, $allowed_comp, $change_agent);
 			if($result == null){
 				$post_flag = 0;
 				$post_message = "Kullanıcı düzenleme işlemi başarısız, kullanıcı adı mevcut!";
@@ -105,6 +112,9 @@
 				$post_flag = 0;
 				$post_message = "Kullanıcı [".$username."] düzenleme işlemi başarısız";
 			}else{
+				if($role == User::BRANCH){
+					$agentService->upsertRelation($user_id, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon);
+				}
 				$post_flag = 1;
 				$post_message = "Kullanıcı [".$username."] başarı ile düzenlendi.";
 				$selected_user = $userService->getUser($user_id);
@@ -169,22 +179,41 @@
 				<input type="checkbox" id="change_agent" name="change_agent">
 				Acenteleri değiştirebilsin
 			</div>
-	        <br>
-	        <div id="komisyon_div" class="input-group" style="visibility: hidden">
-				<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
-				<input class="form-control" id="komisyon_rate" name="komisyon_rate">
-			</div>
-		    <br>
-		    <div id="master_agent_div" class="input-group" style="visibility: hidden">
-				<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
-				<select id="master_agent" name="master_agent" class="form-control">
-					<option value="0">Yok</option>
-					<?php foreach ($allAgents as $agent){?>
-						<?php if($agent[User::ID] == $selected_user[User::ID]){ continue; }?>
-						<option value="<?php echo $agent[User::ID]?>"><?php echo $agent[User::NAME]?> - <?php echo $agent[User::CODE]?></option>
-					<?php }?>
-				</select>
-			</div>
+			<br>
+	        <div id="agent_div" style="visibility: hidden">
+		        <div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Komisyon %</span>
+					<input class="form-control" id="komisyon" name="komisyon" value="0">
+				</div>
+			    <div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
+					<select id="ust_acente" name="ust_acente" class="form-control">
+						<option value="0">Yok</option>
+						<?php foreach ($allAgents as $agent){?>
+							<?php if($agent[User::ID] == $selected_user[User::ID]){ continue; }?>
+							<option value="<?php echo $agent[User::ID]?>"><?php echo $agent[User::NAME]?> - <?php echo $agent[User::CODE]?></option>
+						<?php }?>
+					</select>
+				</div>
+		        <div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Üst Acente Komisyon %</span>
+					<input class="form-control" id="ust_komisyon" name="ust_komisyon" value="0">
+				</div>
+			    <div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Bağlı Acente</span>
+					<select id="bagli_acente" name="bagli_acente" class="form-control">
+						<option value="0">Yok</option>
+						<?php foreach ($allAgents as $agent){?>
+							<?php if($agent[User::ID] == $selected_user[User::ID]){ continue; }?>
+							<option value="<?php echo $agent[User::ID]?>"><?php echo $agent[User::NAME]?> - <?php echo $agent[User::CODE]?></option>
+						<?php }?>
+					</select>
+				</div>
+		        <div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Bağlı Komisyon %</span>
+					<input class="form-control" id="bagli_komisyon" name="bagli_komisyon" value="0">
+				</div>
+	        </div>
 		    <br>
 	        <input type="hidden" id="user_id" name="user_id">
 	        <input type="hidden" id="operation" name="operation">
@@ -217,16 +246,18 @@
 	}
 	if($selected_user[User::ROLE] == User::BRANCH){
 		echo 'document.getElementById("companies_div").style.visibility = "visible";';
-		echo 'document.getElementById("komisyon_div").style.visibility = "visible";';
-		echo 'document.getElementById("master_agent_div").style.visibility = "visible";';
+		echo 'document.getElementById("agent_div").style.visibility = "visible";';
 	}
 	echo '$("#operation").val("'.$operation.'");';
 	if(!is_null($selected_user)){
 		echo '$("#username").prop("readonly", true);';
 		echo 'fillUserForm('.json_encode($selected_user).');';
 		if($selected_user[User::ROLE] == User::BRANCH){
-			echo "$('#komisyon_rate').val(".$selected_user[User::KOMISYON_RATE].");";
-			echo "$('#master_agent').val(".$selected_user[User::MASTER_ID].");";
+			echo "$('#komisyon').val(".$agent_relation[AgentRelation::KOMISYON].");";
+			echo "$('#ust_acente').val(".$agent_relation[AgentRelation::UST_ACENTE].");";
+			echo "$('#ust_komisyon').val(".$agent_relation[AgentRelation::UST_KOMISYON].");";
+			echo "$('#bagli_acente').val(".$agent_relation[AgentRelation::BAGLI_ACENTE].");";
+			echo "$('#bagli_komisyon').val(".$agent_relation[AgentRelation::BAGLI_KOMISYON].");";
 			
 			$allowed_comps = explode(",", $selected_user[User::ALLOWED_COMP]);
 			foreach ($allowed_comps as $comp){
@@ -252,7 +283,11 @@
 		echo "$('#description').val('".$desc."');";
 		echo "$('#select_role').val(".$role.");";
 		if($selected_user[User::ROLE] == User::BRANCH){
-			echo "$('#komisyon_rate').val(".$komisyon_rate.");";
+			echo "$('#komisyon').val(".$komisyon.");";
+			echo "$('#ust_acente').val(".$ust_acente.");";
+			echo "$('#ust_komisyon').val(".$ust_komisyon.");";
+			echo "$('#bagli_acente').val(".$bagli_acente.");";
+			echo "$('#bagli_komisyon').val(".$bagli_komisyon.");";
 		}
 	}
 ?>

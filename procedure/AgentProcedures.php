@@ -163,6 +163,50 @@ class AgentProcedures extends Procedures{
 		}
 		
 	}
+
+	public function existRelation($acente_id){
+		$sql = "SELECT COUNT(*) RELATION_COUNT FROM AGENT_RELATION WHERE ACENTE = ?";
+		$this->_db->query($sql, array($acente_id));
+		$result = $this->_db->first();
+		
+		return ($result->RELATION_COUNT > 0);
+	}
+	
+	public function insertRelation($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon){
+		$this->_db->beginTransaction();
+		
+		$sql = "INSERT INTO AGENT_RELATION(ACENTE, KOMISYON, UST_ACENTE, UST_KOMISYON, BAGLI_ACENTE, BAGLI_KOMISYON) VALUES(?,?,?,?,?,?)";
+		$this->_db->query($sql, array($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon));
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return false;
+		}else{
+			$this->_db->commit();
+			return true;
+		}
+	}
+	
+	public function updateRelation($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon){
+		$this->_db->beginTransaction();
+		
+		$sql = "UPDATE AGENT_RELATION SET KOMISYON = ?, UST_ACENTE = ?, UST_KOMISYON = ?, BAGLI_ACENTE = ?, BAGLI_KOMISYON = ? WHERE ACENTE = ?";
+		$this->_db->query($sql, array($komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon, $acente));
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return false;
+		}else{
+			$this->_db->commit();
+			return true;
+		}
+	}
+	
+	public function getRelation($acente_id){
+		$sql = "SELECT * FROM AGENT_RELATION WHERE ACENTE = ?";
+		$this->_db->query($sql, array($acente_id));
+		$result = $this->_db->first();
+		
+		return json_decode(json_encode($result), true);
+	}
 }
 
 ?>

@@ -68,7 +68,16 @@ class UserProcedures extends Procedures{
 	public function removeUser($user_id){
 		$this->_db->beginTransaction();
 		
+		$sql = "DELETE FROM AGENT_DETAIL WHERE USER_ID = ?";
+		$this->_db->query($sql, array($user_id));
+		
+		$sql = "DELETE FROM AGENT_RELATION WHERE ACENTE = ?";
+		$this->_db->query($sql, array($user_id));
+		
 		$sql = "DELETE FROM USER_SESSION WHERE ID = ?";
+		$this->_db->query($sql, array($user_id));
+		
+		$sql = "DELETE FROM USER_OFFER_ENTER WHERE USER_ID = ?";
 		$this->_db->query($sql, array($user_id));
 		
 		$sql = "DELETE FROM USER WHERE ID = ?";
@@ -85,30 +94,30 @@ class UserProcedures extends Procedures{
 		}
 	}
 	
-	public function addUser($name, $username, $password, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent){
-		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION, KOMISYON_RATE, MASTER_ID, ALLOWED_COMP, CHANGE_AGENT) VALUES(?,?,?,?,?,?,?,?,?,?)";
+	public function addUser($name, $username, $password, $role, $desc, $allowed_comp, $change_agent){
+		$sql = "INSERT INTO USER(NAME, CODE, ROLE, HASH, SALT, DESCRIPTION, ALLOWED_COMP, CHANGE_AGENT) VALUES(?,?,?,?,?,?,?,?)";
 		$salt = Hash::unique();
 		$hash = Hash::make($password, $salt);
-		$params = array($name, $username, $role, $hash, $salt, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent);
+		$params = array($name, $username, $role, $hash, $salt, $desc, $allowed_comp, $change_agent);
 		
 		$this->_db->beginTransaction();
 		$this->_db->query($sql, $params);
-		$result = $this->_db->all();
+		$user_id = $this->_db->lastInsertId();
 		
-		if(is_null($result)){
+		if($this->_db->error()){
 			$this->_db->rollback();
-			return false;
+			return 0;
 		}else{
 			$this->_db->commit();
-			return true;
+			return $user_id;
 		}
 	}
 	
-	public function updateUser($user_id, $name, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent){
-		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ?, KOMISYON_RATE = ?, MASTER_ID = ?, ALLOWED_COMP = ?, CHANGE_AGENT = ? WHERE ID = ?";
+	public function updateUser($user_id, $name, $role, $desc, $allowed_comp, $change_agent){
+		$sql = "UPDATE USER SET NAME = ?, ROLE = ?, DESCRIPTION = ?, ALLOWED_COMP = ?, CHANGE_AGENT = ? WHERE ID = ?";
 		
 		$this->_db->beginTransaction();
-		$this->_db->query($sql, array($name, $role, $desc, $komisyon_rate, $master_agent, $allowed_comp, $change_agent, $user_id));
+		$this->_db->query($sql, array($name, $role, $desc, $allowed_comp, $change_agent, $user_id));
 		$result = $this->_db->all();
 		
 		if(is_null($result)){

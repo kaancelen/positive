@@ -29,8 +29,10 @@ include_once(__DIR__.'/../head.php');
 	}
 	
 	$offerResponses = $offerService->getOffers($offerRequestId);
+	$agentService = new AgentService();
+	$agentRelation = $agentService->getAgentRelation($offerRequest[OfferRequest::USER_ID]);
 	$userService = new UserService();
-	$tempUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);
+	$agentUser = $userService->getUser($offerRequest[OfferRequest::USER_ID]);
 	
 	$makePolicyPermission = true;
 	$alertText = "";
@@ -91,7 +93,7 @@ include_once(__DIR__.'/../head.php');
 			<tr>
 				<td><?php echo $offerRequest[OfferRequest::ID];?></td>
 				<td><?php echo $offerRequest[OfferRequest::POLICY_TYPE];?></td>
-				<td><?php echo $tempUser[User::NAME];?></td>
+				<td><?php echo $agentUser[User::NAME];?></td>
 				<td><?php echo DateUtil::format($offerRequest[OfferRequest::CREATION_DATE]);?></td>
 				<?php if($offerRequest[OfferRequest::POLICY_TYPE] != PolicyType::DIGER){ ?>
 					<td><?php echo $offerRequest[OfferRequest::PLAKA];?></td>
@@ -192,7 +194,7 @@ include_once(__DIR__.'/../head.php');
 			$('#komisyon_<?php echo $company[Company::ID]; ?>').keyup(function() {
 				var komisyon = $(this).val();
 				komisyon = komisyon.replace('.', '').replace(',', '.');
-				var prod_komisyon = (komisyon * <?php echo $tempUser[User::KOMISYON_RATE]; ?>) / 100;
+				var prod_komisyon = (komisyon * <?php echo $agentRelation[AgentRelation::KOMISYON]; ?>) / 100;
 				$('#prod_komisyon_<?php echo $company[Company::ID]; ?>').val(prod_komisyon);
 			});
 		<?php }?>

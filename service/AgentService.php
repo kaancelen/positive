@@ -30,6 +30,18 @@ class AgentService implements Service{
 	public function changePolicyAgent($request_id, $offer_id, $new_user_id){
 		return $this->_agentProcedures->changePolicyAgent($request_id, $offer_id, $new_user_id);
 	}
+
+	public function upsertRelation($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon){
+		if($this->_agentProcedures->existRelation($acente)){
+			return $this->_agentProcedures->updateRelation($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon);
+		}else{
+			return $this->_agentProcedures->insertRelation($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon);
+		}
+	}
+	
+	public function getAgentRelation($acente_id){
+		return $this->_agentProcedures->getRelation($acente_id);
+	}
 }
 
 ?>

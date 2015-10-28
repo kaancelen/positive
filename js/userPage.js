@@ -104,14 +104,12 @@ function showPostMessage(post_flag, post_message){
 function onChangeUserRole(){
 	document.getElementById("companies_div").style.visibility = "hidden";
 	document.getElementById("change_agent_div").style.visibility = "hidden";
-	document.getElementById("komisyon_div").style.visibility = "hidden";
-	document.getElementById("master_agent_div").style.visibility = "hidden";
-	
+	document.getElementById("agent_div").style.visibility = "hidden";
 	
 	var value = document.getElementById("select_role").value;
 	if(value == 3){
-		document.getElementById("komisyon_div").style.visibility = "visible";
-		document.getElementById("master_agent_div").style.visibility = "visible";
+		document.getElementById("companies_div").style.visibility = "visible";
+		document.getElementById("agent_div").style.visibility = "visible";
 	}if(value == 2){
 		document.getElementById("companies_div").style.visibility = "visible";
 		document.getElementById("change_agent_div").style.visibility = "visible";
