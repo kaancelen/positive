@@ -138,20 +138,26 @@ class AgentProcedures extends Procedures{
 			$this->_db->rollback();
 			return false;
 		}else{
-			$sql = "UPDATE OFFER_RESPONSE SET PROD_KOMISYON = (KOMISYON*(SELECT KOMISYON FROM AGENT_RELATION WHERE ACENTE = ?))/100";
+			$sql = "UPDATE OFFER_RESPONSE SET PROD_KOMISYON = (KOMISYON*(SELECT KOMISYON FROM AGENT_RELATION WHERE ACENTE = ?))/100, ";
+			$sql .= "UST_KOMISYON = (KOMISYON*(SELECT UST_KOMISYON FROM AGENT_RELATION WHERE ACENTE = ?))/100, ";
+			$sql .= "BAGLI_KOMISYON = (KOMISYON*(SELECT BAGLI_KOMISYON FROM AGENT_RELATION WHERE ACENTE = ?))/100 ";
 			$sql .= " WHERE ID = ?";
-			$this->_db->query($sql, array($new_user_id, $offer_id));
+			$this->_db->query($sql, array($new_user_id, $new_user_id, $new_user_id, $offer_id));
 			if($this->_db->error()){
 				$this->_db->rollback();
 				return false;
 			}else{
 				$sql = "UPDATE RECON SET 
 						PRODUKTOR = (SELECT NAME FROM USER WHERE ID = ?), 
-						PRODUKTOR_ID = ?, 
-						PROD_KOMISYON = (SELECT PROD_KOMISYON FROM OFFER_RESPONSE WHERE ID = ?)
+						PRODUKTOR_ID = ?,
+						PROD_KOMISYON = (SELECT PROD_KOMISYON FROM OFFER_RESPONSE WHERE ID = ?),
+						UST_PRODUKTOR = (SELECT NAME FROM USER WHERE ID = (SELECT UST_ACENTE FROM AGENT_RELATION WHERE ACENTE = ?)),
+						BAGLI = (SELECT NAME FROM USER WHERE ID = (SELECT BAGLI_ACENTE FROM AGENT_RELATION WHERE ACENTE = ?)),
+						UST_PRODUKTOR_KOMISYON = (SELECT UST_KOMISYON FROM OFFER_RESPONSE WHERE ID = ?),
+						BAGLI_KOMISYON = (SELECT BAGLI_KOMISYON FROM OFFER_RESPONSE WHERE ID = ?)
 						WHERE TAKIP_NO = (SELECT POLICY_ID FROM OFFER_REQUEST_COMPANY 
 											WHERE REQUEST_ID = ? AND OFFER_ID = ?)";
-				$this->_db->query($sql, array($new_user_id, $new_user_id, $offer_id, $request_id, $offer_id));
+				$this->_db->query($sql, array($new_user_id, $new_user_id, $offer_id, $new_user_id, $new_user_id, $offer_id, $offer_id, $request_id, $offer_id));
 				if($this->_db->error()){
 					$this->_db->rollback();
 					return false;

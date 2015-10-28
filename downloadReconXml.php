@@ -46,13 +46,15 @@
 		if($user[User::ROLE] != User::BRANCH){
 			$track->addChild('BÖLGE', $recon[Recon::BOLGE]);
 			$track->addChild('BAĞLI', $recon[Recon::BAGLI]);
+			$track->addChild('BAĞLI_KOMİSYON', $recon[Recon::BAGLI_KOMISYON]);
+			$track->addChild('ÜST_PRODÜKTÖR', $recon[Recon::UST_PRODUKTOR]);
+			$track->addChild('ÜST_PRODÜKTÖR_KOMİSYON', $recon[Recon::UST_PRODUKTOR_KOMISYON]);
 			$track->addChild('TAHSİLAT_DURUMU', $recon[Recon::TAHSILAT_DURUMU]);
 			$track->addChild('ŞİRKET_TAHSİLAT_DURUMU', $recon[Recon::SIRKET_TAHSILAT_DURUMU]);
 			$track->addChild('AÇIKLAMA', $recon[Recon::ACIKLAMA]);
 			$track->addChild('HERO_KOMİSYON', $recon[Recon::HERO_KOMISYON]);
 			$track->addChild('BÖLGE_KOMİSYON', $recon[Recon::BOLGE_KOMISYON]);
 			$track->addChild('ŞUBE_KOMİSYON', $recon[Recon::SUBE_KOMISYON]);
-			$track->addChild('BAĞLI_KOMİSYON', $recon[Recon::BAGLI_KOMISYON]);
 			$track->addChild('MÜŞTERİYE_İADE', $recon[Recon::MUSTERIYE_IADE]);
 			$track->addChild('MERKEZ', $recon[Recon::MERKEZ]);
 		}
