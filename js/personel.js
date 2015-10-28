@@ -13,6 +13,8 @@ function giveOffer(talepNo, companyId, companyName, user_id){
 	var prim = $('#prim_'+companyId).val();
 	var komisyon = $('#komisyon_'+companyId).val();
 	var prod_komisyon = $('#prod_komisyon_'+companyId).val();
+	var ust_komisyon = $('#ust_komisyon_'+companyId).val();
+	var bagli_komisyon = $('#bagli_komisyon_'+companyId).val();
 	
 	if(prim == null || prim.length == 0){
 		alert("Lütfen prim bilgisini giriniz!");
@@ -37,6 +39,8 @@ function giveOffer(talepNo, companyId, companyName, user_id){
 	data.append('prim', prim);
 	data.append('komisyon', komisyon);
 	data.append('prod_komisyon', prod_komisyon);
+	data.append('ust_komisyon', ust_komisyon);
+	data.append('bagli_komisyon', bagli_komisyon);
 	
 	//make ajax request
     $.ajax({

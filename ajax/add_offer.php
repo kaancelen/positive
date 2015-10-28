@@ -21,6 +21,8 @@ if(!empty($_POST)){
 	$prim = Util::cleanInput($_POST['prim']);
 	$komisyon = Util::cleanInput($_POST['komisyon']);
 	$prod_komisyon = Util::cleanInput($_POST['prod_komisyon']);
+	$ust_komisyon = Util::cleanInput($_POST['ust_komisyon']);
+	$bagli_komisyon = Util::cleanInput($_POST['bagli_komisyon']);
 	
 	$prim = str_replace(".", "", $prim);
 	$prim = str_replace(",", ".", $prim);
@@ -31,7 +33,7 @@ if(!empty($_POST)){
 	$komisyon = floatval($komisyon);
 	
 	$offerService = new OfferService();
-	$result = $offerService->addOffer($user_id, $talep_no, $company_id, $prim, $komisyon, $prod_komisyon);
+	$result = $offerService->addOffer($user_id, $talep_no, $company_id, $prim, $komisyon, $prod_komisyon, $ust_komisyon, $bagli_komisyon);
 		
 	if(is_null($result)){
 		echo json_encode(false);

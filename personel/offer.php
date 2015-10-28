@@ -137,6 +137,7 @@ include_once(__DIR__.'/../head.php');
 						<td><b>Komisyon</b></td>
 						<td><b>Prod Komisyonu</b></td>
 						<td><b>Teklif ver</b></td>
+						<td style="display: none;"></td>
 					</tr>
 					<tr>
 					</tr>
@@ -176,6 +177,10 @@ include_once(__DIR__.'/../head.php');
 							</button>
 							<?php } ?>
 						</td>
+						<td style="display: none;">
+							<input type="hidden" id="ust_komisyon_<?php echo $company[Company::ID]; ?>" name="ust_komisyon_<?php echo $company[Company::ID]; ?>">
+							<input type="hidden" id="bagli_komisyon_<?php echo $company[Company::ID]; ?>" name="bagli_komisyon_<?php echo $company[Company::ID]; ?>">
+						</td>
 					</tr>
 				<?php } ?>
 				</tbody>
@@ -196,6 +201,12 @@ include_once(__DIR__.'/../head.php');
 				komisyon = komisyon.replace('.', '').replace(',', '.');
 				var prod_komisyon = (komisyon * <?php echo $agentRelation[AgentRelation::KOMISYON]; ?>) / 100;
 				$('#prod_komisyon_<?php echo $company[Company::ID]; ?>').val(prod_komisyon);
+
+				var ust_komisyon = (komisyon * <?php echo $agentRelation[AgentRelation::UST_KOMISYON]; ?>) / 100;
+				$('#ust_komisyon_<?php echo $company[Company::ID]; ?>').val(ust_komisyon);
+
+				var bagli_komisyon = (komisyon * <?php echo $agentRelation[AgentRelation::BAGLI_KOMISYON]; ?>) / 100;
+				$('#bagli_komisyon_<?php echo $company[Company::ID]; ?>').val(bagli_komisyon);
 			});
 		<?php }?>
 		<?php foreach($offerResponses as $offerResponse){?>

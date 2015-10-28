@@ -167,11 +167,11 @@ class OfferProcedures extends Procedures{
 	 * @param unknown $komisyon
 	 * @return NULL|number
 	 */
-	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon, $prod_komisyon){
+	public function addOffer($user_id, $request_id, $company_id, $prim, $komisyon, $prod_komisyon, $ust_komisyon, $bagli_komisyon){
 		$this->_db->beginTransaction();
 		
-		$sql = "INSERT INTO OFFER_RESPONSE(USER_ID, PRIM, KOMISYON, PROD_KOMISYON) VALUES(?,?,?,?)";
-		$this->_db->query($sql, array($user_id, $prim, $komisyon, $prod_komisyon));
+		$sql = "INSERT INTO OFFER_RESPONSE(USER_ID, PRIM, KOMISYON, PROD_KOMISYON, UST_KOMISYON, BAGLI_KOMISYON) VALUES(?,?,?,?,?,?)";
+		$this->_db->query($sql, array($user_id, $prim, $komisyon, $prod_komisyon, $ust_komisyon, $bagli_komisyon));
 		if($this->_db->error()){
 			$this->_db->rollback();
 			return null;

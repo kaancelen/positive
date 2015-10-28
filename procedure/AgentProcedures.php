@@ -138,7 +138,7 @@ class AgentProcedures extends Procedures{
 			$this->_db->rollback();
 			return false;
 		}else{
-			$sql = "UPDATE OFFER_RESPONSE SET PROD_KOMISYON = (KOMISYON*(SELECT KOMISYON_RATE FROM USER WHERE ID = ?))/100";
+			$sql = "UPDATE OFFER_RESPONSE SET PROD_KOMISYON = (KOMISYON*(SELECT KOMISYON FROM AGENT_RELATION WHERE ACENTE = ?))/100";
 			$sql .= " WHERE ID = ?";
 			$this->_db->query($sql, array($new_user_id, $offer_id));
 			if($this->_db->error()){
