@@ -63,9 +63,9 @@ class ReconService implements Service{
 			}
 		}
 		if($user_role == User::FINANCE || $user_role == User::ADMIN){
-			if(!empty($recon[Recon::BOLGE]) && !empty($recon[Recon::BAGLI]) &&
-			   !empty($recon[Recon::TAHSILAT_DURUMU]) && !empty($recon[Recon::HERO_KOMISYON]) &&
-			   !empty($recon[Recon::BOLGE_KOMISYON]) && $recon[Recon::SUBE_KOMISYON] != 0 &&
+			if(!empty($recon[Recon::BOLGE]) && !empty($recon[Recon::TAHSILAT_DURUMU]) && 
+			   !empty($recon[Recon::HERO_KOMISYON]) && !empty($recon[Recon::UST_PRODUKTOR_KOMISYON]) &&
+			   !empty($recon[Recon::BOLGE_KOMISYON]) && !empty($recon[Recon::SUBE_KOMISYON]) &&
 			   !empty($recon[Recon::BAGLI_KOMISYON]) && !empty($recon[Recon::MUSTERIYE_IADE]) &&
 			   !empty($recon[Recon::MERKEZ])){
 				$class = "row-offer-completed";

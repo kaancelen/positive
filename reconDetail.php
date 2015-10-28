@@ -163,8 +163,13 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Bağlı</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="BAGLI" name="BAGLI"
+						<input type="text" readonly="readonly" class="form-control" aria-describedby="basic-addon1" id="BAGLI" name="BAGLI"
 						value="<?php echo $reconDetail[Recon::BAGLI];?>">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Üst Prodüktör</span>
+						<input type="text" readonly="readonly" class="form-control" aria-describedby="basic-addon1" id="UST_PRODUKTOR" name="UST_PRODUKTOR"
+						value="<?php echo $reconDetail[Recon::UST_PRODUKTOR];?>">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Tahsilat Durumu</span>
@@ -184,24 +189,29 @@
 				</div>
 				<div class="result-column">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Hero Komisyon</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="HERO_KOMISYON" name="HERO_KOMISYON"
-						value="<?php echo $reconDetail[Recon::HERO_KOMISYON];?>">
-					</div>
-					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Bölge Komisyon</span>
 						<input type="text" class="form-control" aria-describedby="basic-addon1" id="BOLGE_KOMISYON" name="BOLGE_KOMISYON"
 						value="<?php echo $reconDetail[Recon::BOLGE_KOMISYON];?>">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Şube Komisyon</span>
-						<input type="text" class="form-control" aria-describedby="basic-addon1" id="SUBE_KOMISYON" name="SUBE_KOMISYON"
-						value="<?php echo $reconDetail[Recon::SUBE_KOMISYON];?>">
-					</div>
-					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Bağlı Komisyon</span>
 						<input type="text" class="form-control" aria-describedby="basic-addon1" id="BAGLI_KOMISYON" name="BAGLI_KOMISYON"
 						value="<?php echo $reconDetail[Recon::BAGLI_KOMISYON];?>">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Üst Prodüktör Komisyon</span>
+						<input type="text" class="form-control" aria-describedby="basic-addon1" id="UST_PRODUKTOR_KOMISYON" name="UST_PRODUKTOR_KOMISYON"
+						value="<?php echo $reconDetail[Recon::UST_PRODUKTOR_KOMISYON];?>">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Hero Komisyon</span>
+						<input type="text" class="form-control" aria-describedby="basic-addon1" id="HERO_KOMISYON" name="HERO_KOMISYON"
+						value="<?php echo $reconDetail[Recon::HERO_KOMISYON];?>">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Şube Komisyon</span>
+						<input type="text" class="form-control" aria-describedby="basic-addon1" id="SUBE_KOMISYON" name="SUBE_KOMISYON"
+						value="<?php echo $reconDetail[Recon::SUBE_KOMISYON];?>">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Müşteriye İade</span>
@@ -226,6 +236,7 @@
 		$('#NET').mask('000.000.000.000.000,00', {reverse: true});
 		$('#HERO_KOMISYON').mask('000.000.000.000.000,00', {reverse: true});
 		$('#BOLGE_KOMISYON').mask('000.000.000.000.000,00', {reverse: true});
+		$('#UST_PRODUKTOR_KOMISYON').mask('000.000.000.000.000,00', {reverse: true});
 		$('#SUBE_KOMISYON').mask('000.000.000.000.000,00', {reverse: true});
 		$('#BAGLI_KOMISYON').mask('000.000.000.000.000,00', {reverse: true});
 		$('#MUSTERIYE_IADE').mask('000.000.000.000.000,00', {reverse: true});

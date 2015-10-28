@@ -73,7 +73,11 @@ class ReconProcedures extends Procedures{
 				  ofre.KOMISYON KOMISYON, 
 				  ofre.PROD_KOMISYON PROD_KOMISYON,
 				  co.IC_DIS KAYNAK,
-				  co.URETIM_KANALI
+				  co.URETIM_KANALI,
+				  ofre.UST_KOMISYON UST_KOMISYON,
+				  ofre.BAGLI_KOMISYON BAGLI_KOMISYON,
+				  (SELECT NAME FROM USER WHERE ID = (SELECT UST_ACENTE FROM AGENT_RELATION WHERE ACENTE = ofr.USER_ID)) UST_ACENTE,
+				  (SELECT NAME FROM USER WHERE ID = (SELECT BAGLI_ACENTE FROM AGENT_RELATION WHERE ACENTE = ofr.USER_ID)) BAGLI_ACENTE
 				FROM 
 				  OFFER_REQUEST ofr, 
 				  OFFER_REQUEST_COMPANY orc, 
@@ -161,9 +165,10 @@ class ReconProcedures extends Procedures{
 	}
 	
 	public function insertRecon($reconPolicy){
-		$sql = "INSERT INTO RECON(URETIM_IPTAL,TAKIP_NO,TANZIM_TARIHI,POLICE_NO,TCKN,VERGI_NO,EK_BILGI,PRODUKTOR, ";
-		$sql .= "PRODUKTOR_ID,TEKNIKCI_ID,TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,BRUT,KOMISYON,PROD_KOMISYON,PARA_BIRIMI, ";
-		$sql .= "URETIM_KANALI,MUSTERI_TIPI,KAYNAK,TAHSILAT_DURUMU)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$sql = "INSERT INTO RECON(URETIM_IPTAL,TAKIP_NO,TANZIM_TARIHI,KAYNAK,URETIM_KANALI,MUSTERI_TIPI,POLICE_NO, ";
+		$sql .= "TCKN,VERGI_NO,EK_BILGI,BAGLI,PRODUKTOR,PRODUKTOR_ID,UST_PRODUKTOR,UST_PRODUKTOR_KOMISYON,TEKNIKCI_ID, ";
+		$sql .= "TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,PARA_BIRIMI,BRUT,KOMISYON,TAHSILAT_DURUMU,PROD_KOMISYON,BAGLI_KOMISYON) ";
+		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		$uretim = "ÜRETİM";
 		$kapali = "KAPALI";
@@ -179,25 +184,29 @@ class ReconProcedures extends Procedures{
 				$uretim,
 				$reconPolicy[ReconPolicy::POLICY_ID],
 				$reconPolicy[ReconPolicy::POLICY_COMPLETE_DATE],
+				$reconPolicy[ReconPolicy::KAYNAK],
+				$reconPolicy[ReconPolicy::URETIM_KANALI],
+				$musteriTipi,
 				$reconPolicy[ReconPolicy::POLICY_NUMBER],
 				$reconPolicy[ReconPolicy::TCKN],
 				$reconPolicy[ReconPolicy::VERGI],
 				$reconPolicy[ReconPolicy::EK_BILGI],
+				$reconPolicy[ReconPolicy::BAGLI_ACENTE],
 				$reconPolicy[ReconPolicy::BRANCH_NAME],
 				$reconPolicy[ReconPolicy::BRANCH_ID],
+				$reconPolicy[ReconPolicy::UST_ACENTE],
+				$reconPolicy[ReconPolicy::UST_KOMISYON],
 				$reconPolicy[ReconPolicy::PERSONEL_ID],
 				$reconPolicy[ReconPolicy::PERSONEL_ID_POLICY],
 				$reconPolicy[ReconPolicy::COMPANY_NAME],
 				$reconPolicy[ReconPolicy::COMPANY_ID],
 				$reconPolicy[ReconPolicy::POLICY_TYPE],
+				'TL',
 				$reconPolicy[ReconPolicy::PRIM],
 				$reconPolicy[ReconPolicy::KOMISYON],
+				$kapali,
 				$reconPolicy[ReconPolicy::PROD_KOMISYON],
-				'TL',
-				$reconPolicy[ReconPolicy::URETIM_KANALI],
-				$musteriTipi,
-				$reconPolicy[ReconPolicy::KAYNAK],
-				$kapali
+				$reconPolicy[ReconPolicy::BAGLI_KOMISYON]
 		);
 		
 		$this->_db->query($sql, $params);
