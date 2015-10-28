@@ -429,7 +429,12 @@ class OfferProcedures extends Procedures{
 		array_push($paramArray, $year);
 		
 		if(!is_null($user_id)){
-			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ? OR po.USER_ID = ?) ";
+			$sql .= "AND (ofr.USER_ID = ? OR ";	//kendisi acente ise
+			$sql .= "ofr.USER_ID IN (SELECT ACENTE FROM AGENT_RELATION WHERE UST_ACENTE = ?) OR ";//üst acente ise
+			$sql .= "ofr.USER_ID IN (SELECT ACENTE FROM AGENT_RELATION WHERE BAGLI_ACENTE = ?) OR ";//bağlı ise
+			$sql .= "ofr.USER_ID IN (SELECT UST_ACENTE FROM AGENT_RELATION WHERE BAGLI_ACENTE = ?) )";//bağlı ise
+			
+			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
@@ -482,8 +487,14 @@ class OfferProcedures extends Procedures{
 		$sql .= "CREDIT_CARDS cc, POLICY po WHERE ofr.ID = orc.REQUEST_ID AND ofre.ID = orc.OFFER_ID AND ";
 		$sql .= "co.ID = orc.COMPANY_ID AND cc.ID = orc.CARD_ID AND po.ID = orc.POLICY_ID AND ";
 		$sql .= "orc.POLICY_ID = ? ";
+		
 		if(!is_null($user_id)){
-			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ? OR po.USER_ID = ?)";
+			$sql .= "AND (ofr.USER_ID = ? OR ";	//kendisi acente ise
+			$sql .= "ofr.USER_ID IN (SELECT ACENTE FROM AGENT_RELATION WHERE UST_ACENTE = ?) OR ";//üst acente ise
+			$sql .= "ofr.USER_ID IN (SELECT ACENTE FROM AGENT_RELATION WHERE BAGLI_ACENTE = ?) OR ";//bağlı ise
+			$sql .= "ofr.USER_ID IN (SELECT UST_ACENTE FROM AGENT_RELATION WHERE BAGLI_ACENTE = ?) )";//bağlı ise
+				
+			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
