@@ -41,6 +41,10 @@ if(!empty($_POST)){
 	$musteriyeIade = str_replace(".", "", $musteriyeIade);
 	$musteriyeIade = str_replace(",", ".", $musteriyeIade);
 	$musteriyeIade = floatval($musteriyeIade);
+	$prodKomisyon = Util::cleanInput($_POST['PROD_KOMISYON']);
+	$prodKomisyon = str_replace(".", "", $prodKomisyon);
+	$prodKomisyon = str_replace(",", ".", $prodKomisyon);
+	$prodKomisyon = floatval($prodKomisyon);
 	$merkez = Util::cleanInput($_POST['MERKEZ']);
 	$merkez = str_replace(".", "", $merkez);
 	$merkez = str_replace(",", ".", $merkez);
@@ -48,6 +52,8 @@ if(!empty($_POST)){
 	
 	$recon_update_params = array(
 			'BOLGE' => Util::cleanInput($_POST['BOLGE']),
+			'BAGLI' => Util::cleanInput($_POST['BAGLI']),
+			'UST_PRODUKTOR' => Util::cleanInput($_POST['UST_PRODUKTOR']),
 			'TAHSILAT_DURUMU' => Util::cleanInput($_POST['TAHSILAT_DURUMU']),
 			'SIRKET_TAHSILAT_DURUMU' => Util::cleanInput($_POST['SIRKET_TAHSILAT_DURUMU']),
 			'ACIKLAMA' => Util::cleanInput($_POST['ACIKLAMA']),
@@ -57,6 +63,7 @@ if(!empty($_POST)){
 			'BAGLI_KOMISYON' => $bagliKomisyon,
 			'UST_PRODUKTOR_KOMISYON' => $ustProduktorKomisyon,
 			'MUSTERIYE_IADE' => $musteriyeIade,
+			'PROD_KOMISYON' => $prodKomisyon,
 			'MERKEZ' => $merkez
 	);
 	

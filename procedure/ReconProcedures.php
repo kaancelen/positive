@@ -167,8 +167,8 @@ class ReconProcedures extends Procedures{
 	public function insertRecon($reconPolicy){
 		$sql = "INSERT INTO RECON(URETIM_IPTAL,TAKIP_NO,TANZIM_TARIHI,KAYNAK,URETIM_KANALI,MUSTERI_TIPI,POLICE_NO, ";
 		$sql .= "TCKN,VERGI_NO,EK_BILGI,BAGLI,PRODUKTOR,PRODUKTOR_ID,UST_PRODUKTOR,UST_PRODUKTOR_KOMISYON,TEKNIKCI_ID, ";
-		$sql .= "TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,PARA_BIRIMI,BRUT,KOMISYON,TAHSILAT_DURUMU,PROD_KOMISYON,BAGLI_KOMISYON) ";
-		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$sql .= "TEKNIKCI_ID_POLICY,SIRKET,SIRKET_ID,POLICE_TURU,PARA_BIRIMI,BRUT,KOMISYON,TAHSILAT_DURUMU,PROD_KOMISYON,BAGLI_KOMISYON,MERKEZ) ";
+		$sql .= "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		$uretim = "ÜRETİM";
 		$kapali = "KAPALI";
@@ -179,6 +179,10 @@ class ReconProcedures extends Procedures{
 		}else{
 			$musteriTipi = "";
 		}
+		$merkez = $reconPolicy[ReconPolicy::KOMISYON] - 
+							($reconPolicy[ReconPolicy::PROD_KOMISYON] + 
+							 $reconPolicy[ReconPolicy::UST_KOMISYON] + 
+							 $reconPolicy[ReconPolicy::BAGLI_KOMISYON]);
 		
 		$params = array(
 				$uretim,
@@ -206,7 +210,8 @@ class ReconProcedures extends Procedures{
 				$reconPolicy[ReconPolicy::KOMISYON],
 				$kapali,
 				$reconPolicy[ReconPolicy::PROD_KOMISYON],
-				$reconPolicy[ReconPolicy::BAGLI_KOMISYON]
+				$reconPolicy[ReconPolicy::BAGLI_KOMISYON],
+				$merkez
 		);
 		
 		$this->_db->query($sql, $params);

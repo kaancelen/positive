@@ -55,19 +55,19 @@ class ReconService implements Service{
 	public function isReconCompleted($user_role, $recon){
 		$class = "";
 		if($user_role == User::BRANCH){
-			if(!empty($recon[Recon::YENI_TECDIT]) &&
-			   !empty($recon[Recon::MUSTERI_TIPI]) && !empty($recon[Recon::MUSTERI_ADI]) &&
-			   !empty($recon[Recon::BASLANGIC_TARIHI]) && !empty($recon[Recon::BITIS_TARIHI]) &&
+			if(!empty($recon[Recon::MUSTERI_TIPI]) && !empty($recon[Recon::YENI_TECDIT]) &&
+			   !empty($recon[Recon::MUSTERI_ADI]) && !empty($recon[Recon::BASLANGIC_TARIHI]) && 
+			   !empty($recon[Recon::BITIS_TARIHI]) && !empty($recon[Recon::POLICE_TURU]) &&
 			   !empty($recon[Recon::PARA_BIRIMI]) && !empty($recon[Recon::NET])){
 				$class = "row-offer-completed";
 			}
 		}
 		if($user_role == User::FINANCE || $user_role == User::ADMIN){
 			if(!empty($recon[Recon::BOLGE]) && !empty($recon[Recon::TAHSILAT_DURUMU]) && 
-			   !empty($recon[Recon::HERO_KOMISYON]) && !empty($recon[Recon::UST_PRODUKTOR_KOMISYON]) &&
-			   !empty($recon[Recon::BOLGE_KOMISYON]) && !empty($recon[Recon::SUBE_KOMISYON]) &&
-			   !empty($recon[Recon::BAGLI_KOMISYON]) && !empty($recon[Recon::MUSTERIYE_IADE]) &&
-			   !empty($recon[Recon::MERKEZ])){
+			   !empty($recon[Recon::HERO_KOMISYON]) && !empty($recon[Recon::BOLGE_KOMISYON]) &&
+			   !empty($recon[Recon::SUBE_KOMISYON]) && !empty($recon[Recon::BAGLI_KOMISYON]) &&
+			   !empty($recon[Recon::UST_PRODUKTOR_KOMISYON]) && !empty($recon[Recon::MUSTERIYE_IADE]) &&
+			   !empty($recon[Recon::PROD_KOMISYON]) && !empty($recon[Recon::MERKEZ])){
 				$class = "row-offer-completed";
 			}
 		}

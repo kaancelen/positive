@@ -1,15 +1,21 @@
 function validateBranchRecon(takipNo){
+	var musteriTipi = $('#MUSTERI_TIPI').val();
 	var yeniTecdit = $('#YENI_TECDIT').val();
 	var zeyilNo = $('#ZEYIL_NO').val();
-	var musteriTipi = $('#MUSTERI_TIPI').val();
 	var musteriAdi = $('#MUSTERI_ADI').val();
 	var baslangicTarihi = $('#BASLANGIC_TARIHI').val();
 	var bitisTarihi = $('#BITIS_TARIHI').val();
+	var policeTuru = $('#POLICE_TURU').val();
 	var paraBirimi = $('#PARA_BIRIMI').val();
 	var net = $('#NET').val();
 	
 	var message = "";
 	
+	if(musteriTipi == null || musteriTipi.length == 0){
+		message += "Lütfen Müşteri tipi bilgisini boş bırakmayınız.<br>";
+	}else if(musteriTipi.length > 32){
+		message += "Müşteri tipi bilgisi en fazla 32 karakter olabilir.<br>";
+	}
 	if(yeniTecdit == null || yeniTecdit.length == 0){
 		message += "Lütfen Yeni/Tecdit bilgisini boş bırakmayınız.<br>";
 	}
@@ -17,11 +23,6 @@ function validateBranchRecon(takipNo){
 		message += "Lütfen Zeyil no bilgisini boş bırakmayınız.<br>";
 	}else if(!isNumeric(zeyilNo)){
 		message += "Zeyil no bilgisi tam sayı olmalıdır.<br>";
-	}
-	if(musteriTipi == null || musteriTipi.length == 0){
-		message += "Lütfen Müşteri tipi bilgisini boş bırakmayınız.<br>";
-	}else if(musteriTipi.length > 32){
-		message += "Müşteri tipi bilgisi en fazla 32 karakter olabilir.<br>";
 	}
 	if(musteriAdi == null || musteriAdi.length == 0){
 		message += "Lütfen Müşteri adı bilgisini boş bırakmayınız.<br>";
@@ -37,6 +38,11 @@ function validateBranchRecon(takipNo){
 		message += "Lütfen Bitiş tarihi bilgisini boş bırakmayınız.<br>";
 	}else if(bitisTarihi.length > 32){
 		message += "Bitiş tarihi bilgisi en fazla 32 karakter olabilir.<br>";
+	}
+	if(policeTuru == null || policeTuru.length == 0){
+		message += "Lütfen Poliçe türü bilgisini boş bırakmayınız.<br>";
+	}else if(policeTuru.length > 32){
+		message += "Poliçe türü bilgisi en fazla 16 karakter olabilir.<br>";
 	}
 	if(paraBirimi == null || paraBirimi.length == 0){
 		message += "Lütfen Para birimi bilgisini boş bırakmayınız.<br>";
@@ -62,6 +68,7 @@ function validateBranchRecon(takipNo){
 	data.append('MUSTERI_ADI', musteriAdi);
 	data.append('BASLANGIC_TARIHI', baslangicTarihi);
 	data.append('BITIS_TARIHI', bitisTarihi);
+	data.append('POLICE_TURU', policeTuru);
 	data.append('PARA_BIRIMI', paraBirimi);
 	data.append('NET', net);
 	
@@ -92,15 +99,18 @@ function validateBranchRecon(takipNo){
 
 function validateFinanceRecon(takipNo){
 	var bolge = $('#BOLGE').val();
+	var bagli = $('#BAGLI').val();
+	var ustAcente = $('#UST_PRODUKTOR').val();
 	var tahsilatDurumu = $('#TAHSILAT_DURUMU').val();
 	var sirketTahsilatDurumu = $('#SIRKET_TAHSILAT_DURUMU').val();
 	var aciklama = $('#ACIKLAMA').val();
 	var heroKomisyon = $('#HERO_KOMISYON').val();
 	var bolgeKomisyon = $('#BOLGE_KOMISYON').val();
-	var ustProduktorKomisyon = $('#UST_PRODUKTOR_KOMISYON').val();
 	var subeKomisyon = $('#SUBE_KOMISYON').val();
 	var bagliKomisyon = $('#BAGLI_KOMISYON').val();
+	var ustProduktorKomisyon = $('#UST_PRODUKTOR_KOMISYON').val();
 	var musteriyeIade = $('#MUSTERIYE_IADE').val();
+	var prodKomisyon = $('#PROD_KOMISYON').val();
 	var merkez = $('#MERKEZ').val();
 	
 	var message = "";
@@ -121,17 +131,20 @@ function validateFinanceRecon(takipNo){
 	if(bolgeKomisyon == null || bolgeKomisyon.length == 0){
 		message += "Lütfen Bölge Komisyon bilgisini boş bırakmayınız.<br>";
 	}
-	if(ustProduktorKomisyon == null || ustProduktorKomisyon.length == 0){
-		message += "Lütfen Üst Prodüktör Komisyon bilgisini boş bırakmayınız.<br>";
-	}
 	if(subeKomisyon == null || subeKomisyon.length == 0){
 		message += "Lütfen Şube Komisyon bilgisini boş bırakmayınız.<br>";
 	}
 	if(bagliKomisyon == null || bagliKomisyon.length == 0){
 		message += "Lütfen Bağlı Komisyon bilgisini boş bırakmayınız.<br>";
 	}
+	if(ustProduktorKomisyon == null || ustProduktorKomisyon.length == 0){
+		message += "Lütfen Üst Acente Komisyon bilgisini boş bırakmayınız.<br>";
+	}
 	if(musteriyeIade == null || musteriyeIade.length == 0){
 		message += "Lütfen Müşteriye iade bilgisini boş bırakmayınız.<br>";
+	}
+	if(prodKomisyon == null || prodKomisyon.length == 0){
+		message += "Lütfen Prodüktör Komisyon bilgisini boş bırakmayınız.<br>";
 	}
 	if(merkez == null || merkez.length == 0){
 		message += "Lütfen Merkez bilgisini boş bırakmayınız.<br>";
@@ -147,15 +160,18 @@ function validateFinanceRecon(takipNo){
 	var data = new FormData();
 	data.append('TAKIP_NO', takipNo);
 	data.append('BOLGE', bolge);
+	data.append('BAGLI', bagli);
+	data.append('UST_PRODUKTOR', ustAcente);
 	data.append('TAHSILAT_DURUMU', tahsilatDurumu);
 	data.append('SIRKET_TAHSILAT_DURUMU', sirketTahsilatDurumu);
 	data.append('ACIKLAMA', aciklama);
 	data.append('HERO_KOMISYON', heroKomisyon);
 	data.append('BOLGE_KOMISYON', bolgeKomisyon);
-	data.append('UST_PRODUKTOR_KOMISYON', ustProduktorKomisyon);
 	data.append('SUBE_KOMISYON', subeKomisyon);
 	data.append('BAGLI_KOMISYON', bagliKomisyon);
+	data.append('UST_PRODUKTOR_KOMISYON', ustProduktorKomisyon);
 	data.append('MUSTERIYE_IADE', musteriyeIade);
+	data.append('PROD_KOMISYON', prodKomisyon);
 	data.append('MERKEZ', merkez);
 	
 	//make ajax request

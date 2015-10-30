@@ -17,6 +17,11 @@ if(!empty($_POST)){
 	
 	$takip_no = Util::cleanInput($_POST['TAKIP_NO']);
 	
+	$net = Util::cleanInput($_POST['NET']);
+	$net = str_replace(".", "", $net);
+	$net = str_replace(",", ".", $net);
+	$net = floatval($net);
+	
 	$recon_update_params = array(
 			'YENI_TECDIT' => Util::cleanInput($_POST['YENI_TECDIT']),
 			'ZEYIL_NO' => Util::cleanInput($_POST['ZEYIL_NO']),
@@ -24,8 +29,9 @@ if(!empty($_POST)){
 			'MUSTERI_ADI' => Util::cleanInput($_POST['MUSTERI_ADI']),
 			'BASLANGIC_TARIHI' => Util::cleanInput($_POST['BASLANGIC_TARIHI']),
 			'BITIS_TARIHI' => Util::cleanInput($_POST['BITIS_TARIHI']),
+			'POLICE_TURU' => Util::cleanInput($_POST['POLICE_TURU']),
 			'PARA_BIRIMI' => Util::cleanInput($_POST['PARA_BIRIMI']),
-			'NET' => Util::cleanInput($_POST['NET']),
+			'NET' => $net
 	);
 	
 	$reconService = new ReconService();

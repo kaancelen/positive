@@ -132,16 +132,34 @@
 				<?php } ?>
 			<?php }?>
 			<?php if($user[User::ROLE] == User::BRANCH){?>
+				<?php 
+					$agentService = new AgentService();
+					$agentRelations = $agentService->getAgentRelation($user[User::ID]);
+				?>
 				<br>
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
-					<label class="form-control"><?php echo $user[User::KOMISYON_RATE]; ?></label>
+					<label class="form-control"><?php echo $agentRelations[AgentRelation::KOMISYON]; ?></label>
 				</div>
 				<br>
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
-					<?php $masterUser = $userService->getUser($user[User::MASTER_ID]); ?>
-					<label class="form-control"><?php echo ($masterUser==null?"Yok":$masterUser[User::NAME]); ?></label>
+					<?php $ustAcente = $userService->getUser($agentRelations[AgentRelation::UST_ACENTE]); ?>
+					<label class="form-control"><?php echo ($ustAcente==null?"Yok":$ustAcente[User::NAME]); ?></label>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Üst Acente komisyon oranı %</span>
+					<label class="form-control"><?php echo $agentRelations[AgentRelation::UST_KOMISYON]; ?></label>
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Bağlı Acente</span>
+					<?php $bagliAcente = $userService->getUser($agentRelations[AgentRelation::BAGLI_ACENTE]); ?>
+					<label class="form-control"><?php echo ($bagliAcente==null?"Yok":$bagliAcente[User::NAME]); ?></label>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Bağlı Acente komisyon oranı %</span>
+					<label class="form-control"><?php echo $agentRelations[AgentRelation::BAGLI_KOMISYON]; ?></label>
 				</div>
 			<?php }?>
 			<?php if($loggedInUser[User::ROLE] == User::BRANCH || ($user[User::ROLE] == User::BRANCH && $loggedInUser[User::ROLE] == User::ADMIN)){ ?>
