@@ -157,6 +157,22 @@ class UserProcedures extends Procedures{
 			return $user;
 		}
 	}
+	
+	public function toggleUserActivity($user_id, $makeActive){
+		$sql = "UPDATE USER SET ACTIVE = ? WHERE ID = ?";
+		
+		$this->_db->beginTransaction();
+		$this->_db->query($sql, array($makeActive, $user_id));
+		$result = $this->_db->all();
+		
+		if(is_null($result)){
+			$this->_db->rollback();
+			return false;
+		}else{
+			$this->_db->commit();
+			return true;
+		}
+	}
 }
 
 ?>

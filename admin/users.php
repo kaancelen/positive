@@ -56,7 +56,15 @@
 			</thead>
 			<tbody>
 		<?php foreach ($all_users as $user){?>
-				<tr id="user_<?php echo $user[User::ID]; ?>">
+			<?php 
+				$class = "";
+				$isActive = true;	  
+			?>
+			<?php if($user[User::ACTIVE] == User::PASSIVE_USER){
+				$class = "row-offer-cancelled";
+				$isActive = false;
+			}?>
+				<tr id="user_<?php echo $user[User::ID]; ?>" class="<?php echo $class; ?>">
 					<td><?php echo $user[User::CODE]; ?></td>
 					<td><?php echo $user[User::NAME]; ?></td>
 					<td><?php 
@@ -83,9 +91,13 @@
 							onclick="location.href = '/positive/admin/user.php?operation=<?php echo urldecode('edit');?>&user_id=<?php echo urldecode($user[User::ID]); ?>'">
 						  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 						</button>
-						<button id="remove_user" type="button" class="btn btn-default btn-sm" aria-label="Left Align"
-							onclick="remove_user('<?php echo $user[User::CODE]; ?>', <?php echo $user[User::ID]; ?>)">
+						<button id="make_user_passive_<?php echo $user[User::ID];?>" type="button" class="btn btn-default btn-sm" aria-label="Left Align" style="visibility: <?php echo $isActive?'':'hidden';?>"
+							onclick="toggle_user('<?php echo $user[User::CODE]; ?>', <?php echo $user[User::ID]; ?>, 1)">
 						  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</button>
+						<button id="make_user_active_<?php echo $user[User::ID];?>" type="button" class="btn btn-default btn-sm" aria-label="Left Align" style="visibility: <?php echo $isActive?'hidden':'';?>"
+							onclick="toggle_user('<?php echo $user[User::CODE]; ?>', <?php echo $user[User::ID]; ?>, 0)">
+						  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 						</button>
 					</td>
 				</tr>

@@ -15,7 +15,7 @@ class LoginProcedures extends Procedures{
 	}
 	
 	public function login($username, $password){
-		$sql = "SELECT * FROM USER WHERE CODE = ?";
+		$sql = "SELECT * FROM USER WHERE CODE = ? AND ACTIVE = 0";
 		$this->_db->query($sql, array($username));
 		$result = $this->_db->first();
 		
@@ -61,7 +61,7 @@ class LoginProcedures extends Procedures{
 	
 	public function loginWithHash($hash){
 		$sql = "SELECT USER.ID, USER.ROLE, USER.NAME, USER.EMAIL, USER.CODE ";
-		$sql .= "FROM USER, USER_SESSION WHERE USER_SESSION.HASH = ? AND USER.ID = USER_SESSION.ID";
+		$sql .= "FROM USER, USER_SESSION WHERE USER_SESSION.HASH = ? AND USER.ID = USER_SESSION.ID AND USER.ACTIVE = 0";
 		$this->_db->query($sql, array($hash));
 		$result = $this->_db->first();
 		

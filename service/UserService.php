@@ -41,5 +41,9 @@ class UserService implements Service{
 	public function getUser($user_id){
 		return $this->_userProcedures->getUser($user_id);
 	}
+	
+	public function toggleUserActivity($user_id, $makeActive){
+		return $this->_userProcedures->toggleUserActivity($user_id, $makeActive);
+	}
 }
 ?>

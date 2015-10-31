@@ -16,10 +16,11 @@ if(!empty($_POST)){
 	}
 	
 	$user_id = Util::cleanInput($_POST['user_id']);
+	$makeActive = Util::cleanInput($_POST['make_active']);
 	$logger->write(ALogger::INFO, __FILE__, "User remove request [".$user_id."] from [".$user[User::CODE]."]");
 	
 	$userService = new UserService();
-	$result = $userService->removeUser($user_id);
+	$result = $userService->toggleUserActivity($user_id, $makeActive);
 	if($result){
 		echo json_encode(true);
 	}else{
