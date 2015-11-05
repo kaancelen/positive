@@ -41,7 +41,7 @@
 		$username = Util::cleanInput($_POST['username']);
 		$name = Util::cleanInput($_POST['name']);
 		$role = Util::cleanInput($_POST['select_role']);
-		$desc = Util::cleanInput($_POST['description']);
+		$desc = str_replace(array("\n","\r"), ' ', Util::cleanInput($_POST['description']));
 		$operation = Util::cleanInput($_POST['operation']);
 		
 		$allowed_comp = "0";
