@@ -182,7 +182,8 @@ class AgentProcedures extends Procedures{
 		$this->_db->beginTransaction();
 		
 		$sql = "INSERT INTO AGENT_RELATION(ACENTE, KOMISYON, UST_ACENTE, UST_KOMISYON, BAGLI_ACENTE, BAGLI_KOMISYON) VALUES(?,?,?,?,?,?)";
-		$this->_db->query($sql, array($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon));
+		$params = array($acente, $komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon);
+		$this->_db->query($sql, $params);
 		if($this->_db->error()){
 			$this->_db->rollback();
 			return false;
@@ -196,7 +197,12 @@ class AgentProcedures extends Procedures{
 		$this->_db->beginTransaction();
 		
 		$sql = "UPDATE AGENT_RELATION SET KOMISYON = ?, UST_ACENTE = ?, UST_KOMISYON = ?, BAGLI_ACENTE = ?, BAGLI_KOMISYON = ? WHERE ACENTE = ?";
-		$this->_db->query($sql, array($komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon, $acente));
+		$params = array($komisyon, $ust_acente, $ust_komisyon, $bagli_acente, $bagli_komisyon, $acente);
+		$this->_db->query($sql, $params);
+		
+		echo $sql;
+		print_r($params);
+		
 		if($this->_db->error()){
 			$this->_db->rollback();
 			return false;

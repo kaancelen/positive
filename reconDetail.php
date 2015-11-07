@@ -51,6 +51,11 @@
 		<?php
 		Session::delete(Session::FLASH);//Remove message
 	}
+	
+	$tanzimTarihi = DateUtil::format($reconDetail[Recon::TANZIM_TARIHI]);
+	$month = substr($tanzimTarihi, 3, 2);
+	$year = substr($tanzimTarihi, 6, 4);
+	$takipNo = $reconDetail[Recon::TAKIP_NO] < 0 ? abs($reconDetail[Recon::TAKIP_NO])."i" : $reconDetail[Recon::TAKIP_NO];
 ?>
 	<script src="/positive/js/reconDetail.js"></script>
 	<div class="container">
@@ -68,13 +73,13 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><?php echo $reconDetail[Recon::TAKIP_NO]; ?></td>
+					<td><?php echo $year.'-'.$month.'-'.$takipNo; ?></td>
 					<td><?php echo $reconDetail[Recon::URETIM_IPTAL]; ?></td>
 					<td><?php echo $reconDetail[Recon::POLICE_NO]; ?></td>
 					<td><?php echo $reconDetail[Recon::TCKN].''.$reconDetail[Recon::VERGI_NO]; ?></td>
-					<td><?php echo DateUtil::format($reconDetail[Recon::TANZIM_TARIHI]);?></td>
-					<td><?php echo $reconDetail[Recon::SIRKET]; ?></td>
+					<td><?php echo $tanzimTarihi;?></td>
 					<td><?php echo $reconDetail[Recon::PRODUKTOR]; ?></td>
+					<td><?php echo $reconDetail[Recon::SIRKET]; ?></td>
 				</tr>
 			</tbody>
 		</table>

@@ -48,11 +48,11 @@
 		$change_agent = 0;
 		
 		if($role == User::BRANCH){
-			$komisyon = Util::cleanInput($_POST['komisyon']);
+			$komisyon = str_replace(",", ".", Util::cleanInput($_POST['komisyon']));
 			$ust_acente = Util::cleanInput($_POST['ust_acente']);
-			$ust_komisyon = Util::cleanInput($_POST['ust_komisyon']);
+			$ust_komisyon = str_replace(",", ".", Util::cleanInput($_POST['ust_komisyon']));
 			$bagli_acente = Util::cleanInput($_POST['bagli_acente']);
-			$bagli_komisyon = Util::cleanInput($_POST['bagli_komisyon']);
+			$bagli_komisyon = str_replace(",", ".", Util::cleanInput($_POST['bagli_komisyon']));
 			
 			if(isset($_POST['comp_0'])){
 				$allowed_comp = "0";

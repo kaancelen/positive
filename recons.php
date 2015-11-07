@@ -87,9 +87,10 @@
 				<?php foreach ($allRecons as $recon){ ?>
 					<?php 
 						$class = $reconService->isReconCompleted($user[User::ROLE], $recon);
+						$takipNo = $recon[Recon::TAKIP_NO] < 0 ? abs($recon[Recon::TAKIP_NO])."i" : $recon[Recon::TAKIP_NO];
 					?>
 					<tr class="<?php echo $class;?>">
-						<td><?php echo $recon[Recon::TAKIP_NO]; ?></td>
+						<td><?php echo $year.'-'.$month.'-'.$takipNo; ?></td>
 						<td><?php echo DateUtil::format($recon[Recon::TANZIM_TARIHI]);?></td>
 						<td><?php echo $recon[Recon::SIRKET]; ?></td>
 						<td><?php echo $recon[Recon::POLICE_NO]; ?></td>
