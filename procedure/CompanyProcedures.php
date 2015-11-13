@@ -41,6 +41,48 @@ class CompanyProcedures extends Procedures{
 			return json_decode(json_encode($result), true);
 		}
 	}
+	
+	public function removeCompany($company_id){
+		$sql = "DELETE FROM COMPANY WHERE ID = ?";
+		$this->_db->query($sql, array($company_id));
+		
+		if($this->_db->error()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public function addCompany($active, $name, $ic_dis, $uretim_kanali){
+		$this->_db->beginTransaction();
+		
+		$sql = "INSERT INTO COMPANY(ACTIVE, NAME, IC_DIS, URETIM_KANALI) VALUES(?,?,?,?)";
+		$this->_db->query($sql, array($active, $name, $ic_dis, $uretim_kanali));
+		
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return null;
+		}else{
+			$company_id = (int)$this->_db->lastInsertId();
+			$this->_db->commit();
+			return $company_id;
+		}
+	}
+	
+	public function editCompany($company_id, $active, $name, $ic_dis, $uretim_kanali){
+		$this->_db->beginTransaction();
+		
+		$sql = "UPDATE COMPANY SET ACTIVE = ?, NAME = ?, IC_DIS = ?, URETIM_KANALI =? WHERE ID = ?";
+		$this->_db->query($sql, array($active, $name, $ic_dis, $uretim_kanali, $company_id));
+		
+		if($this->_db->error()){
+			$this->_db->rollback();
+			return false;
+		}else{
+			$this->_db->commit();
+			return true;
+		}
+	}
 }
 
 ?>

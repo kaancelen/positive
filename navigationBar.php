@@ -26,6 +26,7 @@
       		<li id="admin_1"><a href="/positive/admin/users.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Kullanıcılar</a></li>
       		<li id="admin_2"><a href="/positive/admin/userExceptions.php"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Hata Bildirimleri</a></li>
 <!--       		<li id="admin_3"><a href="/positive/admin/xmlOutput.php"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Excel Çıktısı</a></li> -->
+      		<li id="admin_4"><a href="/positive/admin/companies.php"><span class="glyphicon glyphicon-euro" aria-hidden="true"></span>Şirketler</a></li>
       	<?php }?>
       	<?php if($nav_user[User::ROLE] == User::PERSONEL){?>
       		<li id="personel_1"><a href="/positive/personel/offers.php"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>Talep listesi</a></li>

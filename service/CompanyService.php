@@ -18,6 +18,19 @@ class CompanyService implements Service{
 	public function getCompany($company_id){
 		return $this->_companyProcedures->getCompany($company_id);
 	}
+	
+	public function removeCompany($company_id){
+		return $this->_companyProcedures->removeCompany($company_id);
+	}
+
+	public function addCompany($active, $name, $ic_dis, $uretim_kanali){
+		return $this->_companyProcedures->addCompany($active, $name, $ic_dis, $uretim_kanali);
+	}
+	
+	public function editCompany($company_id, $active, $name, $ic_dis, $uretim_kanali){
+		return $this->_companyProcedures->editCompany($company_id, $active, $name, $ic_dis, $uretim_kanali);
+	}
+	
 }
 
 ?>
