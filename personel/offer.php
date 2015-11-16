@@ -196,17 +196,31 @@ include_once(__DIR__.'/../head.php');
 		<?php foreach ($offerRequest[OfferRequest::COMPANIES] as $company){?>
 			$('#prim_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
 			$('#komisyon_<?php echo $company[Company::ID]; ?>').mask('000.000.000.000.000,00', {reverse: true});
+
+			$('#prod_komisyon_<?php echo $company[Company::ID]; ?>').change(function(){
+				var prod_komisyon_value = (Number)(this.value);
+				this.value = prod_komisyon_value.format(2, 3, '.', ',');
+			});
+			$('#ust_komisyon_<?php echo $company[Company::ID]; ?>').change(function(){
+				var ust_komisyon_value = (Number)(this.value);
+				this.value = ust_komisyon_value.format(2, 3, '.', ',');
+			});
+			$('#bagli_komisyon_<?php echo $company[Company::ID]; ?>').change(function(){
+				var bagli_komisyon_value = (Number)(this.value);
+				this.value = bagli_komisyon_value.format(2, 3, '.', ',');
+			});
+			
 			$('#komisyon_<?php echo $company[Company::ID]; ?>').keyup(function() {
 				var komisyon = $(this).val();
 				komisyon = komisyon.replace('.', '').replace(',', '.');
 				var prod_komisyon = (komisyon * <?php echo $agentRelation[AgentRelation::KOMISYON]; ?>) / 100;
-				$('#prod_komisyon_<?php echo $company[Company::ID]; ?>').val(prod_komisyon);
+				$('#prod_komisyon_<?php echo $company[Company::ID]; ?>').val(prod_komisyon).trigger('change');
 
 				var ust_komisyon = (komisyon * <?php echo $agentRelation[AgentRelation::UST_KOMISYON]; ?>) / 100;
-				$('#ust_komisyon_<?php echo $company[Company::ID]; ?>').val(ust_komisyon);
+				$('#ust_komisyon_<?php echo $company[Company::ID]; ?>').val(ust_komisyon).trigger('change');
 
 				var bagli_komisyon = (komisyon * <?php echo $agentRelation[AgentRelation::BAGLI_KOMISYON]; ?>) / 100;
-				$('#bagli_komisyon_<?php echo $company[Company::ID]; ?>').val(bagli_komisyon);
+				$('#bagli_komisyon_<?php echo $company[Company::ID]; ?>').val(bagli_komisyon).trigger('change');
 			});
 		<?php }?>
 		<?php foreach($offerResponses as $offerResponse){?>

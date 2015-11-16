@@ -32,6 +32,18 @@ if(!empty($_POST)){
 	$komisyon = str_replace(",", ".", $komisyon);
 	$komisyon = floatval($komisyon);
 	
+	$prod_komisyon = str_replace(".", "", $prod_komisyon);
+	$prod_komisyon = str_replace(",", ".", $prod_komisyon);
+	$prod_komisyon = floatval($prod_komisyon);
+	
+	$ust_komisyon = str_replace(".", "", $ust_komisyon);
+	$ust_komisyon = str_replace(",", ".", $ust_komisyon);
+	$ust_komisyon = floatval($ust_komisyon);
+	
+	$bagli_komisyon = str_replace(".", "", $bagli_komisyon);
+	$bagli_komisyon = str_replace(",", ".", $bagli_komisyon);
+	$bagli_komisyon = floatval($bagli_komisyon);
+	
 	$offerService = new OfferService();
 	$result = $offerService->addOffer($user_id, $talep_no, $company_id, $prim, $komisyon, $prod_komisyon, $ust_komisyon, $bagli_komisyon);
 		
