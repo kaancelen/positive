@@ -1,3 +1,4 @@
+<?php header("Cache-Control: max-age=86400, must-revalidate"); //1 day?>
 <meta http-equiv="Content-Type" content="text/HTML; charset=UTF-8"/>
 <link rel="icon" type="image/ico" href="/positive/images/favicon.ico">
 
