@@ -74,17 +74,8 @@
 			</div>
 		</div>
 		<div class="col-lg-2">
-			<select id="selected_agent" name="selected_agent" class="form-control" onchange="onSelectedAgentChange();">
-				<option value="NULL">Tüm Acenteler</option>
-				<?php foreach ($agents as $agent){?>
-					<?php if($agent[User::FIRST_LOGIN] != User::FIRST_LOGIN_FLAG){?>
-						<option value="<?php echo $agent[User::NAME];?>"><?php echo $agent[User::NAME];?></option>
-					<?php }?>
-				<?php }?>
-			</select>
 		</div>
 		<div class="col-lg-6">
-			<h6><i>Acente filtresi sadece tabloya yüklenmiş talepler için çalışmaktadır.</i></h6>
 		</div>
 	</div>
 	<script src="/positive/js/dropdown.js"></script>
@@ -102,6 +93,30 @@
 					<td><b>Aç</b></td>
 				</tr>
 				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+						<select id="selected_agent" name="selected_agent" class="form-control" onchange="onDropdownChange();">
+							<option value="NULL">Tüm Acenteler</option>
+							<?php foreach ($agents as $agent){?>
+								<?php if($agent[User::FIRST_LOGIN] != User::FIRST_LOGIN_FLAG){?>
+									<option value="<?php echo $agent[User::NAME];?>"><?php echo $agent[User::NAME];?></option>
+								<?php }?>
+							<?php }?>
+						</select>
+					</td>
+					<td>
+						<select id="selected_policy_type" name="selected_policy_type" class="form-control" onchange="onDropdownChange();">
+							<option value="NULL">Tüm Poliçeler</option>
+							<option value="Kasko">Kasko</option>
+							<option value="Trafik">Trafik</option>
+							<option value="Diger">Diger</option>
+						</select>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</thead>
 			<tbody>

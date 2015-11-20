@@ -23,6 +23,23 @@
 		$year = date('Y');
 	}
 	
+	$userService = new UserService();
+	$agents = $userService->allTypeOfUsers(User::BRANCH);
+	
+	$companyService = new CompanyService();
+	$companies = $companyService->getAll();
+	
+	if($user[User::ALLOWED_COMP] != 0){
+		$allowed_comp = explode(",", $user[User::ALLOWED_COMP]);
+		$temp_companies = array();
+		foreach ($companies as $company){
+			if(in_array($company[Company::ID], $allowed_comp)){
+				array_push($temp_companies, $company);
+			}
+		}
+		$companies = $temp_companies;
+	}
+	
 	$cancelService = new CancelService();
 	$allowed_comp = null;
 	if($user[User::ALLOWED_COMP] != 0){
@@ -73,6 +90,37 @@
 						<td><b>Aç</b></td>
 					</tr>
 					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							<select id="selected_agent" name="selected_agent" class="form-control" onchange="onDropdownChangeCancels();">
+								<option value="NULL">Tüm Acenteler</option>
+								<?php foreach ($agents as $agent){?>
+									<?php if($agent[User::FIRST_LOGIN] != User::FIRST_LOGIN_FLAG){?>
+										<option value="<?php echo $agent[User::NAME];?>"><?php echo $agent[User::NAME];?></option>
+									<?php }?>
+								<?php }?>
+							</select>
+						</td>
+						<td>
+							<select id="selected_policy_type" name="selected_policy_type" class="form-control" onchange="onDropdownChangeCancels();">
+								<option value="NULL">Tüm Poliçeler</option>
+								<option value="Kasko">Kasko</option>
+								<option value="Trafik">Trafik</option>
+								<option value="Diger">Diger</option>
+							</select>
+						</td>
+						<td></td>
+						<td></td>
+						<td>
+							<select id="selected_company" name="selected_company" class="form-control" onchange="onDropdownChangeCancels();">
+								<option value="NULL">Tüm Şirketler</option>
+								<?php foreach ($companies as $company){?>
+									<option value="<?php echo $company[Company::NAME];?>"><?php echo $company[Company::NAME];?></option>
+								<?php }?>
+							</select>
+						</td>
+						<td></td>
 					</tr>
 				</thead>
 				<tbody>
