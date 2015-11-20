@@ -53,6 +53,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
+          <li><a href="mailto:positiveplatformu@gmail.com">İletişim</a></li>
           <li><a href="/positive/usage.pdf" target="_blank"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></li>
       	  <li><a href="/positive"><?php echo $nav_user[User::NAME]; ?></a></li>
         </ul>
