@@ -28,7 +28,7 @@ class OfferProcedures extends Procedures{
 			array_push($question_marks, "?");
 			array_push($params, $company_id);
 		}
-		$company_part = "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") ";
+		$company_part = "AND orc.COMPANY_ID IN (".implode(",", $question_marks).") AND orc.OFFER_ID = 0 ";
 		
 		//Limit part
 		$limit_part = " ";
