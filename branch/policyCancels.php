@@ -13,6 +13,9 @@
 			Util::redirect("/positive/error/403.php");
 		}
 	}
+	//policy polling job
+	Cookie::put(Cookie::LAST_ENTER_POLICY_REQ_PAGE, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_POLICY_REQ_PAGE_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 	include_once (__DIR__.'/../navigationBar.php');
 	
 	if($user[User::ROLE] == User::BRANCH && $user[User::FIRST_LOGIN] == User::FIRST_LOGIN_FLAG){
@@ -29,9 +32,6 @@
 	
 	$cancelService = new CancelService();
 	$allCancelRequests = $cancelService->getAllCancelRequests($user[User::ID], $month, $year, null);
-	//policy polling job
-	Cookie::put(Cookie::LAST_ENTER_POLICY_REQ_PAGE, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
-	Cookie::put(Cookie::LE_POLICY_REQ_PAGE_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 	
 	if(empty($allCancelRequests)){
 	?>

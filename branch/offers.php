@@ -13,14 +13,14 @@
 			Util::redirect("/positive/error/403.php");
 		}
 	}
+	//policy polling job
+	Cookie::put(Cookie::LAST_ENTER_OFFER_RESP, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
+	Cookie::put(Cookie::LE_OFFER_RESP_FLAG, "off", Cookie::REMEMBER_EXPIRE);
+	
 	include_once (__DIR__.'/../navigationBar.php');
 	if($user[User::ROLE] == User::BRANCH && $user[User::FIRST_LOGIN] == User::FIRST_LOGIN_FLAG){
 		Util::redirect("/positive/profile.php");
 	}
-	
-	//policy polling job
-	Cookie::put(Cookie::LAST_ENTER_OFFER_RESP, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
-	Cookie::put(Cookie::LE_OFFER_RESP_FLAG, "off", Cookie::REMEMBER_EXPIRE);
 	
 	$offerService = new OfferService();
 	$allOfferRequest = $offerService->getBranchRequests($user[User::ID]);//Bu kullanıcının poliçe isteği yapılmamış taleplerini getir.
