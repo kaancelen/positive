@@ -86,6 +86,10 @@ class OfferService implements Service{
 	public function updateRequest($request_id, $ek_bilgi, $plaka = '', $tckn = '', $vergi = '', $belge = '', $asbis = '', $marka_kodu = ''){
 		return $this->_offerProcedures->updateRequest($request_id, $ek_bilgi, $plaka, $tckn, $vergi, $belge, $asbis, $marka_kodu);
 	}
+
+	public function changeOffer($offer_id, $prim, $komisyon, $prod_komisyon, $ust_komisyon, $bagli_komisyon){
+		return $this->_offerProcedures->changeOffer($offer_id, $prim, $komisyon, $prod_komisyon, $ust_komisyon, $bagli_komisyon);
+	}
 }
 
 ?>

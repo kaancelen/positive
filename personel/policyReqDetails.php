@@ -115,6 +115,7 @@
 					<td>Prim</td>
 					<td>Komisyon</td>
 					<td>Prod Komisyonu</td>
+					<td>Prim</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -126,6 +127,11 @@
 					<td><?php echo $policyReqDetail[PolicyRequest::PRIM];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::KOMISYON];?></td>
 					<td><?php echo $policyReqDetail[PolicyRequest::PROD_KOMISYON];?></td>
+					<td>
+						<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel">
+							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Düzelt
+						</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -200,6 +206,7 @@
 		<?php include_once (__DIR__.'/../chat.php'); ?>
 	</div>
 </div>
+<?php include_once (__DIR__.'/../changePrimModal.php');?>
 <script type="text/javascript">
 	$('#personel_2').addClass("active");
 </script>
