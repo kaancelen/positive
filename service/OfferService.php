@@ -82,6 +82,10 @@ class OfferService implements Service{
 	public function openRequest($request_id){
 		return $this->_offerProcedures->openRequest($request_id);
 	}
+
+	public function updateRequest($request_id, $ek_bilgi, $plaka = '', $tckn = '', $vergi = '', $belge = '', $asbis = '', $marka_kodu = ''){
+		return $this->_offerProcedures->updateRequest($request_id, $ek_bilgi, $plaka, $tckn, $vergi, $belge, $asbis, $marka_kodu);
+	}
 }
 
 ?>

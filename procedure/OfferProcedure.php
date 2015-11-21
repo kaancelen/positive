@@ -583,5 +583,18 @@ class OfferProcedures extends Procedures{
 			return false;
 		}
 	}
+	
+	public function updateRequest($request_id, $ek_bilgi, $plaka, $tckn, $vergi, $belge, $asbis, $marka_kodu){
+		$this->_db->beginTransaction();
+		$sql = "UPDATE OFFER_REQUEST SET PLAKA=?, TCKN=?, VERGI=?, BELGE=?, ASBIS=?, MARKA_KODU=?, DESCRIPTION=? WHERE ID = ?";
+		$this->_db->query($sql, array($plaka, $tckn, $vergi, $belge, $asbis, $marka_kodu, $ek_bilgi, $request_id));
+		if($this->_db->count() > 0){
+			$this->_db->commit();
+			return true;
+		}else{
+			$this->_db->rollback();
+			return false;
+		}
+	}
 }
 ?>

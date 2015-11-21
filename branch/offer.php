@@ -77,6 +77,9 @@ include_once(__DIR__.'/../head.php');
 <script src="/positive/js/branch.js"></script>
 <script src="/positive/js/open_request.js"></script>
 <div class="well offer-request-label">
+	<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel">
+		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Düzelt
+	</button>
 	<table class="offer-request-info-table">
 		<thead>
 			<tr>
@@ -205,6 +208,7 @@ include_once(__DIR__.'/../head.php');
 		pullOffers(<?php echo $offerRequest[OfferRequest::ID];?>);
 	</script>
 </div>
+<?php include_once (__DIR__.'/../offerRequestChangeModel.php');?>
 <script type="text/javascript">
 	$('#branch_2').addClass("active");
 </script>
