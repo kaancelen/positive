@@ -78,7 +78,8 @@
 					<td>TC Kimlik No</td>
 					<td>Vergi No</td>
 					<td>Belge No</td>
-					<td>ASBİS No</td>
+					<td>ASBİS</td>
+					<td>Marka Kodu</td>
 				<?php } ?>
 				<td>Ek Bilgi</td>
 			</tr>
@@ -94,6 +95,7 @@
 					<td><?php echo $request[OfferRequest::VERGI];?></td>
 					<td><?php echo $request[OfferRequest::BELGE];?></td>
 					<td><?php echo $request[OfferRequest::ASBIS];?></td>
+					<td><?php echo $request[OfferRequest::MARKA_KODU];?></td>
 				<?php } ?>
 				<td><?php echo $request[OfferRequest::DESCRIPTION];?></td>
 			</tr>

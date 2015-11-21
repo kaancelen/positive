@@ -133,6 +133,11 @@ function validateOfferRequest(companies){
 				message += "ASBİS bilgisi 19 haneli olmalıdır.<br>";
 			}
 		}
+		
+		var marka_kodu = $('#marka_kodu').val();
+		if(marka_kodu != null && marka_kodu.length > 10){
+			message += "Marka kodu en fazla 10 haneli olabilir.<br>";
+		}
 
 		var description = $('#description').val();
 		if(description != null && description.length > 2048){

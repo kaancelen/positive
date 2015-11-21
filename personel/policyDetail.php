@@ -48,7 +48,8 @@
 					<td>TC Kimlik No</td>
 					<td>Vergi No</td>
 					<td>Belge No</td>
-					<td>ASBİS No</td>
+					<td>ASBİS</td>
+					<td>Marka Kodu</td>
 				<?php } ?>
 				<td>Ek Bilgi</td>
 			</tr>
@@ -64,6 +65,7 @@
 					<td><?php echo $policy[Policy::VERGI];?></td>
 					<td><?php echo $policy[Policy::BELGE];?></td>
 					<td><?php echo $policy[Policy::ASBIS];?></td>
+					<td><?php echo $policy[Policy::MARKA_KODU];?></td>
 				<?php } ?>
 				<td><?php echo $policy[Policy::EK_BILGI];?></td>
 			</tr>

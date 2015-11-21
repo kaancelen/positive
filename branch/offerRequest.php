@@ -53,6 +53,7 @@
 			$vergi = Util::cleanInput($_POST['vergiNo']);
 			$belge = Util::cleanInput($_POST['belgeNo']);
 			$asbis = Util::cleanInput($_POST['asbis']);
+			$marka_kodu = Util::cleanInput($_POST['marka_kodu']);
 			$description = Util::cleanInput($_POST['description']);
 			$user_id = $user[User::ID];
 			$policy_type = "Tanımsız";
@@ -76,12 +77,12 @@
 			$offerRequestId = null;
 			
 			if($policy_type == PolicyType::KASKO_TRAFIK){
-				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::KASKO, $user_id, $companyIds);
-				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::TRAFIK, $user_id, $companyIds);
+				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::KASKO, $user_id, $companyIds, $marka_kodu);
+				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, PolicyType::TRAFIK, $user_id, $companyIds, $marka_kodu);
 			}else if($policy_type == PolicyType::DIGER){
-				$offerRequestId = $offerService->addOfferRequest("", "", "", "", "", $description, $policy_type, $user_id, $companyIds);
+				$offerRequestId = $offerService->addOfferRequest("", "", "", "", "", $description, $policy_type, $user_id, $companyIds, $marka_kodu);
 			}else{
-				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companyIds);
+				$offerRequestId = $offerService->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companyIds, $marka_kodu);
 			}
 			
 			if(!is_null($offerRequestId)){
@@ -212,6 +213,13 @@
 								ASBİS
 							</span>
 							<input type="text" readonly class="form-control" aria-describedby="basic-addon1" id="asbis" name="asbis">
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">
+								Marka Kodu
+							</span>
+							<input type="text" class="form-control" aria-describedby="basic-addon1" id="marka_kodu" name="marka_kodu">
 						</div>
 						<br>
 					</div>

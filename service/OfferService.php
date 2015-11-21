@@ -19,8 +19,8 @@ class OfferService implements Service{
 		return $this->_offerProcedures->getBranchRequests($user_id);
 	}
 	
-	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companies){
-		return $this->_offerProcedures->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companies);
+	public function addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companies, $marka_kodu){
+		return $this->_offerProcedures->addOfferRequest($plaka, $tckn, $vergi, $belge, $asbis, $description, $policy_type, $user_id, $companies, $marka_kodu);
 	}
 	
 	public function getOfferRequest($request_id){

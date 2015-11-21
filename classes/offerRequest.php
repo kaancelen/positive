@@ -9,6 +9,7 @@ class OfferRequest{
 	const VERGI = "VERGI";
 	const BELGE = "BELGE";
 	const ASBIS = "ASBIS";
+	const MARKA_KODU = "MARKA_KODU";
 	const STATUS = "STATUS";
 	const DESCRIPTION = "DESCRIPTION";
 	const POLICY_TYPE = "POLICY_TYPE";

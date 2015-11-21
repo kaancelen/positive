@@ -79,7 +79,8 @@ include_once(__DIR__.'/../head.php');
 					<td>TC Kimlik No</td>
 					<td>Vergi No</td>
 					<td>Belge No</td>
-					<td>ASBİS No</td>
+					<td>ASBİS</td>
+					<td>Marka Kodu</td>
 				<?php } ?>
 				<td>Ek Bilgi</td>
 				<?php if($reopen_request){?>
@@ -101,6 +102,7 @@ include_once(__DIR__.'/../head.php');
 					<td><?php echo $offerRequest[OfferRequest::VERGI];?></td>
 					<td><?php echo $offerRequest[OfferRequest::BELGE];?></td>
 					<td><?php echo $offerRequest[OfferRequest::ASBIS];?></td>
+					<td><?php echo $offerRequest[OfferRequest::MARKA_KODU];?></td>
 				<?php } ?>
 				<td><?php echo $offerRequest[OfferRequest::DESCRIPTION];?></td>
 				<?php if($reopen_request){?>

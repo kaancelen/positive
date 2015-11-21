@@ -10,6 +10,7 @@ class Policy{
 	const VERGI = "VERGI";
 	const BELGE = "BELGE";
 	const ASBIS = "ASBIS";
+	const MARKA_KODU = "MARKA_KODU";
 	const EK_BILGI = "EK_BILGI";
 	const OFFER_ID = "OFFER_ID";
 	const PERSONEL_ID = "PERSONEL_ID";
