@@ -141,26 +141,28 @@
 					<span class="input-group-addon" id="basic-addon1">Komisyon oranı %</span>
 					<label class="form-control"><?php echo $agentRelations[AgentRelation::KOMISYON]; ?></label>
 				</div>
-				<br>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
-					<?php $ustAcente = $userService->getUser($agentRelations[AgentRelation::UST_ACENTE]); ?>
-					<label class="form-control"><?php echo ($ustAcente==null?"Yok":$ustAcente[User::NAME]); ?></label>
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Üst Acente komisyon oranı %</span>
-					<label class="form-control"><?php echo $agentRelations[AgentRelation::UST_KOMISYON]; ?></label>
-				</div>
-				<br>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Bağlı Acente</span>
-					<?php $bagliAcente = $userService->getUser($agentRelations[AgentRelation::BAGLI_ACENTE]); ?>
-					<label class="form-control"><?php echo ($bagliAcente==null?"Yok":$bagliAcente[User::NAME]); ?></label>
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Bağlı Acente komisyon oranı %</span>
-					<label class="form-control"><?php echo $agentRelations[AgentRelation::BAGLI_KOMISYON]; ?></label>
-				</div>
+				<?php if($loggedInUser[User::ROLE] != User::BRANCH){ ?>
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Üst Acente</span>
+						<?php $ustAcente = $userService->getUser($agentRelations[AgentRelation::UST_ACENTE]); ?>
+						<label class="form-control"><?php echo ($ustAcente==null?"Yok":$ustAcente[User::NAME]); ?></label>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Üst Acente komisyon oranı %</span>
+						<label class="form-control"><?php echo $agentRelations[AgentRelation::UST_KOMISYON]; ?></label>
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Bağlı Acente</span>
+						<?php $bagliAcente = $userService->getUser($agentRelations[AgentRelation::BAGLI_ACENTE]); ?>
+						<label class="form-control"><?php echo ($bagliAcente==null?"Yok":$bagliAcente[User::NAME]); ?></label>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Bağlı Acente komisyon oranı %</span>
+						<label class="form-control"><?php echo $agentRelations[AgentRelation::BAGLI_KOMISYON]; ?></label>
+					</div>
+				<?php }?>
 			<?php }?>
 			<?php if($loggedInUser[User::ROLE] == User::BRANCH || ($user[User::ROLE] == User::BRANCH && $loggedInUser[User::ROLE] == User::ADMIN)){ ?>
 				<br>
