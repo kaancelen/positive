@@ -58,6 +58,8 @@
 		</div>
 	<?php
 	}
+	
+	$request_id_list = array();
 ?>
 <script src="/positive/js/pullNewChat.js"></script>
 <script src="/positive/js/policiesPage.js"></script>
@@ -128,8 +130,11 @@
 				</thead>
 				<tbody>
 				<?php foreach ($allPolicyRequests as $policyRequest){ ?>
+					<?php array_push($request_id_list, $policyRequest[PolicyRequest::REQUEST_ID]);?>
 					<tr <?php if($policyRequest[PolicyRequest::STATUS] == 3) echo 'class="row-offer-cancelled"'; ?>>
-						<td id="request_<?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?>"></td>
+						<td id="request_<?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?>">
+							<img id='mail_gif' width='24'>
+						</td>
 						<td><b><?php echo $policyRequest[PolicyRequest::REQUEST_ID]; ?></b></td>
 						<td><b><?php echo $policyRequest[PolicyRequest::OFFER_ID]; ?></b></td>
 						<td><?php echo $policyRequest[PolicyRequest::BRANCH_NAME]; ?></td>
@@ -151,7 +156,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-	pullNewChatEntries();
+	pullNewChatEntries(<?php echo "'".implode(',', $request_id_list)."'"; ?>, 1);
 	$('#month').val(<?php echo $month; ?>);
 	$('#year').val(<?php echo $year; ?>);
 	$('#personel_2').addClass("active");

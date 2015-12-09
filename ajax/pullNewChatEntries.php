@@ -9,9 +9,11 @@ if(!empty($_POST)){
 	}
 
 	$user = Session::get(Session::USER);
+	$request_id_string = Util::cleanInput($_POST['request_id_string']);
+	$page_type = Util::cleanInput($_POST['page_type']);
 	
 	$genericService = new GenericService();
-	$result = $genericService->getRequestIdsOfNewChatEntries($user[User::ID]);
+	$result = $genericService->getRequestIdsOfNewChatEntries($user[User::ID], $request_id_string, $page_type);
 	echo json_encode($result);
 }
 ?>

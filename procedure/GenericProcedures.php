@@ -41,11 +41,21 @@ class GenericProcedures extends Procedures{
 		}
 	}
 
-	public function getRequestIdsOfNewChatEntries($user_id){
+	public function getRequestIdsOfNewChatEntries($user_id, $request_id_string, $page_type){
+		$params = array($user_id);
+		$question_marks = array();
+		
+		$request_id_list = explode(',', $request_id_string);
+		foreach ($request_id_list as $request_id){
+			array_push($params, $request_id);
+			array_push($question_marks, "?");
+		}
+		$request_id_part = " AND uoe.REQUEST_ID IN (".implode(",", $question_marks).")";
+		
 		$sql = "SELECT DISTINCT uoe.REQUEST_ID FROM USER_OFFER_ENTER uoe, CHAT chat ";
 		$sql .= "WHERE uoe.REQUEST_ID = chat.REQUEST_ID AND chat.CREATION_DATE > uoe.LAST_ENTER_DATE ";
-		$sql .= "AND uoe.USER_ID = ?";
-		$this->_db->query($sql, array($user_id));
+		$sql .= "AND uoe.USER_ID = ?".$request_id_part;
+		$this->_db->query($sql, $params);
 		
 		$resultObject = $this->_db->all();
 		$result = json_decode(json_encode($resultObject));

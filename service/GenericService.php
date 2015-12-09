@@ -20,8 +20,8 @@ class GenericService implements Service{
 		}
 	}
 
-	public function getRequestIdsOfNewChatEntries($user_id){
-		return $this->_genericProcedures->getRequestIdsOfNewChatEntries($user_id);
+	public function getRequestIdsOfNewChatEntries($user_id, $request_id_string, $page_type){
+		return $this->_genericProcedures->getRequestIdsOfNewChatEntries($user_id, $request_id_string, $page_type);
 	}
 }
 

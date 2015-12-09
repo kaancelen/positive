@@ -32,6 +32,8 @@
 			</div>
 		<?php
 	}
+	
+	$request_id_list = array();
 ?>
 <script src="/positive/js/pullNewChat.js"></script>
 <div class="container">
@@ -52,8 +54,11 @@
 			</thead>
 			<tbody>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
+				<?php array_push($request_id_list, $offerRequest[OfferList::ID]);?>
 				<tr <?php if($offerRequest[OfferList::STATUS] == 2) echo "class='row-offer-cancelled'";?>>
-					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>"></td>
+					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>">
+						<img id='mail_gif' width='24'>
+					</td>
 					<td><b><?php echo $offerRequest[OfferList::ID]; ?></b></td>
 					<td><?php echo $offerRequest[OfferList::OFFER_RATE]; ?></td>
 					<td><?php echo $offerRequest[OfferList::POLICY_TYPE]; ?></td>
@@ -72,7 +77,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-	pullNewChatEntries();
+	pullNewChatEntries(<?php echo "'".implode(',', $request_id_list)."'"; ?>, 0);
 	$('#branch_2').addClass("active");
 </script>
 </body>

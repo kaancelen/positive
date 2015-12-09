@@ -56,6 +56,8 @@
 		}
 		$companies = $temp_companies;
 	}
+	
+	$request_id_list = array();
 ?>
 <script src="/positive/js/pullNewChat.js"></script>
 <div class="container">
@@ -122,6 +124,7 @@
 			<tbody>
 			<?php $userService = new UserService(); ?>
 			<?php foreach ($allOfferRequest as $offerRequest){ ?>
+				<?php array_push($request_id_list, $offerRequest[OfferList::ID]);?>
 				<?php 
 					$class_data = "row-offer-nothing";
 					if($offerRequest[OfferList::STATUS] == 2){
@@ -133,7 +136,6 @@
 				<tr class="<?php echo $class_data; ?>">
 					<td id="request_<?php echo $offerRequest[OfferList::ID]; ?>">
 						<img id='mail_gif' width='24'>
-						<img id='look_gif' width='24'>
 					</td>
 					<td><b id="req_id"><?php echo $offerRequest[OfferList::ID]; ?></b></td>
 					<td><?php echo $offerRequest[OfferList::OFFER_RATE];?></td>
@@ -162,7 +164,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-	pullNewChatEntries();
+	pullNewChatEntries(<?php echo "'".implode(',', $request_id_list)."'"; ?>, 0);
 	$('#personel_1').addClass("active");
 </script>
 </body>
