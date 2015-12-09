@@ -28,7 +28,7 @@ function pullNewChatEntries(){
 	        }
 	    });
 	},
-	5000);
+	20000);
 }
 
 function notifyEntry(request_id){

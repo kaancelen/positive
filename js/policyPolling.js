@@ -62,7 +62,7 @@ setInterval(function(){
         }
     });
 },
-10000);
+60000);
 
 function uriDateToTimestamp(uriDate){
 	var temp = decodeURIComponent(uriDate);
