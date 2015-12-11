@@ -247,7 +247,7 @@
 					$('#email').val('<?php echo $agent_user[Agent::EMAIL];?>');
 					$('#iban').val('<?php echo $agent_user[Agent::IBAN];?>');
 					$('#bank').val('<?php echo $agent_user[Agent::BANK];?>');
-					$('#agents').val('<?php echo $agent_user[Agent::AGENTS];?>');
+					$('#agents').val('<?php echo str_replace(array("\n","\r"), ' ', $agent_user[Agent::AGENTS]);?>');
 					$('#accept_terms').prop("checked", true);
 			<?php }?>
 		</script>

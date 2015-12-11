@@ -266,7 +266,7 @@ class ReconProcedures extends Procedures{
 	}
 
 	public function getRecons($month, $year, $user_id, $user_role){
-		$sql = "SELECT * FROM RECON WHERE MONTH(TANZIM_TARIHI) = ? AND YEAR(TANZIM_TARIHI) = ?";
+		$sql = "SELECT * FROM RECON WHERE MONTH(TANZIM_TARIHI) = ? AND YEAR(TANZIM_TARIHI) = ? ";
 		$params = array($month, $year);
 		
 		if($user_role == User::BRANCH){
