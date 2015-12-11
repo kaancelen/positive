@@ -31,7 +31,7 @@
 	foreach ($allChat as $chat){
 ?>
 <script type="text/javascript">
-	insertEntry('<?php echo $chat[Chat::TEXT];?>', '<?php echo $chat[Chat::USER_NAME];?>', '<?php echo DateUtil::hour_format($chat[Chat::CREATION_DATE]);?>');
+	insertEntry("<?php echo $chat[Chat::TEXT];?>", "<?php echo $chat[Chat::USER_NAME];?>", "<?php echo DateUtil::hour_format($chat[Chat::CREATION_DATE]);?>");
 </script>
 <?php } ?>
 <script type="text/javascript">
