@@ -83,7 +83,6 @@
 						<td>ASBİS</td>
 						<td>Marka Kodu</td>
 					<?php } ?>
-					<td>Ek Bilgi</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -100,6 +99,18 @@
 						<td><?php echo $policyReqDetail[PolicyRequest::ASBIS];?></td>
 						<td><?php echo $policyReqDetail[PolicyRequest::MARKA_KODU];?></td>
 					<?php } ?>
+				</tr>
+			</tbody>
+		</table>
+		<br>
+		<table class="offer-request-info-table">
+			<thead>
+				<tr>
+					<td>Ek Bilgi</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
 					<td><?php echo $policyReqDetail[PolicyRequest::EK_BILGI];?></td>
 				</tr>
 			</tbody>

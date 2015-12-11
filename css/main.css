@@ -69,8 +69,10 @@ body{
 }
 .offer-request-info-table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    width: 100%;
     border-collapse: collapse;
+    word-wrap: break-word; 
+    table-layout:fixed;
+    width: 100%;
 }
 .offer-request-info-table thead td{
 	font-weight: bold;
