@@ -37,7 +37,7 @@ class CancelProcedures extends Procedures{
 		$paramArray = array($month, $year);
 		
 		if(!is_null($user_id)){
-			$sql .= "AND (can.USER_ID = ? OR can.PERSONEL_ID = ?) ";
+			$sql .= " AND (can.USER_ID = ? OR can.PERSONEL_ID = ?) ";
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 		}
@@ -49,10 +49,10 @@ class CancelProcedures extends Procedures{
 				array_push($question_marks, "?");
 				array_push($paramArray, $company_id);
 			}
-			$sql .= "AND can.COMPANY_ID IN (".implode(",", $question_marks).") ";
+			$sql .= " AND can.COMPANY_ID IN (".implode(",", $question_marks).") ";
 		}
 		
-		$sql .= "ORDER BY can.CREATION_DATE DESC";
+		$sql .= " ORDER BY can.CREATION_DATE DESC";
 		
 		$this->_db->query($sql, $paramArray);
 		$result = $this->_db->all();
@@ -80,7 +80,7 @@ class CancelProcedures extends Procedures{
 		$sql .= "WHERE can.ID = ?";
 		
 		if(!is_null($user_id)){
-			$sql .= "AND can.USER_ID = ? ";
+			$sql .= " AND can.USER_ID = ? ";
 			array_push($paramArray, $user_id);
 		}
 		
