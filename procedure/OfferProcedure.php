@@ -366,7 +366,7 @@ class OfferProcedures extends Procedures{
 		$sql .= "ofre.ID = orc.OFFER_ID AND co.ID = orc.COMPANY_ID AND cc.ID = orc.CARD_ID AND ofre.ID = ?";
 		
 		if(!is_null($user_id)){
-			$sql .= "AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) ";
+			$sql .= " AND (ofr.USER_ID = ? OR ofre.USER_ID = ?) ";
 			array_push($paramArray, $user_id);
 			array_push($paramArray, $user_id);
 		}
