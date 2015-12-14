@@ -306,7 +306,7 @@ class ReconProcedures extends Procedures{
 		$params = array($takip_no);
 		
 		if($user_role == User::BRANCH){
-			$sql .= "AND (PRODUKTOR_ID = ? OR ";	//kendisi acente ise
+			$sql .= " AND (PRODUKTOR_ID = ? OR ";	//kendisi acente ise
 			$sql .= "PRODUKTOR_ID IN (SELECT ACENTE FROM AGENT_RELATION WHERE UST_ACENTE = ?) OR ";//üst acente ise
 			$sql .= "PRODUKTOR_ID IN (SELECT ACENTE FROM AGENT_RELATION WHERE BAGLI_ACENTE = ?) OR ";//bağlı ise
 			$sql .= "PRODUKTOR_ID IN (SELECT UST_ACENTE FROM AGENT_RELATION WHERE BAGLI_ACENTE = ?) ) ";//bağlı ise
