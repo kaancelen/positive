@@ -44,6 +44,7 @@
 			if($user[User::ROLE] == User::ADMIN){
 				Util::redirect("/positive/admin");
 			}else if($user[User::ROLE] == User::PERSONEL){
+				Cookie::delete('companies');
 				Util::redirect("/positive/personel");
 			}else if($user[User::ROLE] == User::BRANCH){
 				Util::redirect("/positive/branch");

@@ -94,7 +94,6 @@ include_once(__DIR__.'/../head.php');
 					<td>ASBİS</td>
 					<td>Marka Kodu</td>
 				<?php } ?>
-				<td>Ek Bilgi</td>
 				<?php if($reopen_request){?>
 					<td>Yeniden aç</td>
 				<?php } ?>
@@ -113,7 +112,6 @@ include_once(__DIR__.'/../head.php');
 					<td><?php echo $offerRequest[OfferRequest::ASBIS];?></td>
 					<td><?php echo $offerRequest[OfferRequest::MARKA_KODU];?></td>
 				<?php } ?>
-				<td><?php echo $offerRequest[OfferRequest::DESCRIPTION];?></td>
 				<?php if($reopen_request){?>
 					<td>
 						<div style="text-align: center">
@@ -123,6 +121,19 @@ include_once(__DIR__.'/../head.php');
 						</div>
 					</td>
 				<?php } ?>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<table class="offer-request-info-table">
+		<thead>
+			<tr>
+				<td>Ek Bilgi</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><?php echo $offerRequest[OfferRequest::DESCRIPTION];?></td>
 			</tr>
 		</tbody>
 	</table>
