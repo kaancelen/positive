@@ -5,7 +5,11 @@
 ?>
 </head>
 <body>
-<?php 
+<?php
+	function sortByStatus($a, $b) {
+	    return $a[PolicyRequest::STATUS] - $b[PolicyRequest::STATUS];
+	}
+
 	include_once (__DIR__.'/../Util/init.php');
 	if($loggedIn){
 		$user = Session::get(Session::USER);
@@ -47,6 +51,7 @@
 		$allowed_comp = $user[User::ALLOWED_COMP];
 	}
 	$allPolicyRequests = $offerService->getAllPolicyRequest(null, $month, $year, $allowed_comp);
+	usort($allPolicyRequests, 'sortByStatus');
 	//policy polling job
 	Cookie::put(Cookie::LAST_ENTER_POLICY_REQ, date(DateUtil::DB_DATE_FORMAT_TIME), Cookie::REMEMBER_EXPIRE);//son sayfa yenilemeyi cookie'ye yaz
 	Cookie::put(Cookie::LE_POLICY_FLAG, "off", Cookie::REMEMBER_EXPIRE);
