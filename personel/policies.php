@@ -7,6 +7,9 @@
 <body>
 <?php
 	function sortByStatus($a, $b) {
+		if($a[PolicyRequest::STATUS] == $b[PolicyRequest::STATUS]){
+			return $b[PolicyRequest::REQUEST_ID] - $a[PolicyRequest::REQUEST_ID];
+		}
 	    return $a[PolicyRequest::STATUS] - $b[PolicyRequest::STATUS];
 	}
 
